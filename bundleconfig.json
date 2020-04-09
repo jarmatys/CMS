@@ -1,0 +1,44 @@
+[
+  {
+    "outputFileName": "wwwroot/boundle/js/header.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/webfont/webfont.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/css/header.min.css",
+    "inputFiles": [
+      "wwwroot/css/bootstrap.min.css",
+      "wwwroot/css/atlantis.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/basic.min.js",
+    "inputFiles": [
+      "wwwroot/js/core/jquery.3.2.1.min.js",
+      "wwwroot/js/core/popper.min.js",
+      "wwwroot/js/core/bootstrap.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/jquery.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js",
+      "wwwroot/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js",
+      "wwwroot/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js",
+      "wwwroot/js/plugin/moment/moment.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/chart.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/chart.js/chart.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/sparkline.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/jquery.sparkline/jquery.sparkline.min.js"
+    ]
+  }
+]
