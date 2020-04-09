@@ -16,6 +16,9 @@ namespace CMS
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Dodajemy obs³ugê silnika razor oraz controllerów
+            services.AddRazorPages();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,14 +29,14 @@ namespace CMS
                 app.UseDeveloperExceptionPage();
             }
 
+            // dodajemy obs³ugê plików statycznych z ~/wwwroot
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                // ustawiamy routing na domyœlny Model - View - Controller
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
