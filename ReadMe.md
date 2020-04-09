@@ -1,4 +1,4 @@
-﻿# OpenSource CMS - ASP .NET MVC 3.1 
+﻿# OpenSource CMS - ASP .NET Core 3.1 
 
 ***
 
