@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CMS.Models.Db.Article;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace CMS.Models.Db.Account
     {
         public string Name { get; set; }
         public string Surname { get; set; }
+
+        public IEnumerable<PostModel> Posts { get; set; }
     }
 }

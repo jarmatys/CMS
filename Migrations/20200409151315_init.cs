@@ -50,6 +50,32 @@ namespace CMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Options",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    SiteUrl = table.Column<string>(nullable: true),
+                    BlogName = table.Column<string>(nullable: true),
+                    BlogDescription = table.Column<string>(nullable: true),
+                    UserCanRegister = table.Column<bool>(nullable: false),
+                    AdminEmail = table.Column<string>(nullable: true),
+                    CommentsNotify = table.Column<bool>(nullable: false),
+                    PostPerPage = table.Column<int>(nullable: false),
+                    MailServerUrl = table.Column<string>(nullable: true),
+                    MailServerLogin = table.Column<string>(nullable: true),
+                    MailServerPassword = table.Column<string>(nullable: true),
+                    MailPort = table.Column<int>(nullable: false),
+                    AllowComments = table.Column<bool>(nullable: false),
+                    DateFormat = table.Column<string>(nullable: true),
+                    TimeFormat = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Options", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -155,6 +181,36 @@ namespace CMS.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AddDate = table.Column<DateTime>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(nullable: true),
+                    CommentStatus = table.Column<bool>(nullable: false),
+                    Password = table.Column<string>(nullable: true),
+                    Slug = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    FullUrl = table.Column<string>(nullable: true),
+                    MenuOrder = table.Column<int>(nullable: false),
+                    CommentCount = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +247,11 @@ namespace CMS.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_UserId",
+                table: "Posts",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -209,6 +270,12 @@ namespace CMS.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Options");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
