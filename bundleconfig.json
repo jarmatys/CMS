@@ -9,7 +9,7 @@
     "outputFileName": "wwwroot/boundle/css/header.min.css",
     "inputFiles": [
       "wwwroot/css/bootstrap.min.css",
-      "wwwroot/css/atlantis.css"
+      "wwwroot/css/main.css"
     ]
   },
   {
@@ -39,6 +39,116 @@
     "outputFileName": "wwwroot/boundle/js/sparkline.min.js",
     "inputFiles": [
       "wwwroot/js/plugin/jquery.sparkline/jquery.sparkline.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/circles.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/chart-circle/circles.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/datatables.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/datatables/datatables.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/bootstrap-notify.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/bootstrap-notify/bootstrap-notify.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/bootstrap-toggle.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/jquery.vmap.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/jqvmap/jquery.vmap.min.js",
+      "wwwroot/js/plugin/jqvmap/maps/jquery.vmap.world.js"
+    ]
+  },
+  
+  {
+    "outputFileName": "wwwroot/boundle/js/dropzone.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/dropzone/dropzone.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/fullcalendar.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/fullcalendar/fullcalendar.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/bootstrap-datetimepicker.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/datepicker/bootstrap-datetimepicker.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/bootstrap-tagsinput.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/bootstrapwizard.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/bootstrap-wizard/bootstrapwizard.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/jquery.validate.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/jquery.validate/jquery.validate.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/summernote-bs4.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/summernote/summernote-bs4.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/select2.full.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/select2/select2.full.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/sweetalert.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/sweetalert/sweetalert.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/owl.carousel.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/owl-carousel/owl.carousel.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/owl.carousel.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/owl-carousel/owl.carousel.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/jquery.magnific-popup.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/boundle/js/main.min.js",
+    "inputFiles": [
+      "wwwroot/js/main.min.js"
     ]
   }
 ]

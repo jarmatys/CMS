@@ -9,9 +9,7 @@
     <Folder Include="Services\interfaces\" />
     <Folder Include="wwwroot\boundle\js\" />
     <Folder Include="wwwroot\boundle\css\" />
-    <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />
-    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,5 +25,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties bundleconfig_1json__JsonSchema="http://json.schemastore.org/appsettings" /></VisualStudio></ProjectExtensions>
 
 </Project>
