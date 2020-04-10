@@ -8,7 +8,15 @@ namespace CMS.Controllers
 {
     public class ArticleController : Controller
     {
-        public IActionResult Index()
+        // [ GET ] - <domain>/Article/List
+        [HttpGet]
+        public IActionResult List()
+        {
+            return View();
+        }
+
+        // [ GET ] - <domain>/Article/Add
+        public IActionResult Add()
         {
             return View();
         }

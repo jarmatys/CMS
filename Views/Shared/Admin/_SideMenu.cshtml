@@ -7,7 +7,7 @@
             <div class="info">
                 <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                     <span>
-                        Hizrian
+                        Admin
                         <span class="user-level">Administrator</span>
                         <span class="caret"></span>
                     </span>
@@ -18,17 +18,17 @@
                     <ul class="nav">
                         <li>
                             <a href="#profile">
-                                <span class="link-collapse">My Profile</span>
+                                <span class="link-collapse">Mój profil</span>
                             </a>
                         </li>
                         <li>
                             <a href="#edit">
-                                <span class="link-collapse">Edit Profile</span>
+                                <span class="link-collapse">Edytuj profil</span>
                             </a>
                         </li>
                         <li>
                             <a href="#settings">
-                                <span class="link-collapse">Settings</span>
+                                <span class="link-collapse">Ustawienia</span>
                             </a>
                         </li>
                     </ul>
@@ -91,7 +91,38 @@
                 <span class="sidebar-mini-icon">
                     <i class="fa fa-ellipsis-h"></i>
                 </span>
-                <h4 class="text-section">Components</h4>
+                <h4 class="text-section">MENU</h4>
+            </li>
+            <li class="nav-item">
+                <a data-toggle="collapse" href="#base">
+                    <i class="fas fa-layer-group"></i>
+                    <p>Wpisy</p>
+                    <span class="caret"></span>
+                </a>
+                <div class="collapse" id="base">
+                    <ul class="nav nav-collapse">
+                        <li>
+                            <a href="@Url.Action("List","Article")">
+                                <span class="sub-item">Wszystkie wpisy</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Add","Article")">
+                                <span class="sub-item">Dodaj nowy</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("List","Category")">
+                                <span class="sub-item">Kategorie</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("List","Tag")">
+                                <span class="sub-item">Tagi</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li class="nav-item">
                 <a data-toggle="collapse" href="#base">

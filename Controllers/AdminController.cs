@@ -8,9 +8,12 @@ namespace CMS.Controllers
 {
     public class AdminController : Controller
     {
+        // [ GET ] - <domain>/Admin/Index
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
+
     }
 }
