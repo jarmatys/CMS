@@ -39,7 +39,7 @@
             <li class="nav-item active">
                 <a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
                     <i class="fas fa-home"></i>
-                    <p>Dashboard</p>
+                    <p>Na skróty</p>
                     <span class="caret"></span>
                 </a>
                 <div class="collapse" id="dashboard">
@@ -47,41 +47,6 @@
                         <li>
                             <a href="../demo1/index.html">
                                 <span class="sub-item">Dashboard 1</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../demo2/index.html">
-                                <span class="sub-item">Dashboard 2</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../demo3/index.html">
-                                <span class="sub-item">Dashboard 3</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../demo4/index.html">
-                                <span class="sub-item">Dashboard 4</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../demo5/index.html">
-                                <span class="sub-item">Dashboard 5</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../demo6/index.html">
-                                <span class="sub-item">Dashboard 6</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../demo7/index.html">
-                                <span class="sub-item">Dashboard 7</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../demo8/index.html">
-                                <span class="sub-item">Dashboard 8</span>
                             </a>
                         </li>
                     </ul>
@@ -94,12 +59,12 @@
                 <h4 class="text-section">MENU</h4>
             </li>
             <li class="nav-item">
-                <a data-toggle="collapse" href="#base">
-                    <i class="fas fa-layer-group"></i>
+                <a data-toggle="collapse" href="#posts">
+                    <i class="fas fa-pen-square"></i>
                     <p>Wpisy</p>
                     <span class="caret"></span>
                 </a>
-                <div class="collapse" id="base">
+                <div class="collapse" id="posts">
                     <ul class="nav nav-collapse">
                         <li>
                             <a href="@Url.Action("List","Article")">
@@ -124,77 +89,23 @@
                     </ul>
                 </div>
             </li>
+
             <li class="nav-item">
-                <a data-toggle="collapse" href="#base">
+                <a data-toggle="collapse" href="#media">
                     <i class="fas fa-layer-group"></i>
-                    <p>Base</p>
+                    <p>Media</p>
                     <span class="caret"></span>
                 </a>
-                <div class="collapse" id="base">
+                <div class="collapse" id="media">
                     <ul class="nav nav-collapse">
                         <li>
-                            <a href="components/avatars.html">
-                                <span class="sub-item">Avatars</span>
+                            <a href="@Url.Action("List","Media")">
+                                <span class="sub-item">Biblioteka</span>
                             </a>
                         </li>
                         <li>
-                            <a href="components/buttons.html">
-                                <span class="sub-item">Buttons</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/gridsystem.html">
-                                <span class="sub-item">Grid System</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/panels.html">
-                                <span class="sub-item">Panels</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/notifications.html">
-                                <span class="sub-item">Notifications</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/sweetalert.html">
-                                <span class="sub-item">Sweet Alert</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/lists.html">
-                                <span class="sub-item">Lists</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/owl-carousel.html">
-                                <span class="sub-item">Owl Carousel</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/magnific-popup.html">
-                                <span class="sub-item">Magnific Popup</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/font-awesome-icons.html">
-                                <span class="sub-item">Font Awesome Icons</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/simple-line-icons.html">
-                                <span class="sub-item">Simple Line Icons</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/flaticons.html">
-                                <span class="sub-item">Flaticons</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components/typography.html">
-                                <span class="sub-item">Typography</span>
+                            <a href="@Url.Action("Add","Media")">
+                                <span class="sub-item">Dodaj nowe</span>
                             </a>
                         </li>
                     </ul>
