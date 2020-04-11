@@ -4,41 +4,281 @@
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
-<div class="page-inner">
-    <div class="page-header">
-        <h4 class="page-title">Text Editor</h4>
-        <ul class="breadcrumbs">
-            <li class="nav-home">
-                <a href="#">
-                    <i class="flaticon-home"></i>
-                </a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a href="#">Forms</a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a href="#">WYSIWYG Editor</a>
-            </li>
-        </ul>
-    </div>
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">Summernote</div>
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Dodawanie wpisu</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Forms</a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Dodawanie wpisu</a>
+                </li>
+            </ul>
         </div>
-        <div class="card-body">
-            <div id="summernote"></div>
+
+        <!-- Tytuł i slug wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Podstawowe informacje</div>
+            </div>
+            <div class="card-body">
+
+                <div class="input-icon mb-3">
+                    <span class="input-icon-addon">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Tytuł wpisu">
+                </div>
+
+                <div class="input-icon">
+                    <span class="input-icon-addon">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Bezpośredni odnośnik np. twojadomena.pl/tytul-artykulu">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Treść wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Treść wpisu</div>
+            </div>
+            <div class="card-body">
+                <div id="summernote"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Obrazek wyróżniający</div>
+            </div>
+            <div class="card-body">
+                <form action="upload.php" class="dropzone dz-clickable">
+                    <div class="dz-message" data-dz-message="">
+                        <div class="icon">
+                            <i class="flaticon-file"></i>
+                        </div>
+                        <h4 class="message">Drag and Drop files here</h4>
+                        <div class="note">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- Treść wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Zajawka wpisu</div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="comment">Zajawka</label>
+                    <textarea class="form-control" id="comment" rows="7"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status i dostępność -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Status i dostępność</div>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <div class="selectgroup w-100">
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="status" value="50" class="selectgroup-input" checked="">
+                                    <span class="selectgroup-button">Dostępny</span>
+                                </label>
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="status" value="100" class="selectgroup-input">
+                                    <span class="selectgroup-button">Szkic</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Dostępność</label>
+                            <div class="selectgroup w-100">
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="availability" value="50" class="selectgroup-input" checked="">
+                                    <span class="selectgroup-button">Publiczny</span>
+                                </label>
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="availability" value="100" class="selectgroup-input">
+                                    <span class="selectgroup-button">Hasło</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data publikacji -->
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Data publikacji</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Data</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="datepicker" name="datepicker">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-calendar-check"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Godzina</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="timepicker" name="timepicker">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-clock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kategoria wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Kategorie wpisu</div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="selectgroup selectgroup-pills">
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="HTML" class="selectgroup-input" checked="">
+                            <span class="selectgroup-button">HTML</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="CSS" class="selectgroup-input">
+                            <span class="selectgroup-button">CSS</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="PHP" class="selectgroup-input">
+                            <span class="selectgroup-button">PHP</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="JavaScript" class="selectgroup-input">
+                            <span class="selectgroup-button">JavaScript</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="Ruby" class="selectgroup-input">
+                            <span class="selectgroup-button">Ruby</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="Ruby" class="selectgroup-input">
+                            <span class="selectgroup-button">Ruby</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="C++" class="selectgroup-input">
+                            <span class="selectgroup-button">C++</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tagi wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Tagi wpisu</div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="selectgroup selectgroup-pills">
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="HTML" class="selectgroup-input" checked="">
+                            <span class="selectgroup-button">HTML</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="CSS" class="selectgroup-input">
+                            <span class="selectgroup-button">CSS</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="PHP" class="selectgroup-input">
+                            <span class="selectgroup-button">PHP</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="JavaScript" class="selectgroup-input">
+                            <span class="selectgroup-button">JavaScript</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="Ruby" class="selectgroup-input">
+                            <span class="selectgroup-button">Ruby</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="Ruby" class="selectgroup-input">
+                            <span class="selectgroup-button">Ruby</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="checkbox" name="value" value="C++" class="selectgroup-input">
+                            <span class="selectgroup-button">C++</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ustawienia wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Ustawienia wpisu</div>
+            </div>
+            <div class="card-body">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="">
+                        <span class="form-check-sign">Zezwalam na komentowanie wpisu</span>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
 @section Scripts {
     <script>
+        $('#datepicker').datetimepicker({
+            format: 'MM/DD/YYYY',
+        });
+        $('#timepicker').datetimepicker({
+            format: 'h:mm A',
+        });
+
         $('#summernote').summernote({
             placeholder: 'Atlantis',
             fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],

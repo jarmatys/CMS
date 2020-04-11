@@ -21,6 +21,7 @@ namespace CMS.Models.Db.Article
         public DateTime AddDate { get; set; }
         public string Content { get; set; }
         public string Title { get; set; }
+        public string Excerpt { get; set; }
 
         // Status określa na jakim etapie znajduje się nasz post [Publish, Draft]
         public string Status { get; set; }
