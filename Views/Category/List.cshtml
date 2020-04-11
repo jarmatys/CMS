@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewData["Title"] = "Lista kategorii";
+    Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+}
+
+<div class="page-inner">
+
+    <div class="page-header">
+        <h4 class="page-title">Lista kategorii</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="#">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">Tables</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">Datatables</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Lista kategorii</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>Opis</th>
+                                    <th>Uproszczona nazwa</th>
+                                    <th>Liczba</th>
+                                    <th style="width: 10%">Operacje</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>Nazwa kategorii</td>
+                                    <td>Opis kategorii</td>
+                                    <td>Uproszczona nazwa</td>
+                                    <td>Liczba wpisów</td>
+                                    <td>
+                                        <div class="form-button-action">
+                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Dodaj kategorię</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <class ="form-group">
+                        <div class="input-icon mb-3">
+                            <span class="input-icon-addon">
+                                <i class="fa fa-user"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Nazwa kategorii">
+                        </div>
+
+                        <div class="input-icon mb-3">
+                            <span class="input-icon-addon">
+                                <i class="fa fa-user"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Nazwa kategorii">
+                        </div>
+
+                        <label for="comment">Opis</label>
+                        <textarea class="form-control" id="comment" rows="5"></textarea>
+                </div>
+
+                <button class="btn btn-primary" type="submit">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span>
+                    Dodaj kategorię
+                </button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#basic-datatables').DataTable({
+            });
+
+        });
+    </script>
+}
+
+
