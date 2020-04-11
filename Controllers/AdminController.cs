@@ -15,5 +15,12 @@ namespace CMS.Controllers
             return View();
         }
 
+        // [ GET ] - <domain>/Admin/Faq
+        [HttpGet]
+        public IActionResult Faq()
+        {
+            return View();
+        }
+
     }
 }
