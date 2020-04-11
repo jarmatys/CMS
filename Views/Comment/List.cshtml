@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Lista stron";
+    ViewData["Title"] = "lista komentarzy";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
@@ -8,14 +8,14 @@
     <div class="nav-scroller">
         <div class="nav nav-tabs nav-line nav-color-secondary d-flex align-items-center justify-contents-center w-100">
             <a class="nav-link active show" data-toggle="tab" href="#tab1">
-                Wszystkie strony
+                Wszystkie komentarze
                 <span class="count ml-1">(30)</span>
             </a>
-            <a class="nav-link" data-toggle="tab" href="#tab2">Opublikowane</a>
-            <a class="nav-link" data-toggle="tab" href="#tab3">Szkic</a>
-            <div class="ml-auto">
-                <a href="@Url.Action("Add","Page")" class="btn btn-success">Dodaj stronę</a>
-            </div>
+            <a class="nav-link" data-toggle="tab" href="#tab2">Moje</a>
+            <a class="nav-link" data-toggle="tab" href="#tab3">Oczekujące</a>
+            <a class="nav-link" data-toggle="tab" href="#tab4">Zatwierdzone</a>
+            <a class="nav-link" data-toggle="tab" href="#tab5">Spam</a>
+
         </div>
     </div>
 </div>
@@ -25,31 +25,34 @@
             <table id="add-row" class="display table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th style="width: 30%">Tytuł</th>
                         <th>Autor</th>
-                        <th style="width: 2%"><i class="far fa-comment-alt"></i></th>
+                        <th>Komentarz</th>
+                        <th>Post</th>
                         <th>Data</th>
                         <th style="width: 10%">Operacje</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th style="width: 30%">Tytuł</th>
                         <th>Autor</th>
-                        <th style="width: 2%"><i class="far fa-comment-alt"></i></th>
+                        <th>Komentarz</th>
+                        <th>Post</th>
                         <th>Data</th>
-                        <th style="width: 10%">Action</th>
+                        <th style="width: 10%">Operacje</th>
                     </tr>
                 </tfoot>
                 <tbody>
 
                     <tr>
-                        <td>Tytuł strony</td>
-                        <td>Andrzej Kowalski</td>
-                        <td>5</td>
+                        <td>Andrzej kowalski</td>
+                        <td>Treść komentarza</td>
+                        <td>link do artykułu</td>
                         <td>02-02-2020</td>
                         <td>
                             <div class="form-button-action">
+                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Edit Task">
+                                    <i class="fas fa-check"></i>
+                                </button>
                                 <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                     <i class="fa fa-edit"></i>
                                 </button>
@@ -63,10 +66,8 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
-
 
 @section Scripts {
     <script>
@@ -118,3 +119,5 @@
         });
     </script>
 }
+
+
