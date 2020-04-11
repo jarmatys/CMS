@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
 {
-    public class CategoryController : Controller
+    public class TagController : Controller
     {
-        // [ GET ] - <domain>/Category/List
+        // [ GET ] - <domain>/Tag/List
         [HttpGet]
         public IActionResult List()
         {
             return View();
         }
 
-        // [ POST ] - <domain>/Category/Add
+        // [ POST ] - <domain>/Tag/Add
         [HttpPost]
         public IActionResult Add()
         {
