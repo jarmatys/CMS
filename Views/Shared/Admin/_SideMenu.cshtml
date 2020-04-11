@@ -111,6 +111,29 @@
                     </ul>
                 </div>
             </li>
+
+            <li class="nav-item">
+                <a data-toggle="collapse" href="#page">
+                    <i class="fas fa-desktop"></i>
+                    <p>Strony</p>
+                    <span class="caret"></span>
+                </a>
+                <div class="collapse" id="page">
+                    <ul class="nav nav-collapse">
+                        <li>
+                            <a href="@Url.Action("List","Page")">
+                                <span class="sub-item">Wszystkie strony</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Add","Page")">
+                                <span class="sub-item">Dodaj nową</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
             <li class="nav-item">
                 <a data-toggle="collapse" href="#sidebarLayouts">
                     <i class="fas fa-th-list"></i>
@@ -263,13 +286,7 @@
                     <span class="badge badge-info">1</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="widgets.html">
-                    <i class="fas fa-desktop"></i>
-                    <p>Widgets</p>
-                    <span class="badge badge-success">4</span>
-                </a>
-            </li>
+
             <li class="nav-section">
                 <span class="sidebar-mini-icon">
                     <i class="fa fa-ellipsis-h"></i>
