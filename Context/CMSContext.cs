@@ -17,6 +17,9 @@ namespace CMS.Context
         // Tutaj będziemy dodawać DbSet'y
         public DbSet<OptionsModel> Options { get; set; }
         public DbSet<PostModel> Posts { get; set; }
+        public DbSet<CategoryModel> Categories { get; set; }
+        public DbSet<TagModel> Tags { get; set; }
+        public DbSet<TaxonomyModel> Taxonomies { get; set; }
 
         // Zaślepka na klasę bazową
         protected override void OnModelCreating(ModelBuilder builder)

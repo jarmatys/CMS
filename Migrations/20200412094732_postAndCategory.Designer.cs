@@ -3,14 +3,16 @@ using System;
 using CMS.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CMS.Migrations
 {
     [DbContext(typeof(CMSContext))]
-    partial class CMSContextModelSnapshot : ModelSnapshot
+    [Migration("20200412094732_postAndCategory")]
+    partial class postAndCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,6 +198,9 @@ namespace CMS.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<int?>("PostModelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Slug")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -209,6 +214,8 @@ namespace CMS.Migrations
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PostModelId");
 
                     b.HasIndex("UserId");
 
@@ -394,6 +401,10 @@ namespace CMS.Migrations
 
             modelBuilder.Entity("CMS.Models.Db.Article.PostModel", b =>
                 {
+                    b.HasOne("CMS.Models.Db.Article.PostModel", null)
+                        .WithMany("Posts")
+                        .HasForeignKey("PostModelId");
+
                     b.HasOne("CMS.Models.Db.Account.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId");
@@ -408,7 +419,7 @@ namespace CMS.Migrations
                         .IsRequired();
 
                     b.HasOne("CMS.Models.Db.Article.PostModel", "Post")
-                        .WithMany("Taxonomies")
+                        .WithMany()
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
