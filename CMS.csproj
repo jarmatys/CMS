@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\ViewModels\" />
-    <Folder Include="Services\interfaces\" />
     <Folder Include="wwwroot\boundle\js\" />
     <Folder Include="wwwroot\boundle\css\" />
     <Folder Include="wwwroot\images\" />
