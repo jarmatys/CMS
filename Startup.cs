@@ -54,6 +54,7 @@ namespace CMS
 
             // Tutaj dodajemy zale¿noœci do wstrzykiwania
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ITagService, TagService>();
         }
 
 

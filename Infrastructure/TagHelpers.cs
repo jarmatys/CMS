@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace CMS.Infrastructure
 {
-    public static class CategoryHelpers
+    public class TagHelpers
     {
         static string ConvertTextToSlug(string text)
         {
             return text.Trim().Replace(" ", "-").ToLower();
-        } 
+        }
 
-        public static CategoryModel ConvertToModel(CategoryView result)
+        public static TagModel ConvertToModel(TagView result)
         {
-            var categoryModel = new CategoryModel
+            var categoryModel = new TagModel
             {
                 Name = result.Name,
                 Slug = ConvertTextToSlug(result.ShortName),
@@ -26,19 +26,19 @@ namespace CMS.Infrastructure
             return categoryModel;
         }
 
-        public static CategoryView ConvertToView(CategoryModel result)
+        public static TagView ConvertToView(TagModel result)
         {
-            var categoryView = new CategoryView
+            var tagView = new TagView
             {
                 Id = result.Id,
                 Name = result.Name,
                 ShortName = result.Slug,
                 Description = result.Description
             };
-            return categoryView;
+            return tagView;
         }
 
-        public static CategoryModel MergeViewWithModel(CategoryModel model, CategoryView view)
+        public static TagModel MergeViewWithModel(TagModel model, TagView view)
         {
             model.Name = view.Name;
             model.Slug = ConvertTextToSlug(view.ShortName);

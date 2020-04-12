@@ -1,13 +1,13 @@
-﻿@model CategoryView
+﻿@model TagView
 
 @{
-    ViewData["Title"] = "edytowanie kategorii";
+    ViewData["Title"] = "edytowanie tagu";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 <div class="page-inner">
 
     <div class="page-header">
-        <h4 class="page-title">Edytowanie kategorii</h4>
+        <h4 class="page-title">Edytowanie tagu</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
                 <a href="@Url.Action("Index","Admin")">
@@ -24,7 +24,7 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a href="@Url.Action("List","Category")">Kategorie</a>
+                <a href="@Url.Action("List","Tag")">Tagi</a>
             </li>
             <li class="separator">
                 <i class="flaticon-right-arrow"></i>
@@ -36,11 +36,11 @@
     </div>
 
     <div class="card">
-        @using (Html.BeginForm("Edit", "Category", FormMethod.Post))
+        @using (Html.BeginForm("Edit", "Tag", FormMethod.Post))
         {
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Edytuj kategorię</h4>
+                    <h4 class="card-title">Edytuj tag</h4>
                 </div>
             </div>
             <div class="card-body">
@@ -53,7 +53,7 @@
                     <span class="input-icon-addon">
                         <i class="fas fa-pen-alt"></i>
                     </span>
-                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder = "Nazwa kategorii" })
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder = "Nazwa tagu" })
                 </div>
 
                 <div class="input-icon mb-3">
@@ -65,7 +65,7 @@
                 </div>
 
                 <label for="comment">Opis</label>
-                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @placeholder = "Opis kategorii (opcjonalnie)", @id = "comment", @rows = "5" })
+                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @placeholder = "Opis tagu (opcjonalnie)", @id = "comment", @rows = "5" })
 
             </div>
 
@@ -74,7 +74,7 @@
                     <span class="btn-label">
                         <i class="fas fa-edit"></i>
                     </span>
-                    Edytuj kategorię
+                    Edytuj tag
                 </button>
             </div>
         }
