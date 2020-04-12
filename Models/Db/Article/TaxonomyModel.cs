@@ -16,6 +16,6 @@ namespace CMS.Models.Db.Article
         public CategoryModel Category { get; set; }
 
         public int PostId { get; set; }
-        public PostModel Post { get; set; }
+        public ArticleModel Post { get; set; }
     }
 }

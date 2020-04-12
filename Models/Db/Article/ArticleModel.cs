@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace CMS.Models.Db.Article
 {
     // Model wpisu na blogu
-    public class PostModel
+    public class ArticleModel
     {
-        public PostModel()
+        public ArticleModel()
         {
             AddDate = DateTime.Now;
         }

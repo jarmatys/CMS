@@ -12,6 +12,6 @@ namespace CMS.Models.Db.Account
         public string Name { get; set; }
         public string Surname { get; set; }
 
-        public IEnumerable<PostModel> Posts { get; set; }
+        public IEnumerable<ArticleModel> Posts { get; set; }
     }
 }
