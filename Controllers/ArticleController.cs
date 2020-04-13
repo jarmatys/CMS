@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.Models.ViewModels.Article;
 using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +31,7 @@ namespace CMS.Controllers
         }
 
         // [ GET ] - <domain>/Article/Add
+        [HttpGet]
         public async Task<IActionResult> Add()
         {
             // 1. Pobieranie listy tagów oraz kategorii
@@ -37,6 +39,22 @@ namespace CMS.Controllers
             ViewBag.Tags = await _tagService.GetAll();
 
             return View();
+        }
+
+        // [ POST ] - <domain>/Article/Add
+        [HttpPost]
+        public async Task<IActionResult> Add(ArticleView result)
+        {
+            // 1. Pobieranie listy tagów oraz kategorii
+            ViewBag.Categories = await _categoryService.GetAll();
+            ViewBag.Tags = await _tagService.GetAll();
+
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            return RedirectToAction("List");
         }
     }
 }

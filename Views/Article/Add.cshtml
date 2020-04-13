@@ -1,4 +1,5 @@
-﻿
+﻿@model ArticleView
+
 @{
     ViewData["Title"] = "Dodaj wpis";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
@@ -27,232 +28,303 @@
             </li>
         </ul>
     </div>
-
-    <!-- Tytuł i slug wpisu -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">Podstawowe informacje</div>
-        </div>
-        <div class="card-body">
-
-            <div class="input-icon mb-3">
-                <span class="input-icon-addon">
-                    <i class="fa fa-user"></i>
-                </span>
-                <input type="text" class="form-control" placeholder="Tytuł wpisu">
+    @using (Html.BeginForm("Add", "Article", FormMethod.Post))
+    {
+        <!-- Tytuł i slug wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Podstawowe informacje</div>
             </div>
+            <div class="card-body">
 
-            <div class="input-icon">
-                <span class="input-icon-addon">
-                    <i class="fa fa-user"></i>
-                </span>
-                <input type="text" class="form-control" placeholder="Bezpośredni odnośnik np. twojadomena.pl/tytul-artykulu">
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Treść wpisu -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">Treść wpisu</div>
-        </div>
-        <div class="card-body">
-            <div id="summernote"></div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">Obrazek wyróżniający</div>
-        </div>
-        <div class="card-body">
-            <form action="upload.php" class="dropzone dz-clickable">
-                <div class="dz-message" data-dz-message="">
-                    <div class="icon">
-                        <i class="flaticon-file"></i>
-                    </div>
-                    <h4 class="message">Drag and Drop files here</h4>
-                    <div class="note">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</div>
+                <div class="input-icon mb-3">
+                    <span class="input-icon-addon">
+                        <i class="fas fa-pen-alt"></i>
+                    </span>
+                    <input id="post-title" name="title" type="text" class="form-control" placeholder="Tytuł wpisu">
                 </div>
 
-            </form>
-        </div>
-    </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="domain-name">https://twojadomena.pl/</span>
+                    </div>
+                    <input type="text" class="form-control" id="post-url" name="slug" aria-describedby="Nazwa domeny">
+                </div>
 
-    <!-- Treść wpisu -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">Zajawka wpisu</div>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label for="comment">Zajawka</label>
-                <textarea class="form-control" id="comment" rows="7"></textarea>
             </div>
         </div>
-    </div>
 
-    <!-- Status i dostępność -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">Status i dostępność</div>
+        <!-- Treść wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Treść wpisu</div>
+            </div>
+            <div class="card-body">
+                <textarea name="content" id="summernote"></textarea>
+            </div>
         </div>
-        <div class="card-body">
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Status</label>
-                        <div class="selectgroup w-100">
-                            <label class="selectgroup-item">
-                                <input type="radio" name="status" value="50" class="selectgroup-input" checked="">
-                                <span class="selectgroup-button">Dostępny</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="status" value="100" class="selectgroup-input">
-                                <span class="selectgroup-button">Szkic</span>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Zdjęcie wyróżniające -->
+                <div style="min-height:500px;" class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">Zdjęcie wyrózniające</h4>
+                            <label for="uploadImg" class="btn btn-primary ml-auto">
+                                <i class="fa fa-plus"></i>
+                                Dołącz zdjęcie
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Dostępność</label>
-                        <div class="selectgroup w-100">
-                            <label class="selectgroup-item">
-                                <input type="radio" name="availability" value="50" class="selectgroup-input" checked="">
-                                <span class="selectgroup-button">Publiczny</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="radio" name="availability" value="100" class="selectgroup-input">
-                                <span class="selectgroup-button">Hasło</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Data publikacji -->
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Data publikacji</h4>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Data</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="datepicker" name="datepicker">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fa fa-calendar-check"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Godzina</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="timepicker" name="timepicker">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fa fa-clock"></i>
-                                </span>
+                    <div class="card-body mx-auto justify-content-center align-items-center flex-column">
+                        <div class="form-group">
+                            <div class="input-file input-file-image">
+                                <img class="img-upload-preview" height="350" width="400" src="#" alt="preview">
+                                <input type="file" class="form-control form-control-file" name="uploadImg" accept="image/*">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Kategoria wpisu -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">Kategorie wpisu</div>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <div class="selectgroup selectgroup-pills">
-                    @if (Enumerable.Count(ViewBag.Categories) != 0)
-                    {
-                        foreach (var category in ViewBag.Categories as List<CategoryModel>)
-                        {
-                            <label class="selectgroup-item">
-                                <input type="checkbox" name="category" value="@category.Name" class="selectgroup-input">
-                                <span class="selectgroup-button">@category.Name</span>
-                            </label>
-                        }
-                    }
-                    else
-                    {
-                        <h3>Brak dodanych kategorii wpisów</h3>
-                    }
+            <div class="col-md-6">
+                <!-- Zajawka wpisu -->
+                <div style="min-height:500px;" class="card">
+                    <div class="card-header">
+                        <div class="card-title">Zajawka wpisu</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="comment">Wpisz treść zajawki</label>
+                            <textarea class="form-control" name="excerpt" rows="15"></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Tagi wpisu -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">Tagi wpisu</div>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <div class="selectgroup selectgroup-pills">
-                    @if (Enumerable.Count(ViewBag.Tags) != 0)
-                    {
-                        foreach (var tag in ViewBag.Tags as List<TagModel>)
-                        {
-                            <label class="selectgroup-item">
-                                <input type="checkbox" name="category" value="@tag.Name" class="selectgroup-input">
-                                <span class="selectgroup-button">@tag.Name</span>
-                            </label>
-                        }
-                    }
-                    else
-                    {
-                        <h3>Brak dodanych tagów wpisów</h3>
-                    }
+        <!-- Status i dostępność -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Status i dostępność</div>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <div class="selectgroup w-100">
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="status" value="Publish" class="selectgroup-input" checked="">
+                                    <span class="selectgroup-button">Dostępny</span>
+                                </label>
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="status" value="Draft" class="selectgroup-input">
+                                    <span class="selectgroup-button">Szkic</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Dostępność</label>
+                            <div class="selectgroup w-100">
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="availability" value="Public" class="selectgroup-input" checked="">
+                                    <span class="selectgroup-button">Publiczny</span>
+                                </label>
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="availability" value="Password" class="selectgroup-input">
+                                    <span class="selectgroup-button">Hasło</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="post-password" class="form-group d-none">
+                            <label for="password">Hasło zabezpieczające wpis</label>
+                            <div class="input-icon mb-3">
+                                <span id="show-password" class="input-icon-addon cursor-pointer">
+                                    <i class="fas fa-eye"></i>
+                                </span>
+                                <input type="password" class="form-control" name="password" id="post-password-input" placeholder="Hasło">
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Ustawienia wpisu -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">Ustawienia wpisu</div>
-        </div>
-        <div class="card-body">
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" value="">
-                    <span class="form-check-sign">Zezwalam na komentowanie wpisu</span>
-                </label>
+        <!-- Data publikacji -->
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Data publikacji</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Data</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="datepicker" name="date">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-calendar-check"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Godzina</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="timepicker" name="time">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-clock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+        <!-- Kategoria wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Kategorie wpisu</div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="selectgroup selectgroup-pills">
+                        @if (Enumerable.Count(ViewBag.Categories) != 0)
+                        {
+                            foreach (var category in ViewBag.Categories as List<CategoryModel>)
+                            {
+                                <label class="selectgroup-item">
+                                    <input type="checkbox" name="categories" value="@category.Name" class="selectgroup-input">
+                                    <span class="selectgroup-button">@category.Name</span>
+                                </label>
+                            }
+                        }
+                        else
+                        {
+                            <h3>Brak dodanych kategorii wpisów</h3>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tagi wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Tagi wpisu</div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="selectgroup selectgroup-pills">
+                        @if (Enumerable.Count(ViewBag.Tags) != 0)
+                        {
+                            foreach (var tag in ViewBag.Tags as List<TagModel>)
+                            {
+                                <label class="selectgroup-item">
+                                    <input type="checkbox" name="tags" value="@tag.Name" class="selectgroup-input">
+                                    <span class="selectgroup-button">@tag.Name</span>
+                                </label>
+                            }
+                        }
+                        else
+                        {
+                            <h3>Brak dodanych tagów wpisów</h3>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ustawienia wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Ustawienia wpisu</div>
+            </div>
+            <div class="card-body">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.CheckBoxFor(x => x.CommentStatus, new { @class = "form-check-input" })
+                        <span class="form-check-sign">Zezwalam na komentowanie wpisu</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-plus"></i>
+                Dodaj wpis
+            </button>
+        </div>
+
+    }
 </div>
 
 @section Scripts {
     <script>
+
+        // 1. Ustawianie nazwy domeny w inpucie
+        const domainName = document.querySelector("#domain-name");
+        domainName.innerText = `${window.location.hostname}/`;
+
+        // 2. Uzpełnianie sluga na podstawie tytyłu
+        const titleInput = document.querySelector("#post-title");
+        const slugInput = document.querySelector("#post-url");
+
+        titleInput.addEventListener("keyup", function () {
+            // 1. Trim -> usuwamy białe znaki z początku i końca
+            // 2. Regex -> usuwamy znaki specjalne z linku
+            // 3. Split + Join -> zamieniamy spacje na "-"
+            // 4. toLowerCase -> zmieniamy wszystkie literki na małe
+            slugInput.value = titleInput.value.trim().replace(/[&\/\\#,+()$~%.'":*?<>{}!]/g, "").split(" ").join("-").toLowerCase().trim("-");
+        });
+
+        // 3. None/Inline dla hasła wpisu w zalezności od danego zaznaczonego radio buttona
+        const availabilityRadio = document.querySelectorAll('input[name=availability]');
+        const passwordField = document.querySelector("#post-password");
+
+        for (let btnRadio of availabilityRadio) {
+            btnRadio.addEventListener("change", function () {
+                passwordField.classList.toggle("d-none");
+            });
+        }
+
+        // 4. Pokazanie hasła
+        const showPassoword = document.querySelector("#show-password");
+        const passwordInput = document.querySelector("#post-password-input");
+
+        showPassoword.addEventListener("click", function () {
+            if (passwordInput.type == "text") {
+                passwordInput.type = "password";
+            }
+            else {
+                passwordInput.type = "text";
+            }
+        });
+
         $('#datepicker').datetimepicker({
-            format: 'MM/DD/YYYY',
+            format: 'DD-MM-YYYY',
         });
         $('#timepicker').datetimepicker({
-            format: 'h:mm A',
+            format: 'hh:mm',
         });
 
         $('#summernote').summernote({
-            placeholder: 'Atlantis',
+            placeholder: 'Pełna treść twojego wpisu',
             fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
             tabsize: 2,
             height: 300
