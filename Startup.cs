@@ -56,6 +56,7 @@ namespace CMS
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IMediaService, MediaService>();
         }
 
 

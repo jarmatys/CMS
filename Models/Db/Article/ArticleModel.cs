@@ -1,4 +1,5 @@
 ﻿using CMS.Models.Db.Account;
+using CMS.Models.Db.Media;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -36,6 +37,10 @@ namespace CMS.Models.Db.Article
         public string UserId { get; set; }
         public User User { get; set; }
 
+        public int? MediaId { get; set; }
+        public MediaModel Image { get; set; }
+
         public ICollection<TaxonomyModel> Taxonomies { get; set; }
+        
     }
 }
