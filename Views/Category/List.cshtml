@@ -1,6 +1,7 @@
-﻿
+﻿@model List<CategoryModel>
+
 @{
-    ViewData["Title"] = "Lista kategorii";
+    ViewData["Title"] = "lista kategorii";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
@@ -10,7 +11,7 @@
         <h4 class="page-title">Lista kategorii</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
-                <a href="#">
+                <a href="@Url.Action("Index","Admin")">
                     <i class="flaticon-home"></i>
                 </a>
             </li>
@@ -18,23 +19,27 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a href="#">Tables</a>
+                <a href="@Url.Action("List","Article")">Wpisy</a>
             </li>
             <li class="separator">
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a href="#">Datatables</a>
+                Kategorie
             </li>
         </ul>
     </div>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Lista kategorii</h4>
+                        <button class="btn btn-primary ml-auto" onclick="location='@Url.Action("Add","Category")'">
+                            <i class="fa fa-plus"></i>
+                            Dodaj kategorię
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -46,83 +51,108 @@
                                     <th>Nazwa</th>
                                     <th>Opis</th>
                                     <th>Uproszczona nazwa</th>
-                                    <th>Liczba</th>
+                                    <th>Liczba wpisów</th>
                                     <th style="width: 10%">Operacje</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                <tr>
-                                    <td>Nazwa kategorii</td>
-                                    <td>Opis kategorii</td>
-                                    <td>Uproszczona nazwa</td>
-                                    <td>Liczba wpisów</td>
-                                    <td>
-                                        <div class="form-button-action">
-                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-
+                                @if (Model.Count != 0)
+                                {
+                                    foreach (var category in Model)
+                                    {
+                                        <tr id="row-@category.Id">
+                                            <td>@category.Name</td>
+                                            <td>@category.Description</td>
+                                            <td>@category.Slug</td>
+                                            <td>@category.Count</td>
+                                            <td>
+                                                <div class="form-button-action">
+                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj" onclick="location='@Url.Action("Edit","Category", new { Id = category.Id})'">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-categoryid="@category.Id">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5">Brak dodanych kategorii</td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h4 class="card-title">Dodaj kategorię</h4>
-                    </div>
-                </div>
-                <div class="card-body">
-
-                    <class ="form-group">
-                        <div class="input-icon mb-3">
-                            <span class="input-icon-addon">
-                                <i class="fa fa-user"></i>
-                            </span>
-                            <input type="text" class="form-control" placeholder="Nazwa kategorii">
-                        </div>
-
-                        <div class="input-icon mb-3">
-                            <span class="input-icon-addon">
-                                <i class="fa fa-user"></i>
-                            </span>
-                            <input type="text" class="form-control" placeholder="Nazwa kategorii">
-                        </div>
-
-                        <label for="comment">Opis</label>
-                        <textarea class="form-control" id="comment" rows="5"></textarea>
-                </div>
-
-                <button class="btn btn-primary" type="submit">
-                    <span class="btn-label">
-                        <i class="fa fa-plus"></i>
-                    </span>
-                    Dodaj kategorię
-                </button>
-
-            </div>
-        </div>
-
     </div>
 </div>
 
 
-</div>
-
 @section Scripts {
     <script>
+        // Example POST method implementation:
+        async function postData(url = '', data = {}) {
+            // Default options are marked with *
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            return response.json(); // parses JSON response into native JavaScript objects
+        }
+
+
         $(document).ready(function () {
             $('#basic-datatables').DataTable({
+            });
+
+        });
+
+        $('.delete-alert').click(function (e) {
+            swal({
+                title: 'Czy na pewno chcesz usunąć tą kategorię?',
+                text: "Tych zmian nie da się odtworzyć!",
+                type: 'warning',
+                buttons: {
+                    confirm: {
+                        text: 'Usuń!',
+                        className: 'btn btn-danger'
+                    },
+                    cancel: {
+                        visible: true,
+                        text: 'Cofnij',
+                        className: 'btn btn-success'
+                    }
+                }
+            }).then((Delete) => {
+                if (Delete) {
+
+                    $.post("@Url.Action("Delete","Category")", { Id: this.dataset.categoryid });
+
+                    var row = document.getElementById(`row-${this.dataset.categoryid}`);
+                    row.parentNode.removeChild(row);
+
+                    swal({
+                        title: 'Usunieto',
+                        text: 'Twoja kategoria została usunięta.',
+                        type: 'success',
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        }
+                    });
+
+
+                } else {
+                    swal.close();
+                }
+
             });
 
         });

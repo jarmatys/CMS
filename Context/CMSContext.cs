@@ -1,6 +1,7 @@
 ﻿using CMS.Models.Db.Account;
 using CMS.Models.Db.Admin;
 using CMS.Models.Db.Article;
+using CMS.Models.Db.Media;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,7 +17,12 @@ namespace CMS.Context
 
         // Tutaj będziemy dodawać DbSet'y
         public DbSet<OptionsModel> Options { get; set; }
-        public DbSet<PostModel> Posts { get; set; }
+        public DbSet<ArticleModel> Articles { get; set; }
+        public DbSet<CategoryModel> Categories { get; set; }
+        public DbSet<TagModel> Tags { get; set; }
+        public DbSet<TaxonomyModel> Taxonomies { get; set; }
+        public DbSet<MediaModel> Medias { get; set; }
+        public DbSet<MediaTypeModel> MediaTypes { get; set; }
 
         // Zaślepka na klasę bazową
         protected override void OnModelCreating(ModelBuilder builder)

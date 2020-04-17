@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CMS.Context;
 using CMS.Models.Db.Account;
+using CMS.Services;
+using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -49,6 +51,12 @@ namespace CMS
             // Dodajemy obs³ugê silnika razor oraz controllerów
             services.AddRazorPages();
             services.AddControllersWithViews();
+
+            // Tutaj dodajemy zale¿noœci do wstrzykiwania
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IMediaService, MediaService>();
         }
 
 

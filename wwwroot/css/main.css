@@ -186,8 +186,9 @@ b, .b, strong, .strong {
     color: #F25961 !important; }
 
 label {
-  color: #495057 !important;
-  font-size: 14px !important; }
+    /*color: #495057 !important;*/
+    font-size: 14px !important;
+}
 
 .text-small {
   font-size: 11px; }
@@ -14063,3 +14064,6 @@ body {
   background: -webkit-linear-gradient(legacy-direction(-45deg), #E80A15, #F25961) !important;
   background: linear-gradient(-45deg, #E80A15, #F25961) !important; }
 
+.cursor-pointer {
+    cursor: pointer;
+}

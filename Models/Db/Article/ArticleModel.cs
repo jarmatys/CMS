@@ -1,4 +1,5 @@
 ﻿using CMS.Models.Db.Account;
+using CMS.Models.Db.Media;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 namespace CMS.Models.Db.Article
 {
     // Model wpisu na blogu
-    public class PostModel
+    public class ArticleModel
     {
-        public PostModel()
+        public ArticleModel()
         {
             AddDate = DateTime.Now;
         }
@@ -35,5 +36,11 @@ namespace CMS.Models.Db.Article
 
         public string UserId { get; set; }
         public User User { get; set; }
+
+        public int? MediaId { get; set; }
+        public MediaModel Image { get; set; }
+
+        public ICollection<TaxonomyModel> Taxonomies { get; set; }
+        
     }
 }

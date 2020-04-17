@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
 {
     public class MediaController : Controller
     {
+        // Wstrzykiwanie serwisu do obsługi kategorii w CMS'ie
+        private readonly IMediaService _mediaService;
+        public MediaController(IMediaService mediaService)
+        {
+            _mediaService = mediaService;
+        }
+
         // [ GET ] - <domain>/Media/List
         [HttpGet]
         public IActionResult List()
