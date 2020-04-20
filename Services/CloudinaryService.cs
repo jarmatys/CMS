@@ -29,7 +29,7 @@ namespace CMS.Services
             _context = context;
         }
 
-        public async Task<bool> AddPhoto(IFormFile file)
+        public async Task<bool> AddFile(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
             if (file.Length > 0)
@@ -39,7 +39,7 @@ namespace CMS.Services
                     var uploadParams = new ImageUploadParams
                     {
                         File = new FileDescription(file.FileName, stream),
-                        Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
+                        //Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
                     };
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
@@ -66,17 +66,20 @@ namespace CMS.Services
 
         }
 
-        public async Task<bool> DeletePhoto(string publicId)
+        public async Task<bool> DeleteFile(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
             var result = _cloudinary.Destroy(deleteParams);
-
-            // TODO: remove from database
-
+            
             if (result.Result == "ok")
             {
+                var toRemove = await _context.Medias.FindAsync(publicId);
+                _context.Medias.Remove(toRemove);
+                await _context.SaveChangesAsync();
+
                 return true;
             }
+
             return false;
         }
     }

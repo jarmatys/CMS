@@ -9,7 +9,7 @@ namespace CMS.Services.interfaces
 {
     public interface ICloudService
     {
-        Task<bool> AddPhoto(IFormFile file);
-        Task<bool> DeletePhoto(string publicId);
+        Task<bool> AddFile(IFormFile file);
+        Task<bool> DeleteFile(string publicId);
     }
 }

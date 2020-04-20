@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.Infrastructure.Helpers;
+using CMS.Models.ViewModels.Media;
 using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +44,7 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromForm]IFormFile file)
         {
-            var check = await _cloudinaryService.AddPhoto(file);
+            var check = await _cloudinaryService.AddFile(file);
             return RedirectToAction("List","Media");
         }
 
@@ -52,6 +54,38 @@ namespace CMS.Controllers
         {
             var medium = await _mediaService.Get(id);
             return View(medium);
+        }
+
+        // [ GET ] - <domain>/Media/Edit/{id}
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var medium = await _mediaService.Get(id);
+            return View(MediaHelpers.ConvertToView(medium));
+        }
+
+        // [ POST ] - <domain>/Media/Edit/{id}
+        [HttpPost]
+        public async Task<IActionResult> Edit(MediaView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            var medium = await _mediaService.Get(result.Id);
+
+            await _mediaService.Update(MediaHelpers.MergeViewWithModel(medium, result));
+
+            return RedirectToAction("Details", "Media", new { id = result.Id });
+        }
+
+        // [ POST ] - <domain>/Media/Delete
+        [HttpPost]
+        public async Task<IActionResult> Delete(string Id)
+        {
+            await _cloudinaryService.DeleteFile(Id);
+            return RedirectToAction("List");
         }
     }
 }

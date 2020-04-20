@@ -10,6 +10,7 @@ namespace CMS.Services.interfaces
     {
         Task<MediaModel> Get(string id);
         Task<List<MediaModel>> GetAll();
+        Task<bool> Update(MediaModel media);
         Task<int> MediaCount();
     }
 }

@@ -33,5 +33,11 @@ namespace CMS.Services
             var medias = await _context.Medias.ToListAsync();
             return medias.Count();
         }
+
+        public async Task<bool> Update(MediaModel media)
+        {
+            _context.Medias.Update(media);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }
