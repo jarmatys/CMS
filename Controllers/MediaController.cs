@@ -10,8 +10,8 @@ namespace CMS.Controllers
     public class MediaController : Controller
     {
         // Wstrzykiwanie serwisu do obsługi kategorii w CMS'ie
-        private readonly IMediaService _mediaService;
-        public MediaController(IMediaService mediaService)
+        private readonly IPhotoService _mediaService;
+        public MediaController(IPhotoService mediaService)
         {
             _mediaService = mediaService;
         }

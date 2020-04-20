@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CMS.Context;
+using CMS.Infrastructure;
 using CMS.Models.Db.Account;
 using CMS.Services;
 using CMS.Services.interfaces;
@@ -56,7 +57,10 @@ namespace CMS
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IArticleService, ArticleService>();
-            services.AddScoped<IMediaService, MediaService>();
+            services.AddScoped<IPhotoService, PhotoService>();
+
+            // Konfiguracja platformy cloudinary do przechowywania zdjêæ w chmurze
+            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
         }
 
 

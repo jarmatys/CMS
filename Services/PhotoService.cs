@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace CMS.Services
 {
-    public class MediaService : IMediaService
+    public class PhotoService : IPhotoService
     {
 		private readonly CMSContext _context;
 
-		public MediaService(CMSContext context)
+		public PhotoService(CMSContext context)
 		{
 			_context = context;
 		}
