@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<MediaModel>
+
 @{
     ViewData["Title"] = "lista mediów";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
@@ -9,7 +10,7 @@
         <div class="nav nav-tabs nav-line nav-color-secondary d-flex align-items-center justify-contents-center w-100">
             <a class="nav-link active show" data-toggle="tab" href="#tab1">
                 Wszystkie media
-                <span class="count ml-1">(30)</span>
+                <span class="count ml-1">(@ViewBag.MediasCount)</span>
             </a>
             <a class="nav-link" data-toggle="tab" href="#tab2">Zdjęcia</a>
             <a class="nav-link" data-toggle="tab" href="#tab3">Wideo</a>
@@ -23,28 +24,40 @@
 </div>
 <div class="page-inner">
     <div class="row row-projects">
-        <div class="col-sm-6 col-lg-3">
-            <div class="card">
-                <div class="p-2">
-                    <img class="card-img-top rounded" src="~/images/examples/product1.jpg" alt="Product 1">
-                </div>
-                <div class="card-body pt-2">
-                    <h4 class="mb-1 fw-bold">Nazwa zdjęcia</h4>
-                    <p class="text-muted small mb-2">Data dodania: 02-02-2020</p>
-                    <div class="form-button-action">
-                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-l" data-original-title="Szczegóły">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Usuń">
-                            <i class="fa fa-times"></i>
-                        </button>
+        @if (Model.Count() == 0)
+        {
+            <div class="col-md-12 h-50">
+                Brak dodanych mediów
+            </div>
+        }
+        else
+        {
+            foreach (var medium in Model)
+            {
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="p-2">
+                            <img class="card-img-top rounded" src="@medium.Url" alt="@medium.Description">
+                        </div>
+                        <div class="card-body pt-2">
+                            <h4 class="mb-1 fw-bold">@medium.Name</h4>
+                            <p class="text-muted small mb-2">Data dodania: @medium.AddDate.ToString("dd-MM-yyyy")</p>
+                            <div class="form-button-action">
+                                <button onclick="location='@Url.Action("Details","Media",new { id = medium.Id })'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-l" data-original-title="Szczegóły">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Usuń">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            }
+        }
     </div>
 </div>
 

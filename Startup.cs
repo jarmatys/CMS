@@ -21,12 +21,15 @@ namespace CMS
     public class Startup
     {
         // Wstrzykiwanie pliku konfiguracyjnego do naszej aplikacji
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+
+        public Startup()
         {
-            Configuration = configuration;
+            var config = new ConfigurationBuilder();
+            config.AddJsonFile("appsettings.json");
+            Configuration = config.Build();
         }
 
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -52,15 +55,18 @@ namespace CMS
             // Dodajemy obs³ugê silnika razor oraz controllerów
             services.AddRazorPages();
             services.AddControllersWithViews();
+            // Dodajemy obs³ugê dodawania opcji w konfiguracji
+            services.AddOptions();
 
             // Tutaj dodajemy zale¿noœci do wstrzykiwania
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IArticleService, ArticleService>();
-            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<ICloudService, CloudinaryService>();
+            services.AddScoped<IMediaService, MediaService>();
 
             // Konfiguracja platformy cloudinary do przechowywania zdjêæ w chmurze
-            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
         }
 
 

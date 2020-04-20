@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static CMS.Models.Db.Media.PhotoUploadModel;
 
 namespace CMS.Services.interfaces
 {
-    public interface IPhotoService
+    public interface ICloudService
     {
-        
+        Task<bool> AddPhoto(IFormFile file);
+        Task<bool> DeletePhoto(string publicId);
     }
 }

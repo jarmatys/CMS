@@ -32,7 +32,7 @@
             <div class="card-title">Dodaj medium</div>
         </div>
         <div class="card-body">
-            <form action="upload.php" class="dropzone">
+            <!--<form action="upload.php" class="dropzone">
                 <div class="dz-message" data-dz-message>
                     <div class="icon">
                         <i class="flaticon-file"></i>
@@ -43,7 +43,12 @@
                 <div class="fallback">
                     <input name="file" type="file" multiple />
                 </div>
-            </form>
+            </form-->
+            @using (Html.BeginForm("Add", "Media", FormMethod.Post, new { @enctype="multipart/form-data" }))
+            {
+                <input type="file" name="file" />
+                <button>Wyślij</button>
+            }
         </div>
     </div>
 </div>

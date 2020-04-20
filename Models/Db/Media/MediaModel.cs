@@ -13,12 +13,14 @@ namespace CMS.Models.Db.Media
             AddDate = DateTime.Now;
         }
 
-        public int Id { get; set; }
-        public string Path { get; set; }
-        public string MiniaturePath { get; set; }
+        public string Id { get; set; }
+        public string Url { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
         public DateTime AddDate { get; set; }
 
-        public int TypeMediaId { get; set; }
+        public int TypeId { get; set; }
         public MediaTypeModel Type { get; set; }
 
         public int? ArticleId { get; set; }

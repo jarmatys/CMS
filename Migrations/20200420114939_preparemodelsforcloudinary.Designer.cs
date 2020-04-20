@@ -3,14 +3,16 @@ using System;
 using CMS.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CMS.Migrations
 {
     [DbContext(typeof(CMSContext))]
-    partial class CMSContextModelSnapshot : ModelSnapshot
+    [Migration("20200420114939_preparemodelsforcloudinary")]
+    partial class preparemodelsforcloudinary
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,8 +271,9 @@ namespace CMS.Migrations
 
             modelBuilder.Entity("CMS.Models.Db.Media.MediaModel", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("datetime(6)");
@@ -278,13 +281,10 @@ namespace CMS.Migrations
                     b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int?>("TypeId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("TypeId")
+                    b.Property<int>("TypeMediaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Url")
@@ -478,9 +478,7 @@ namespace CMS.Migrations
 
                     b.HasOne("CMS.Models.Db.Media.MediaTypeModel", "Type")
                         .WithMany("Medias")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TypeId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

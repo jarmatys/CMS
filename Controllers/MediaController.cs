@@ -3,24 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CMS.Services.interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
 {
     public class MediaController : Controller
     {
-        // Wstrzykiwanie serwisu do obsługi kategorii w CMS'ie
-        private readonly IPhotoService _mediaService;
-        public MediaController(IPhotoService mediaService)
+        // Wstrzykiwanie serwisu do obsługi platformy cloudinary w CMS'ie
+        private readonly ICloudService _cloudinaryService;
+        private readonly IMediaService _mediaService;
+
+        public MediaController(ICloudService cloudinaryService, IMediaService mediaService)
         {
+            _cloudinaryService = cloudinaryService;
             _mediaService = mediaService;
         }
 
         // [ GET ] - <domain>/Media/List
         [HttpGet]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            return View();
+            var medias = await _mediaService.GetAll();
+
+            ViewBag.MediasCount = await _mediaService.MediaCount();
+
+            return View(medias);
         }
 
         // [ GET ] - <domain>/Media/Add
@@ -28,6 +36,22 @@ namespace CMS.Controllers
         public IActionResult Add()
         {
             return View();
+        }
+
+        // [ POST ] - <domain>/Media/Add
+        [HttpPost]
+        public async Task<IActionResult> Add([FromForm]IFormFile file)
+        {
+            var check = await _cloudinaryService.AddPhoto(file);
+            return RedirectToAction("List","Media");
+        }
+
+        // [ GET ] - <domain>/Media/Details/{id}
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            var medium = await _mediaService.Get(id);
+            return View(medium);
         }
     }
 }
