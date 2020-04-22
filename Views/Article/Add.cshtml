@@ -28,8 +28,11 @@
             </li>
         </ul>
     </div>
-    @using (Html.BeginForm("Add", "Article", FormMethod.Post))
+
+    @using (Html.BeginForm("Add", "Article", FormMethod.Post, new { @enctype = "multipart/form-data" }))
     {
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
         <!-- Tytuł i slug wpisu -->
         <div class="card">
             <div class="card-header">
@@ -41,14 +44,14 @@
                     <span class="input-icon-addon">
                         <i class="fas fa-pen-alt"></i>
                     </span>
-                    <input id="post-title" name="title" type="text" class="form-control" placeholder="Tytuł wpisu">
+                    @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @placeholder = "Tytuł wpisu", @id = "post-title" })
                 </div>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="domain-name">https://twojadomena.pl/</span>
                     </div>
-                    <input type="text" class="form-control" id="post-url" name="slug" aria-describedby="Nazwa domeny">
+                    @Html.TextBoxFor(x => x.Slug, new { @class = "form-control", @id = "post-url" })
                 </div>
 
             </div>
@@ -60,33 +63,43 @@
                 <div class="card-title">Treść wpisu</div>
             </div>
             <div class="card-body">
-                <textarea name="content" id="summernote"></textarea>
+                @Html.TextAreaFor(x => x.Content, new { @id = "summernote" })
             </div>
         </div>
 
         <div class="row">
+
             <div class="col-md-6">
                 <!-- Zdjęcie wyróżniające -->
                 <div style="min-height:500px;" class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Zdjęcie wyrózniające</h4>
-                            <label for="uploadImg" class="btn btn-primary ml-auto">
+
+                            <button id="open-load-img-placeholder" class="btn btn-primary ml-auto">
                                 <i class="fa fa-plus"></i>
                                 Dołącz zdjęcie
-                            </label>
+                            </button>
+                            <button id="delete-img-placeholder" class="btn btn-danger ml-3 d-none">
+                                <i class="fa fa-times"></i>
+                                Usuń zdjęcie
+                            </button>
+
                         </div>
                     </div>
                     <div class="card-body mx-auto justify-content-center align-items-center flex-column">
                         <div class="form-group">
                             <div class="input-file input-file-image">
-                                <img class="img-upload-preview" height="350" width="400" src="#" alt="preview">
-                                <input type="file" class="form-control form-control-file" name="uploadImg" accept="image/*">
+                                <img class="img-upload-preview" height="350" src="~/images/img-placeholder.png" alt="preview" id="img-placeholder">
+                                @Html.TextBoxFor(x => x.FeaturedImg, null, new { type = "file", @class = "form-control form-control-file", @id = "input-img-placeholder" })
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
+
             <div class="col-md-6">
                 <!-- Zajawka wpisu -->
                 <div style="min-height:500px;" class="card">
@@ -96,66 +109,12 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="comment">Wpisz treść zajawki</label>
-                            <textarea class="form-control" name="excerpt" rows="15"></textarea>
+                            @Html.TextAreaFor(x => x.Excerpt, new { @class = "form-control", @rows = "15" })
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Status i dostępność -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">Status i dostępność</div>
-            </div>
-            <div class="card-body">
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Status</label>
-                            <div class="selectgroup w-100">
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="status" value="Publish" class="selectgroup-input" checked="">
-                                    <span class="selectgroup-button">Dostępny</span>
-                                </label>
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="status" value="Draft" class="selectgroup-input">
-                                    <span class="selectgroup-button">Szkic</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Dostępność</label>
-                            <div class="selectgroup w-100">
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="availability" value="Public" class="selectgroup-input" checked="">
-                                    <span class="selectgroup-button">Publiczny</span>
-                                </label>
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="availability" value="Password" class="selectgroup-input">
-                                    <span class="selectgroup-button">Hasło</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div id="post-password" class="form-group d-none">
-                            <label for="password">Hasło zabezpieczające wpis</label>
-                            <div class="input-icon mb-3">
-                                <span id="show-password" class="input-icon-addon cursor-pointer">
-                                    <i class="fas fa-eye"></i>
-                                </span>
-                                <input type="password" class="form-control" name="password" id="post-password-input" placeholder="Hasło">
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Data publikacji -->
@@ -169,7 +128,7 @@
                         <div class="form-group">
                             <label>Data</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="datepicker" name="date">
+                                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @id = "datepicker" })
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i class="fa fa-calendar-check"></i>
@@ -182,7 +141,7 @@
                         <div class="form-group">
                             <label>Godzina</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="timepicker" name="time">
+                                @Html.TextBoxFor(x => x.Time, new { @class = "form-control", @id = "timepicker" })
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i class="fa fa-clock"></i>
@@ -207,10 +166,21 @@
                         {
                             foreach (var category in ViewBag.Categories as List<CategoryModel>)
                             {
-                                <label class="selectgroup-item">
-                                    <input type="checkbox" name="categories" value="@category.Name" class="selectgroup-input">
-                                    <span class="selectgroup-button">@category.Name</span>
-                                </label>
+                                if (Model != null && Model.Categories != null && Model.Categories.Contains(category.Name))
+                                {
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="categories" value="@category.Name" class="selectgroup-input" checked>
+                                        <span class="selectgroup-button">@category.Name</span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="categories" value="@category.Name" class="selectgroup-input">
+                                        <span class="selectgroup-button">@category.Name</span>
+                                    </label>
+                                }
+
                             }
                         }
                         else
@@ -234,10 +204,20 @@
                         {
                             foreach (var tag in ViewBag.Tags as List<TagModel>)
                             {
-                                <label class="selectgroup-item">
-                                    <input type="checkbox" name="tags" value="@tag.Name" class="selectgroup-input">
-                                    <span class="selectgroup-button">@tag.Name</span>
-                                </label>
+                                if (Model != null && Model.Tags != null && Model.Tags.Contains(tag.Name))
+                                {
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="tags" value="@tag.Name" class="selectgroup-input" checked>
+                                        <span class="selectgroup-button">@tag.Name</span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="tags" value="@tag.Name" class="selectgroup-input">
+                                        <span class="selectgroup-button">@tag.Name</span>
+                                    </label>
+                                }
                             }
                         }
                         else
@@ -256,11 +236,20 @@
             </div>
             <div class="card-body">
                 <div class="form-check">
+
                     <label class="form-check-label">
                         @Html.CheckBoxFor(x => x.CommentStatus, new { @class = "form-check-input" })
                         <span class="form-check-sign">Zezwalam na komentowanie wpisu</span>
                     </label>
                 </div>
+
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.CheckBoxFor(x => x.IsDraft, new { @class = "form-check-input" })
+                        <span class="form-check-sign">Opublikuj jako szkic</span>
+                    </label>
+                </div>
+
             </div>
         </div>
 
@@ -293,41 +282,58 @@
             slugInput.value = titleInput.value.trim().replace(/[&\/\\#,+()$~%.'":*?<>{}!]/g, "").split(" ").join("-").toLowerCase().trim("-");
         });
 
-        // 3. None/Inline dla hasła wpisu w zalezności od danego zaznaczonego radio buttona
-        const availabilityRadio = document.querySelectorAll('input[name=availability]');
-        const passwordField = document.querySelector("#post-password");
+        //5. Otwieranie explorera plików
+        const openLoadImgPlaceholder = document.querySelector("#open-load-img-placeholder");
+        const inputImgPlaceholder = document.querySelector("#input-img-placeholder");
 
-        for (let btnRadio of availabilityRadio) {
-            btnRadio.addEventListener("change", function () {
-                passwordField.classList.toggle("d-none");
-            });
+        openLoadImgPlaceholder.addEventListener("click", function (e) {
+            e.preventDefault();
+            inputImgPlaceholder.click();
+        });
+
+        // 6. Przekazywanie zdjęcia do placeholdera
+        const imgPlaceholder = document.querySelector("#img-placeholder");
+        const buttonPlaceholder = document.querySelector("#load-placeholder");
+        const deleteButton = document.querySelector("#delete-img-placeholder");
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imgPlaceholder.src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+
+                // pokazujemy przycisk do usuwania
+                deleteButton.classList.toggle("d-none");
+            }
         }
 
-        // 4. Pokazanie hasła
-        const showPassoword = document.querySelector("#show-password");
-        const passwordInput = document.querySelector("#post-password-input");
-
-        showPassoword.addEventListener("click", function () {
-            if (passwordInput.type == "text") {
-                passwordInput.type = "password";
-            }
-            else {
-                passwordInput.type = "text";
-            }
+        // 7. Usuwanie placeholdera
+        deleteButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            imgPlaceholder.src = "/images/img-placeholder.png";
+            deleteButton.classList.toggle("d-none");
         });
+
+        // 8. Inicjalizacja datetimepicera aktualną datą i godziną
+        const dateNow = new Date();
 
         $('#datepicker').datetimepicker({
             format: 'DD-MM-YYYY',
+            defaultDate: dateNow
         });
         $('#timepicker').datetimepicker({
             format: 'hh:mm',
+            defaultDate: dateNow
         });
+
 
         $('#summernote').summernote({
             placeholder: 'Pełna treść twojego wpisu',
             fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
             tabsize: 2,
-            height: 300
+            height: 600
         });
     </script>
 }

@@ -11,11 +11,6 @@ namespace CMS.Models.Db.Article
     // Model wpisu na blogu
     public class ArticleModel
     {
-        public ArticleModel()
-        {
-            AddDate = DateTime.Now;
-        }
-
         [Key]
         public int Id { get; set; }
 
@@ -24,14 +19,13 @@ namespace CMS.Models.Db.Article
         public string Title { get; set; }
         public string Excerpt { get; set; }
 
-        // Status określa na jakim etapie znajduje się nasz post [Publish, Draft]
-        public string Status { get; set; }
+        public bool IsDraft { get; set; }
         public bool CommentStatus { get; set; }
-        public string Password { get; set; }
+
         public string Slug { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string FullUrl { get; set; }
-        public int MenuOrder { get; set; }
+        public int? MenuOrder { get; set; }
         public int CommentCount { get; set; }
 
         public string UserId { get; set; }

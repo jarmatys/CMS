@@ -14,12 +14,14 @@ namespace CMS.Controllers
         private readonly IArticleService _articleService;
         private readonly ICategoryService _categoryService;
         private readonly ITagService _tagService;
+        private readonly ICloudService _cloudService;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, ITagService tagService)
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, ITagService tagService, ICloudService cloudService)
         {
             _articleService = articleService;
             _categoryService = categoryService;
             _tagService = tagService;
+            _cloudService = cloudService;
         }
 
         // [ GET ] - <domain>/Article/Lists
@@ -53,6 +55,15 @@ namespace CMS.Controllers
             {
                 return View(result);
             }
+
+            // 2. Poprawnie zwalidowane post zapisuję do bazy danych
+
+            // a. Pobranie usera
+
+            // b. Wygenerowanie taxonomies
+
+            // c. Zapis zdjęcia
+            //var medium = await _cloudService.AddFile(result.FeaturedImg);
 
             return RedirectToAction("List");
         }

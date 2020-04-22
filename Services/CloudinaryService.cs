@@ -29,7 +29,7 @@ namespace CMS.Services
             _context = context;
         }
 
-        protected async Task<bool> UploadToCloudinary(IFormFile file)
+        protected async Task<MediaModel> UploadToCloudinary(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
             if (file.Length > 0)
@@ -47,7 +47,7 @@ namespace CMS.Services
 
             if (uploadResult.Error != null)
             {
-                return false;
+                return null;
             }
 
             var medium = new MediaModel
@@ -62,10 +62,10 @@ namespace CMS.Services
             await _context.Medias.AddAsync(medium);
             await _context.SaveChangesAsync();
 
-            return true;
+            return medium;
         }
 
-        public async Task<bool> AddFile(IFormFile file)
+        public async Task<MediaModel> AddFile(IFormFile file)
         {
             return await UploadToCloudinary(file);
         }
@@ -76,7 +76,7 @@ namespace CMS.Services
             foreach(var file in files)
             {
                 // jeżeli zapis, któregoś zdjęcia się nie powiedzie to zwróć false
-                if (await UploadToCloudinary(file) == false)
+                if (await UploadToCloudinary(file) == null)
                 {
                     status = false;
                 }
