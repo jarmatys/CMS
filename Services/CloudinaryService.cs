@@ -29,7 +29,7 @@ namespace CMS.Services
             _context = context;
         }
 
-        public async Task<bool> AddFile(IFormFile file)
+        protected async Task<bool> UploadToCloudinary(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
             if (file.Length > 0)
@@ -39,7 +39,7 @@ namespace CMS.Services
                     var uploadParams = new ImageUploadParams
                     {
                         File = new FileDescription(file.FileName, stream),
-                        //Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
+                        Transformation = new Transformation().Width(1000)
                     };
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
@@ -63,7 +63,25 @@ namespace CMS.Services
             await _context.SaveChangesAsync();
 
             return true;
+        }
 
+        public async Task<bool> AddFile(IFormFile file)
+        {
+            return await UploadToCloudinary(file);
+        }
+
+        public async Task<bool> AddMultipleFiles(List<IFormFile> files)
+        {
+            bool status = true;
+            foreach(var file in files)
+            {
+                // jeżeli zapis, któregoś zdjęcia się nie powiedzie to zwróć false
+                if (await UploadToCloudinary(file) == false)
+                {
+                    status = false;
+                }
+            }
+            return status;
         }
 
         public async Task<bool> DeleteFile(string publicId)
@@ -82,5 +100,7 @@ namespace CMS.Services
 
             return false;
         }
+
+        
     }
 }

@@ -29,10 +29,17 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <div class="card-title">Dodaj medium</div>
+            <div class="card-title"></div>
         </div>
         <div class="card-body">
-            <!--<form action="upload.php" class="dropzone">
+
+            <div class="row justify-content-center">
+                progres bar ilości miejsca na dysku
+            </div>
+
+
+            @using (Html.BeginForm("Add", "Media", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "dropzone", @id = "uploaddropzone" }))
+            {
                 <div class="dz-message" data-dz-message>
                     <div class="icon">
                         <i class="flaticon-file"></i>
@@ -40,15 +47,80 @@
                     <h4 class="message">Przeciągnij i upuść zdjęcie tutaj</h4>
                     <div class="note">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</div>
                 </div>
+
                 <div class="fallback">
-                    <input name="file" type="file" multiple />
+                    <input type="file" name="files" multiple />
                 </div>
-            </form-->
-            @using (Html.BeginForm("Add", "Media", FormMethod.Post, new { @enctype="multipart/form-data" }))
-            {
-                <input type="file" name="file" />
-                <button>Wyślij</button>
             }
+
+            <div class="row justify-content-center">
+                <button class="btn btn-primary mb-3 mt-4" id="photo-submit">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span>
+                    Dodaj zdjęcia
+                </button>
+            </div>
+
         </div>
     </div>
 </div>
+
+@section Scripts {
+
+    <!-- Dropzone -->
+    <script src="~/boundle/js/dropzone.min.js"></script>
+
+    <script>
+
+        // Zapobieganie aby dropzone nie próbował dwa utworzyć się dwa razy
+        Dropzone.autoDiscover = false;
+
+        const options = {
+            paramName: () => "files", // aby otrzymać w backendzie wynik wysyłki należy użyć funkcji lambda zamiast stringa
+            uploadMultiple: true, // zaznaczenie że będziemy wysyłać kilka plików
+            parallelUploads: 5, // ile maksymalnie plików moze pójść w kolejce
+            maxFilesize: 2, // maksymalny rozmiar pliku w MB
+            maxFiles: 5, // maksymalna liczba plików
+            addRemoveLinks: true, // mozliwość usunięcia z dropzone zdjęcia
+            acceptedFiles: ".png,.jpg,.gif,.jpeg",
+            autoProcessQueue: false, // blokowanie automatycznej wysyłki
+
+            accept: function (file, done) {
+                done();
+            },
+
+            init: function () { },
+
+            success: function (file, response) { // akcja wykonywana po wysłaniu pliku
+                document.location = "@Url.Action("List","Media")";
+            },
+
+            error: function (file, response) { // akcja wykonywana w przypadku wystąpienia błędu
+                var html = '<div class="alert alert-danger alert-dismissible" role="alert">'
+                    + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+                    + '<strong>Error! </strong>' + response + '</div>';
+                $("#uploaddropzone").after(html);
+                this.removeFile(file);
+            }
+
+        };
+
+        const myDropzone = new Dropzone("#uploaddropzone", options);
+
+        const submitButton = document.querySelector("#photo-submit");
+        submitButton.addEventListener("click", function () {
+
+            // komunikat o pozytwnym wysłaniu
+            	swal("Sukces", "Twoje zdjęcia się zapisują, poczekaj na przekierowanie!", {
+						icon : "success",
+						buttons: false
+					});
+
+            myDropzone.processQueue()
+
+        });
+
+    </script>
+
+}

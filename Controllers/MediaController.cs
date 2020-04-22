@@ -42,9 +42,9 @@ namespace CMS.Controllers
 
         // [ POST ] - <domain>/Media/Add
         [HttpPost]
-        public async Task<IActionResult> Add([FromForm]IFormFile file)
+        public async Task<IActionResult> Add(List<IFormFile> files)
         {
-            var check = await _cloudinaryService.AddFile(file);
+            var check = await _cloudinaryService.AddMultipleFiles(files);
             return RedirectToAction("List","Media");
         }
 

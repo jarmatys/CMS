@@ -76,7 +76,7 @@
   {
     "outputFileName": "wwwroot/boundle/js/dropzone.min.js",
     "inputFiles": [
-      "wwwroot/js/plugin/dropzone/dropzone.min.js"
+      "wwwroot/js/plugin/dropzone/dropzone.js"
     ]
   },
   {
