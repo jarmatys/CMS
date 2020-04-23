@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Panel admina - @ViewData["Title"]</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+
+    <link rel="icon" href="~/images/icon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="~/boundle/js/header.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Lato:300,400,700,900"] },
+            custom: {
+                "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+                urls: ['/../../../css/fonts.min.css']
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="~/boundle/css/header.min.css">
+
+</head>
+
+<body class="login">
+    <div class="wrapper wrapper-login wrapper-login-full p-0">
+        <div class="login-aside w-50 d-flex flex-column align-items-center justify-content-center text-center bg-secondary-gradient">
+            <h1 class="title fw-bold text-white mb-3">Join Our Comunity</h1>
+            <p class="subtitle text-white op-7">Ayo bergabung dengan komunitas kami untuk masa depan yang lebih baik</p>
+        </div>
+        @RenderBody()   
+    </div>
+
+    @await Html.PartialAsync("Login/_Scripts")
+</body>
+</html>

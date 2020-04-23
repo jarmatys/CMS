@@ -1,0 +1,78 @@
+﻿@model RegisterView
+
+@{
+    ViewData["Title"] = "Rejestracja";
+    Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+}
+
+<div class="page-inner">
+
+    <div class="page-header">
+        <h4 class="page-title">Użytkownicy</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="@Url.Action("Index","Admin")">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Rejestracja
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <h4 class="card-title">Zarejestruj nowego użytkownika</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="login" style="background-color: white;">
+                            
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "login-form" }))
+                            {
+                                <div class="form-group">
+                                    <label for="username" class="placeholder"><b>Login</b></label>
+                                    @Html.TextBoxFor(x => x.Login, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="username" class="placeholder"><b>E-mail</b></label>
+                                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="placeholder"><b>Potwierdź hasło</b></label>
+                                    <div class="position-relative">
+                                        @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                                        <div class="show-password">
+                                            <i class="icon-eye"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="placeholder"><b>Hasło</b></label>
+                                    <div class="position-relative">
+                                        @Html.PasswordFor(x => x.RepeatPassword, new { @class = "form-control" })
+                                        <div class="show-password">
+                                            <i class="icon-eye"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-action-d-flex mb-3">
+                                    <button type="submit" class="btn btn-secondary col-md-5 float-left mt-3 mt-sm-0 fw-bold">Rejestruj</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

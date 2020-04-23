@@ -6,11 +6,13 @@ using CMS.Infrastructure.Helpers;
 using CMS.Models.Db.Account;
 using CMS.Models.ViewModels.Article;
 using CMS.Services.interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
 {
+    [Authorize]
     public class ArticleController : Controller
     {
         // Wstrzykiwanie serwisu do obsługi kategorii w CMS'ie

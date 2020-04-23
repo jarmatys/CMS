@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using CMS.Infrastructure;
 using CMS.Models.ViewModels.Article;
 using CMS.Services.interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         // Wstrzykiwanie serwisu do obsługi kategorii w CMS'ie

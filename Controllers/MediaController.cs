@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using CMS.Infrastructure.Helpers;
 using CMS.Models.ViewModels.Media;
 using CMS.Services.interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
 {
+    [Authorize]
     public class MediaController : Controller
     {
         // Wstrzykiwanie serwisu do obsługi platformy cloudinary w CMS'ie
