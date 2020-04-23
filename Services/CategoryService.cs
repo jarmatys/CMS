@@ -53,14 +53,17 @@ namespace CMS.Services
 			return await _context.SaveChangesAsync() > 0;
 		}
 
-		public async Task<List<CategoryModel>> GetCategoriesByNames(List<string> categoriesName)
+		public async Task<List<CategoryModel>> GetCategoriesByNames(IEnumerable<string> categoriesName)
 		{
 			var categoriesList = new List<CategoryModel>();
-			foreach(var name in categoriesName)
+			if(categoriesName != null)
 			{
-				var category = await _context.Categories.SingleOrDefaultAsync(x => x.Name == name);
-				categoriesList.Add(category);
-			}
+				foreach (var name in categoriesName)
+				{
+					var category = await _context.Categories.SingleOrDefaultAsync(x => x.Name == name);
+					categoriesList.Add(category);
+				}
+			}	
 			return categoriesList;
 		}
 	}

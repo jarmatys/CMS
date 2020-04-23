@@ -31,7 +31,12 @@ namespace CMS.Services
 
 		public async Task<List<ArticleModel>> GetAll()
 		{
-			return await _context.Articles.ToListAsync();
+			// PYTANIE - Jak wyciągnąć dane powiązane z taxonomies w categorii i tagach
+			return await _context.Articles
+				.Include(x => x.Taxonomies).ThenInclude(x=> x.Category)
+				.Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
+				.Include(x => x.User)
+				.ToListAsync();
 		}
 
 		public async Task<bool> Update(ArticleModel article)

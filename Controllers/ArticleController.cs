@@ -66,22 +66,22 @@ namespace CMS.Controllers
                 return View(result);
             }
 
-            // 2. Poprawnie zwalidowane post zapisuję do bazy danych
+            // 2.Poprawnie zwalidowane post zapisuję do bazy danych
 
-            //// a. Pobranie usera
-            //var user = await _userManager.GetUserAsync(User);
+            // a. Pobranie usera
+            var user = await _userManager.GetUserAsync(User);
 
-            //// b. Zapis zdjęcia
-            //var medium = await _cloudService.AddFile(result.FeaturedImg);
+            // b. Zapis zdjęcia
+            var medium = await _cloudService.AddFile(result.FeaturedImg);
 
-            //// c. Utworzenie wpisu
-            //var articleModel = ArticleHelpers.ConvertToModel(result, user, medium);
-            //var article = await _articleService.Create(articleModel);
-            //if(article == false) { return RedirectToAction("Index","Admin"); } // TODO: przekieruj na stronę z błędem
+            // c. Utworzenie wpisu
+            var articleModel = ArticleHelpers.ConvertToModel(result, user, medium);
+            var article = await _articleService.Create(articleModel);
+            if (article == false) { return RedirectToAction("Index", "Admin"); } // TODO: przekieruj na stronę z błędem
 
-            //// d. Wygenerowanie taxonomies
-            //await _taxonomyService.SaveCategories(await _categoryService.GetCategoriesByNames(result.Categories.ToList()), articleModel);
-            //await _taxonomyService.SaveTags(await _tagService.GetCategoriesByNames(result.Tags.ToList()), articleModel);
+            // d. Wygenerowanie taxonomies
+            await _taxonomyService.SaveCategories(await _categoryService.GetCategoriesByNames(result.Categories), articleModel);
+            await _taxonomyService.SaveTags(await _tagService.GetCategoriesByNames(result.Tags), articleModel);
 
             return RedirectToAction("List");
         }

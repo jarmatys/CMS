@@ -22,7 +22,7 @@
                 Wpisy
             </li>
 
-    
+
         </ul>
     </div>
 
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="card-body">
-        
+
                 <div class="table-responsive">
                     <table id="add-row" class="display table table-striped table-hover">
 
@@ -74,10 +74,31 @@
                                     <tr>
                                         <td>@article.Title</td>
                                         <td>@article.User.UserName</td>
-                                        <td>lista kategorii</td>
-                                        <td>lista tagów</td>
-                                        <td>5</td>
+
+                                        <td>
+                                            @foreach (var taxonomy in article.Taxonomies)
+                                            {
+                                                if (taxonomy.Category != null)
+                                                {
+                                                    <span class="badge badge-info">@taxonomy.Category.Name</span>
+                                                }
+                                            }
+                                        </td>
+
+                                        <td>
+                                            @foreach (var taxonomy in article.Taxonomies)
+                                            {
+                                                if (taxonomy.Tag != null)
+                                                {
+                                                    <span class="badge badge-info">@taxonomy.Tag.Name</span>
+                                                }
+                                            }
+                                        </td>
+
+                                        <td>0</td>
+
                                         <td>@article.AddDate.ToString("dd-MM-yyyy")</td>
+
                                         <td>
                                             <div class="form-button-action">
                                                 <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj" onclick="location='@Url.Action("Edit","Article",new { Id = article.Id })'">

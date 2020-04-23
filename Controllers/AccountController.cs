@@ -21,12 +21,14 @@ namespace CMS.Controllers
             _signInManager = signInManager;
         }
 
+        // [ GET ] - <domain>/Account/Register
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        // [ POST ] - <domain>/Account/Register
         [HttpPost]
         public async Task<IActionResult> Register(RegisterView result)
         {
@@ -54,6 +56,7 @@ namespace CMS.Controllers
             return View(result);
         }
 
+        // [ GET ] - <domain>/Account/Login
         [HttpGet]
         public IActionResult Login()
         {
@@ -64,6 +67,7 @@ namespace CMS.Controllers
             return View();
         }
 
+        // [ POST ] - <domain>/Account/Login
         [HttpPost]
         public async Task<IActionResult> Login(LoginView result)
         {
@@ -80,6 +84,7 @@ namespace CMS.Controllers
             return View(result);
         }
 
+        // [ GET ] - <domain>/Account/Logout
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
@@ -87,6 +92,7 @@ namespace CMS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        // [ GET ] - <domain>/Account/List
         [HttpGet]
         public async Task<IActionResult> List()
         {

@@ -23,7 +23,6 @@ namespace CMS.Models.Db.Media
         public int TypeId { get; set; }
         public MediaTypeModel Type { get; set; }
 
-        public int? ArticleId { get; set; }
         public ArticleModel Article { get; set; }
     }
 }

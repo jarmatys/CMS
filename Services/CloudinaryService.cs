@@ -32,7 +32,8 @@ namespace CMS.Services
         protected async Task<MediaModel> UploadToCloudinary(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
-            if (file.Length > 0)
+
+            if (file != null && file.Length > 0)
             {
                 using (var stream = file.OpenReadStream())
                 {
@@ -43,26 +44,29 @@ namespace CMS.Services
                     };
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
+
+                if (uploadResult.Error != null)
+                {
+                    return null;
+                }
+
+                var medium = new MediaModel
+                {
+                    Id = uploadResult.PublicId,
+                    Url = uploadResult.SecureUri.AbsoluteUri,
+                    Name = Path.GetFileNameWithoutExtension(file.FileName),
+                    Description = Path.GetFileNameWithoutExtension(file.FileName),
+                    Type = _context.MediaTypes.SingleOrDefault(x => x.Name == uploadResult.ResourceType)
+                };
+
+                await _context.Medias.AddAsync(medium);
+                await _context.SaveChangesAsync();
+
+                return medium;
+
             }
 
-            if (uploadResult.Error != null)
-            {
-                return null;
-            }
-
-            var medium = new MediaModel
-            {
-                Id = uploadResult.PublicId,
-                Url = uploadResult.SecureUri.AbsoluteUri,
-                Name = Path.GetFileNameWithoutExtension(file.FileName),
-                Description = Path.GetFileNameWithoutExtension(file.FileName),
-                Type = _context.MediaTypes.SingleOrDefault(x => x.Name == uploadResult.ResourceType)
-            };
-
-            await _context.Medias.AddAsync(medium);
-            await _context.SaveChangesAsync();
-
-            return medium;
+            return null;
         }
 
         public async Task<MediaModel> AddFile(IFormFile file)
@@ -73,7 +77,7 @@ namespace CMS.Services
         public async Task<bool> AddMultipleFiles(List<IFormFile> files)
         {
             bool status = true;
-            foreach(var file in files)
+            foreach (var file in files)
             {
                 // jeżeli zapis, któregoś zdjęcia się nie powiedzie to zwróć false
                 if (await UploadToCloudinary(file) == null)
@@ -88,7 +92,7 @@ namespace CMS.Services
         {
             var deleteParams = new DeletionParams(publicId);
             var result = _cloudinary.Destroy(deleteParams);
-            
+
             if (result.Result == "ok")
             {
                 var toRemove = await _context.Medias.FindAsync(publicId);
@@ -101,6 +105,6 @@ namespace CMS.Services
             return false;
         }
 
-        
+
     }
 }

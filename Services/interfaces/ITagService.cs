@@ -13,7 +13,7 @@ namespace CMS.Services.interfaces
         Task<List<TagModel>> GetAll();
         Task<bool> Update(TagModel tag);
         Task<bool> Delete(int id);
-        Task<List<TagModel>> GetCategoriesByNames(List<string> tagsName);
+        Task<List<TagModel>> GetCategoriesByNames(IEnumerable<string> tagsName);
 
     }
 }
