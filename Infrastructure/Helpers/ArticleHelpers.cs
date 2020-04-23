@@ -30,7 +30,7 @@ namespace CMS.Infrastructure.Helpers
             return new DateTime(year, mounth, day, hour, minutes, 0);
         }
 
-        public static ArticleModel ConvertToModel(ArticleView article, User user, List<TaxonomyModel> taxonomies, MediaModel media)
+        public static ArticleModel ConvertToModel(ArticleView article, User user, MediaModel media)
         {
             var articleModel = new ArticleModel
             {
@@ -47,7 +47,6 @@ namespace CMS.Infrastructure.Helpers
                 CommentCount = 0,
                 User = user,
                 Image = media,
-                Taxonomies = taxonomies
             };
 
             return articleModel;

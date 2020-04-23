@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.Infrastructure.Helpers;
+using CMS.Models.Db.Account;
 using CMS.Models.ViewModels.Article;
 using CMS.Services.interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
@@ -15,13 +18,18 @@ namespace CMS.Controllers
         private readonly ICategoryService _categoryService;
         private readonly ITagService _tagService;
         private readonly ICloudService _cloudService;
+        private readonly ITaxonomyService _taxonomyService;
+        private readonly UserManager<User> _userManager;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, ITagService tagService, ICloudService cloudService)
+
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, ITagService tagService, ICloudService cloudService, ITaxonomyService taxonomyService, UserManager<User> userManager)
         {
             _articleService = articleService;
             _categoryService = categoryService;
             _tagService = tagService;
             _cloudService = cloudService;
+            _taxonomyService = taxonomyService;
+            _userManager = userManager;
         }
 
         // [ GET ] - <domain>/Article/Lists
@@ -58,12 +66,20 @@ namespace CMS.Controllers
 
             // 2. Poprawnie zwalidowane post zapisuję do bazy danych
 
-            // a. Pobranie usera
+            //// a. Pobranie usera
+            //var user = await _userManager.GetUserAsync(User);
 
-            // b. Wygenerowanie taxonomies
-
-            // c. Zapis zdjęcia
+            //// b. Zapis zdjęcia
             //var medium = await _cloudService.AddFile(result.FeaturedImg);
+
+            //// c. Utworzenie wpisu
+            //var articleModel = ArticleHelpers.ConvertToModel(result, user, medium);
+            //var article = await _articleService.Create(articleModel);
+            //if(article == false) { return RedirectToAction("Index","Admin"); } // TODO: przekieruj na stronę z błędem
+
+            //// d. Wygenerowanie taxonomies
+            //await _taxonomyService.SaveCategories(await _categoryService.GetCategoriesByNames(result.Categories.ToList()), articleModel);
+            //await _taxonomyService.SaveTags(await _tagService.GetCategoriesByNames(result.Tags.ToList()), articleModel);
 
             return RedirectToAction("List");
         }

@@ -3,14 +3,16 @@ using System;
 using CMS.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CMS.Migrations
 {
     [DbContext(typeof(CMSContext))]
-    partial class CMSContextModelSnapshot : ModelSnapshot
+    [Migration("20200422185957_repairTaxonomymodel")]
+    partial class repairTaxonomymodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,10 +246,10 @@ namespace CMS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("ArticleId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("PostId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TagId")
@@ -255,9 +257,9 @@ namespace CMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArticleId");
-
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("PostId");
 
                     b.HasIndex("TagId");
 
@@ -448,15 +450,15 @@ namespace CMS.Migrations
 
             modelBuilder.Entity("CMS.Models.Db.Article.TaxonomyModel", b =>
                 {
-                    b.HasOne("CMS.Models.Db.Article.ArticleModel", "Article")
-                        .WithMany("Taxonomies")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CMS.Models.Db.Article.CategoryModel", "Category")
                         .WithMany("Taxonomies")
                         .HasForeignKey("CategoryId");
+
+                    b.HasOne("CMS.Models.Db.Article.ArticleModel", "Post")
+                        .WithMany("Taxonomies")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CMS.Models.Db.Article.TagModel", "Tag")
                         .WithMany("Taxonomies")

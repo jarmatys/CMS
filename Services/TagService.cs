@@ -52,5 +52,16 @@ namespace CMS.Services
 			_context.Tags.Remove(tag);
 			return await _context.SaveChangesAsync() > 0;
 		}
+
+		public async Task<List<TagModel>> GetCategoriesByNames(List<string> tagsName)
+		{
+			var tagList = new List<TagModel>();
+			foreach (var name in tagsName)
+			{
+				var tag = await _context.Tags.SingleOrDefaultAsync(x => x.Name == name);
+				tagList.Add(tag);
+			}
+			return tagList;
+		}
 	}
 }

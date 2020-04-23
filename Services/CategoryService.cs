@@ -52,5 +52,16 @@ namespace CMS.Services
 			_context.Categories.Remove(category);
 			return await _context.SaveChangesAsync() > 0;
 		}
+
+		public async Task<List<CategoryModel>> GetCategoriesByNames(List<string> categoriesName)
+		{
+			var categoriesList = new List<CategoryModel>();
+			foreach(var name in categoriesName)
+			{
+				var category = await _context.Categories.SingleOrDefaultAsync(x => x.Name == name);
+				categoriesList.Add(category);
+			}
+			return categoriesList;
+		}
 	}
 }

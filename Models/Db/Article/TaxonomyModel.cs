@@ -9,13 +9,13 @@ namespace CMS.Models.Db.Article
     {
         public int Id { get; set; }
 
-        public int TagId { get; set; }
+        public int? TagId { get; set; }
         public TagModel Tag { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public CategoryModel Category { get; set; }
 
-        public int PostId { get; set; }
-        public ArticleModel Post { get; set; }
+        public int ArticleId { get; set; }
+        public ArticleModel Article { get; set; }
     }
 }
