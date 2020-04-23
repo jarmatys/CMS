@@ -12,6 +12,32 @@ namespace CMS.Infrastructure.Helpers
 {
     public static class ArticleHelpers
     {
+        private static List<string> GetCategoryFromTaxonomy(ICollection<TaxonomyModel> taxonomies)
+        {
+            var categoryList = new List<string>();
+            foreach(var taxonomy in taxonomies)
+            {
+                if(taxonomy.Category != null)
+                {
+                    categoryList.Add(taxonomy.Category.Name);
+                }
+            }
+            return categoryList;
+        }
+
+        private static List<string> GetTagFromTaxonomy(ICollection<TaxonomyModel> taxonomies)
+        {
+            var tagList = new List<string>();
+            foreach (var taxonomy in taxonomies)
+            {
+                if (taxonomy.Tag != null)
+                {
+                    tagList.Add(taxonomy.Tag.Name);
+                }
+            }
+            return tagList;
+        }
+
         private static string ValidateSlug(string text)
         {
             var tempString = text.Trim().Replace(" ", "-").ToLower();
@@ -50,6 +76,25 @@ namespace CMS.Infrastructure.Helpers
             };
 
             return articleModel;
+        }
+
+        public static ArticleView ConvertToView(ArticleModel article)
+        {
+            var articleView = new ArticleView
+            {
+                Time = article.AddDate,
+                Date = article.AddDate,
+                Title = article.Title,
+                Excerpt = article.Excerpt,
+                IsDraft = article.IsDraft,
+                CommentStatus = article.CommentStatus,
+                Slug = article.Slug,
+                ImageUrl = article.Image.Url,
+                Categories = GetCategoryFromTaxonomy(article.Taxonomies),
+                Tags = GetTagFromTaxonomy(article.Taxonomies)
+            };
+
+            return articleView;
         }
     }
 }
