@@ -85,5 +85,27 @@ namespace CMS.Controllers
 
             return RedirectToAction("List");
         }
+
+        // [ POST ] - <domain>/Article/Delete
+        [HttpPost]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            var article = await _articleService.Get(Id);
+            await _cloudService.DeleteFile(article.ImageId);
+
+            await _articleService.Delete(Id);
+
+            // TODO: cascadowe usuwanie tagów i kategorii + zdjęcia refactoring
+
+            return RedirectToAction("List");
+        }
+
+        // [ GET ] - <domain>/Article/Edit
+        [HttpGet]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            var article = await _articleService.Get(Id);
+            return View(article);
+        }
     }
 }

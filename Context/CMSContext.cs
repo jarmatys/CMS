@@ -28,6 +28,16 @@ namespace CMS.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<ArticleModel>()
+                .HasOne(i => i.Image)
+                .WithOne(a => a.Article)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ArticleModel>()
+                .HasMany(t => t.Taxonomies)
+                .WithOne(a => a.Article)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
