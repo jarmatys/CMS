@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CMS.Models.Db.Account;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,6 +10,12 @@ namespace CMS.Models.ViewModels.Article
 {
     public class ArticleView
     {
+        public ArticleView()
+        {
+            IsPhotoEdited = false;
+        }
+
+        public int Id { get; set; }
         [Required(ErrorMessage = "Uzupełnij tytuł wpisu")]
         public string Title { get; set; }
         [Required(ErrorMessage = "Uzupełnij adres url wpisu")]
@@ -16,8 +23,10 @@ namespace CMS.Models.ViewModels.Article
         [Required(ErrorMessage = "Wpis nie może być pusty")]
         public string Content { get; set; }
         public string Excerpt { get; set; }
+
         public IFormFile FeaturedImg { get; set; }
         public string ImageUrl { get; set; }
+        public bool IsPhotoEdited { get; set; }
 
         [Required(ErrorMessage = "Wpis musi mieć datę publikacji")]
         public DateTime Date { get; set; }
@@ -30,5 +39,6 @@ namespace CMS.Models.ViewModels.Article
         public bool CommentStatus { get; set; }
         public bool IsDraft { get; set; }
 
+        public User User { get; set; }
     }
 }

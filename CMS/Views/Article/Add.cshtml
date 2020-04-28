@@ -1,7 +1,7 @@
 ﻿@model ArticleView
 
 @{
-    ViewData["Title"] = "Dodaj wpis";
+    ViewData["Title"] = "dodaj wpis";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
@@ -305,7 +305,7 @@
                 reader.readAsDataURL(input.files[0]);
 
                 // pokazujemy przycisk do usuwania
-                deleteButton.classList.toggle("d-none");
+                deleteButton.classList.remove("d-none");
             }
         }
 
@@ -313,7 +313,7 @@
         deleteButton.addEventListener("click", function (e) {
             e.preventDefault();
             imgPlaceholder.src = "/images/img-placeholder.png";
-            deleteButton.classList.toggle("d-none");
+            deleteButton.classList.add("d-none");
         });
 
         // 8. Inicjalizacja datetimepicera aktualną datą i godziną

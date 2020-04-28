@@ -82,19 +82,46 @@ namespace CMS.Infrastructure.Helpers
         {
             var articleView = new ArticleView
             {
-                Time = article.AddDate,
-                Date = article.AddDate,
+                Id = article.Id,
                 Title = article.Title,
+                Content = article.Content,
                 Excerpt = article.Excerpt,
                 IsDraft = article.IsDraft,
                 CommentStatus = article.CommentStatus,
                 Slug = article.Slug,
-                ImageUrl = article.Image.Url,
-                Categories = GetCategoryFromTaxonomy(article.Taxonomies),
-                Tags = GetTagFromTaxonomy(article.Taxonomies)
+                User = article.User
             };
 
+            // Sprawdzamy czy zdjęcie wyrożniające jest ustawione
+            if(article.Image == null)
+            {
+                articleView.ImageUrl = "/images/img-placeholder.png";
+            }
+            else
+            {
+                articleView.ImageUrl = article.Image.Url;
+            }
+
+            // Sprawdzamy czy wystepują jakieś tagi bądź kategorie
+            if(article.Taxonomies.Count != 0)
+            {
+                articleView.Categories = GetCategoryFromTaxonomy(article.Taxonomies);
+                articleView.Tags = GetTagFromTaxonomy(article.Taxonomies);
+            }
+
             return articleView;
+        }
+
+        public static ArticleModel MergeViewWithModel(ArticleModel model, ArticleView view)
+        {
+            model.Title = view.Title;
+            model.Slug = view.Slug;
+            model.Content = view.Content;
+            model.CommentStatus = view.CommentStatus;
+            model.IsDraft = view.IsDraft;
+            model.Excerpt = view.Excerpt;
+
+            return model;
         }
     }
 }

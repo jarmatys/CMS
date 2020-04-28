@@ -97,9 +97,8 @@ namespace CMS.Services
             {
                 var toRemove = await _context.Medias.FindAsync(publicId);
                 _context.Medias.Remove(toRemove);
-                await _context.SaveChangesAsync();
-
-                return true;
+                
+                return await _context.SaveChangesAsync() > 0;
             }
 
             return false;

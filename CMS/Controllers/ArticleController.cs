@@ -57,14 +57,16 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ArticleView result)
         {
-            // 1. Pobieranie listy tagów oraz kategorii
-            ViewBag.Categories = await _categoryService.GetAll();
-            ViewBag.Tags = await _tagService.GetAll();
-
             if (!ModelState.IsValid)
             {
+                // 1. Pobieranie listy tagów oraz kategorii
+                ViewBag.Categories = await _categoryService.GetAll();
+                ViewBag.Tags = await _tagService.GetAll();
+
                 return View(result);
             }
+
+            // TODO: sprawdzić czy występuje już artykuł o tym tyle bądź slugu
 
             // 2.Poprawnie zwalidowane post zapisuję do bazy danych
 
@@ -91,11 +93,21 @@ namespace CMS.Controllers
         public async Task<IActionResult> Delete(int Id)
         {
             var article = await _articleService.Get(Id);
-            await _cloudService.DeleteFile(article.ImageId);
 
+            // Usuwamy zdjęcie przypisane do artykułu
+            if (article.Image != null)
+            {
+                await _cloudService.DeleteFile(article.ImageId);
+            }
+
+            // Usuwamy taxonomies artykułu
+            if(article.Taxonomies.Count != 0)
+            {
+                await _taxonomyService.Delete(Id);
+            }
+
+            // Usuwamy artykuł
             await _articleService.Delete(Id);
-
-            // TODO: cascadowe usuwanie tagów i kategorii + zdjęcia refactoring
 
             return RedirectToAction("List");
         }
@@ -104,8 +116,68 @@ namespace CMS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
-            var article = await _articleService.Get(Id);
-            return View(article);
+            // 1. Pobieranie listy tagów oraz kategorii
+            ViewBag.Categories = await _categoryService.GetAll();
+            ViewBag.Tags = await _tagService.GetAll();
+
+            var articleModel = await _articleService.Get(Id);
+
+            // 2. Sprawdzanie czy artykuł należy do użytkownika
+            if (articleModel.User.UserName != User.Identity.Name)
+            {
+                return RedirectToAction("List", "Article");
+            }
+
+            var articleView = ArticleHelpers.ConvertToView(articleModel);
+
+            return View(articleView);
+        }
+
+        // [ GET ] - <domain>/Article/Edit
+        [HttpPost]
+        public async Task<IActionResult> Edit(ArticleView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                // 1. Pobieranie listy tagów oraz kategorii
+                ViewBag.Categories = await _categoryService.GetAll();
+                ViewBag.Tags = await _tagService.GetAll();
+
+                return View(result);
+            }
+
+            var article = await _articleService.Get(result.Id);
+
+            // 2. Poprawnie zwalidowane post zapisuję do bazy danych
+
+            // a. Jeżeli nastąpiła zamiana zdjęcia do zapisujemy
+            if (result.IsPhotoEdited)
+            {
+                // Jeżeli zostało wgrane nowe zdjęcie to je zapisz i przypisz
+                if (result.FeaturedImg != null)
+                {
+                    var medium = await _cloudService.AddFile(result.FeaturedImg);
+                    article.Image = medium;
+                }
+                
+                // Usuwanie starego zdjęcia tylko pod warunkiem jeżeli istnieje
+                if(article.Image != null)
+                {
+                    // usuwanie starego zdjęcia
+                    await _cloudService.DeleteFile(article.ImageId);
+                }
+            }
+
+            // b. Aktualizacja wpisu
+            await _articleService.Update(ArticleHelpers.MergeViewWithModel(article, result));
+
+            // c. Aktualizacja taxonomies
+            await _taxonomyService.Delete(result.Id);
+
+            await _taxonomyService.SaveCategories(await _categoryService.GetCategoriesByNames(result.Categories), article);
+            await _taxonomyService.SaveTags(await _tagService.GetCategoriesByNames(result.Tags), article);
+
+            return RedirectToAction("List");
         }
     }
 }

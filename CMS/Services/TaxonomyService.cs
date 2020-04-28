@@ -1,6 +1,7 @@
 ﻿using CMS.Context;
 using CMS.Models.Db.Article;
 using CMS.Services.interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,16 @@ namespace CMS.Services
             return taxonomiesList;
         }
 
+        public async Task<bool> Delete(int articleId)
+        {
+            var taxonomiesToRemove =  await _context.Taxonomies.Where(a => a.ArticleId == articleId).ToListAsync();
 
+            foreach(var taxonomy in taxonomiesToRemove)
+            {
+                _context.Taxonomies.Remove(taxonomy);
+            }
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

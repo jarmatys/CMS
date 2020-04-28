@@ -100,14 +100,17 @@
                                         <td>@article.AddDate.ToString("dd-MM-yyyy")</td>
 
                                         <td>
-                                            <div class="form-button-action">
-                                                <button type="button" data-toggle="tooltip" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj" onclick="location='@Url.Action("Edit","Article",new { Id = article.Id })'">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-articleid="@article.Id">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </div>
+                                            @if (User.Identity.Name == article.User.UserName)
+                                            {
+                                                <div class="form-button-action">
+                                                    <button type="button" data-toggle="tooltip" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj" onclick="location='@Url.Action("Edit","Article",new { Id = article.Id })'">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-articleid="@article.Id">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            }
                                         </td>
                                     </tr>
                                 }

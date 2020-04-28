@@ -10,5 +10,6 @@ namespace CMS.Services.interfaces
     {
         Task<List<TaxonomyModel>> SaveCategories(List<CategoryModel> categories, ArticleModel article);
         Task<List<TaxonomyModel>> SaveTags(List<TagModel> tags, ArticleModel article);
+        Task<bool> Delete(int articleId);
     }
 }
