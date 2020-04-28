@@ -46,6 +46,7 @@
                                         <th>E-mail</th>
                                         <th>Imię</th>
                                         <th>Nazwisko</th>
+                                        <th>Posty</th>
                                         <th style="width: 10%">Operacje</th>
                                     </tr>
                                 </thead>
@@ -55,26 +56,28 @@
                                         <th>E-mail</th>
                                         <th>Imię</th>
                                         <th>Nazwisko</th>
+                                        <th>Posty</th>
                                         <th style="width: 10%">Operacje</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     @foreach (var user in Model)
                                     {
-                                        <tr>
+                                        <tr id="row-@user.Id">
                                             <td>@user.UserName</td>
                                             <td>@user.Email</td>
                                             <td>@user.Name</td>
                                             <td>@user.Surname</td>
+                                            <td>0</td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Nadaj prawa">
+                                                    <button type="button" data-toggle="tooltip" class="btn btn-link btn-success btn-lg" data-original-title="Nadaj prawa">
                                                         <i class="fas fa-check"></i>
                                                     </button>
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
+                                                    <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("Edit","Account", new { Id = user.Id })'" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
                                                         <i class="fa fa-edit"></i>
                                                     </button>
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Usuń">
+                                                    <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-userid="@user.Id" >
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </div>
@@ -94,32 +97,48 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $('#basic-datatables').DataTable({
-            });
+              
+            $('.delete-alert').click(function (e) {
 
-            $('#multi-filter-select').DataTable({
-                "pageLength": 5,
-                initComplete: function () {
-                    this.api().columns().every(function () {
-                        var column = this;
-                        var select = $('<select class="form-control"><option value=""></option></select>')
-                            .appendTo($(column.footer()).empty())
-                            .on('change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
+                swal({
+                title: 'Czy na pewno chcesz usunąć tego użytkownika?',
+                text: "Tych zmian nie da się odtworzyć!",
+                type: 'warning',
+                buttons: {
+                    confirm: {
+                        text: 'Usuń!',
+                        className: 'btn btn-danger'
+                    },
+                    cancel: {
+                        visible: true,
+                        text: 'Cofnij',
+                        className: 'btn btn-success'
+                    }
+                }
+            }).then((Delete) => {
+                if (Delete) {
 
-                                column
-                                    .search(val ? '^' + val + '$' : '', true, false)
-                                    .draw();
-                            });
+                    $.post("@Url.Action("Delete","Account")", { Id: this.dataset.userid });
 
-                        column.data().unique().sort().each(function (d, j) {
-                            select.append('<option value="' + d + '">' + d + '</option>')
-                        });
+                    var row = document.getElementById(`row-${this.dataset.userid}`);
+                    row.parentNode.removeChild(row);
+
+                    swal({
+                        title: 'Usunieto',
+                        text: 'Użytkownik został usunięty',
+                        type: 'success',
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        }
                     });
+
+                } else {
+                    swal.close();
                 }
             });
+                  });
         });
     </script>
 }

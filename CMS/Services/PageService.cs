@@ -53,5 +53,10 @@ namespace CMS.Services
 			return await _context.SaveChangesAsync() > 0;
 		}
 
+		public async Task<int> MediaCount()
+		{
+			var pages = await _context.Pages.ToListAsync();
+			return pages.Count();
+		}
 	}
 }

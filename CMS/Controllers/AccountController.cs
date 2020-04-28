@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.Infrastructure.Helpers;
 using CMS.Models.Db.Account;
 using CMS.Models.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
@@ -44,7 +45,7 @@ namespace CMS.Controllers
                     // nadanie mu roli "user"
                     // await _userManager.AddToRoleAsync(user, "user");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("List", "Account");
                 }
 
                 foreach (var error in register.Errors)
@@ -96,8 +97,41 @@ namespace CMS.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
+            // ZAPYTAĆ jak pobrać includem artykuły tego usera jak menadżer jest już gotowy (?)
             var users = await _userManager.Users.ToListAsync();
             return View(users);
+        }
+
+        // [ GET ] - <domain>/Account/Edit
+        [HttpGet]
+        public async Task<IActionResult> Edit(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            return View(AccountHelpers.ConvertToView(user));
+        }
+
+        // [ POST ] - <domain>/Account/Edit
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            var user = await _userManager.FindByIdAsync(result.Id);
+            await _userManager.UpdateAsync(AccountHelpers.MergeViewWithModel(user, result));
+
+            return RedirectToAction("List", "Account");
+        }
+
+        // [ POST ] - <domain>/Page/Delete
+        [HttpPost]
+        public async Task<IActionResult> Delete(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            await _userManager.DeleteAsync(user);
+            return RedirectToAction("List", "Page");
         }
 
     }

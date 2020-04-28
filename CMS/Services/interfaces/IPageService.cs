@@ -13,5 +13,6 @@ namespace CMS.Services.interfaces
         Task<List<PageModel>> GetAll();
         Task<bool> Update(PageModel page);
         Task<bool> Delete(int id);
+        Task<int> MediaCount();
     }
 }

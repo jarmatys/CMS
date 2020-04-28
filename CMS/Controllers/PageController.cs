@@ -24,6 +24,7 @@ namespace CMS.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
+            ViewBag.PagesCount = await _pageService.MediaCount();
             var pages = await _pageService.GetAll();
             return View(pages);
         }
