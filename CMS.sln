@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS", "CMS\CMS.csproj", "{8BEBE0DE-0ACC-47BB-BEBC-8063DA4A6394}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPay", "TPay\TPay.csproj", "{A71262E5-7ED7-49A3-9BB9-F9FA20FE26EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TPay", "TPay\TPay.csproj", "{A71262E5-7ED7-49A3-9BB9-F9FA20FE26EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
