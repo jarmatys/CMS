@@ -23,7 +23,6 @@ namespace CMS.Controllers
         private readonly ITaxonomyService _taxonomyService;
         private readonly UserManager<User> _userManager;
 
-
         public ArticleController(IArticleService articleService, ICategoryService categoryService, ITagService tagService, ICloudService cloudService, ITaxonomyService taxonomyService, UserManager<User> userManager)
         {
             _articleService = articleService;

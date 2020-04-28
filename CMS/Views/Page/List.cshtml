@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<PageModel>
+
 @{
     ViewData["Title"] = "Lista stron";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
@@ -26,39 +27,67 @@
                 <thead>
                     <tr>
                         <th style="width: 30%">Tytuł</th>
-                        <th>Autor</th>
-                        <th style="width: 2%"><i class="far fa-comment-alt"></i></th>
+                        <th>Informacje</th>
                         <th>Data</th>
+                        <th>Status</th>
                         <th style="width: 10%">Operacje</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th style="width: 30%">Tytuł</th>
-                        <th>Autor</th>
-                        <th style="width: 2%"><i class="far fa-comment-alt"></i></th>
+                        <th>Informacje</th>
                         <th>Data</th>
-                        <th style="width: 10%">Action</th>
+                        <th>Status</th>
+                        <th style="width: 10%">Operacje</th>
                     </tr>
                 </tfoot>
                 <tbody>
 
-                    <tr>
-                        <td>Tytuł strony</td>
-                        <td>Andrzej Kowalski</td>
-                        <td>5</td>
-                        <td>02-02-2020</td>
-                        <td>
-                            <div class="form-button-action">
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    @foreach (var pageModel in Model)
+                    {
+                        <tr id="row-@pageModel.Id">
+                            <td>@pageModel.Title</td>
+
+                            <td>
+                                @if (pageModel.IsIndex)
+                                {
+                                    <span class="badge badge-danger">noindex</span>
+                                }
+                                @if (pageModel.IsCannonical)
+                                {
+                                    <span class="badge badge-success">Canonical</span>
+                                }
+                            </td>
+
+                            <td>@pageModel.AddDate.ToString("dd-MM-yyyy")</td>
+
+                            <td>
+                                @if (pageModel.IsDraft)
+                                {
+                                    <span class="badge badge-info">Szkic</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success">Opublikowana</span>
+                                }
+                            </td>
+
+                            <td>
+                                <div class="form-button-action">
+                                    <button type="button" data-toggle="tooltip" onclick="location='@pageModel.FullUrl'" class="btn btn-link btn-success btn-lg" data-original-title="Podgląd">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("Edit","Page", new { Id = pageModel.Id })'" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
+                                        <i class="fas fa-code"></i>
+                                    </button>
+                                    <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-pageid="@pageModel.Id">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
 
                 </tbody>
             </table>
@@ -71,50 +100,55 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $('#basic-datatables').DataTable({
-            });
 
-            $('#multi-filter-select').DataTable({
-                "pageLength": 5,
-                initComplete: function () {
-                    this.api().columns().every(function () {
-                        var column = this;
-                        var select = $('<select class="form-control"><option value=""></option></select>')
-                            .appendTo($(column.footer()).empty())
-                            .on('change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
+            
+            $('.delete-alert').click(function (e) {
 
-                                column
-                                    .search(val ? '^' + val + '$' : '', true, false)
-                                    .draw();
-                            });
+                swal({
+                title: 'Czy na pewno chcesz usunąć tą stronę?',
+                text: "Tych zmian nie da się odtworzyć!",
+                type: 'warning',
+                buttons: {
+                    confirm: {
+                        text: 'Usuń!',
+                        className: 'btn btn-danger'
+                    },
+                    cancel: {
+                        visible: true,
+                        text: 'Cofnij',
+                        className: 'btn btn-success'
+                    }
+                }
+            }).then((Delete) => {
+                if (Delete) {
 
-                        column.data().unique().sort().each(function (d, j) {
-                            select.append('<option value="' + d + '">' + d + '</option>')
-                        });
+                    $.post("@Url.Action("Delete","Page")", { Id: this.dataset.pageid });
+
+                    var row = document.getElementById(`row-${this.dataset.pageid}`);
+                    row.parentNode.removeChild(row);
+
+                    swal({
+                        title: 'Usunieto',
+                        text: 'Twoja strona została usunięta.',
+                        type: 'success',
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        }
                     });
+
+                } else {
+                    swal.close();
                 }
             });
+                  });
 
             // Add Row
             $('#add-row').DataTable({
-                "pageLength": 5,
+                "pageLength": 10,
             });
 
-            var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-            $('#addRowButton').click(function () {
-                $('#add-row').dataTable().fnAddData([
-                    $("#addName").val(),
-                    $("#addPosition").val(),
-                    $("#addOffice").val(),
-                    action
-                ]);
-                $('#addRowModal').modal('hide');
-
-            });
         });
     </script>
 }

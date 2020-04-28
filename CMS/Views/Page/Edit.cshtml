@@ -1,13 +1,13 @@
 ﻿@model PageView
 
 @{
-    ViewData["Title"] = "dodaj stronę";
+    ViewData["Title"] = "edytuj stronę";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
 <div class="page-inner">
     <div class="page-header">
-        <h4 class="page-title">Dodawanie strony</h4>
+        <h4 class="page-title">Edytowanie strony</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
                 <a href="@Url.Action("Index","Admin")">
@@ -24,11 +24,11 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                Dodawanie strony
+                Edytowanie strony
             </li>
         </ul>
     </div>
-    @using (Html.BeginForm("Add", "Page", FormMethod.Post))
+    @using (Html.BeginForm("Edit", "Page", FormMethod.Post))
     {
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
@@ -105,8 +105,8 @@
 
         <div class="d-flex align-items-center">
             <button class="btn btn-primary" type="submit">
-                <i class="fa fa-plus"></i>
-                Dodaj stronę
+                <i class="fa fa-edit"></i>
+                Edytuj stronę
             </button>
         </div>
     }

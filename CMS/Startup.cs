@@ -30,7 +30,6 @@ namespace CMS
             Configuration = config.Build();
         }
 
-
         public void ConfigureServices(IServiceCollection services)
         {
             // £¹czenie z baz¹ danych
@@ -65,6 +64,7 @@ namespace CMS
             services.AddScoped<ICloudService, CloudinaryService>();
             services.AddScoped<IMediaService, MediaService>();
             services.AddScoped<ITaxonomyService, TaxonomyService>();
+            services.AddScoped<IPageService, PageService>();
 
             // Konfiguracja platformy cloudinary do przechowywania zdjêæ w chmurze
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));

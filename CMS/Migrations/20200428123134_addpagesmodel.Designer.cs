@@ -3,14 +3,16 @@ using System;
 using CMS.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CMS.Migrations
 {
     [DbContext(typeof(CMSContext))]
-    partial class CMSContextModelSnapshot : ModelSnapshot
+    [Migration("20200428123134_addpagesmodel")]
+    partial class addpagesmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,9 +112,6 @@ namespace CMS.Migrations
 
                     b.Property<string>("DateFormat")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<bool>("IsIndex")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("MailPort")
                         .HasColumnType("int");
@@ -320,6 +319,9 @@ namespace CMS.Migrations
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Cannonical")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("Content")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -329,13 +331,7 @@ namespace CMS.Migrations
                     b.Property<string>("FullUrl")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<bool>("IsCannonical")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsDraft")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsIndex")
+                    b.Property<bool>("Index")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("KeyWords")

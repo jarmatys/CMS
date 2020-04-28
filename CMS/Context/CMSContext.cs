@@ -2,6 +2,7 @@
 using CMS.Models.Db.Admin;
 using CMS.Models.Db.Article;
 using CMS.Models.Db.Media;
+using CMS.Models.Db.Page;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,6 +24,7 @@ namespace CMS.Context
         public DbSet<TaxonomyModel> Taxonomies { get; set; }
         public DbSet<MediaModel> Medias { get; set; }
         public DbSet<MediaTypeModel> MediaTypes { get; set; }
+        public DbSet<PageModel> Pages { get; set; }
 
         // Zaślepka na klasę bazową
         protected override void OnModelCreating(ModelBuilder builder)

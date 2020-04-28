@@ -25,6 +25,7 @@ namespace CMS.Models.Db.Admin
         public bool AllowComments { get; set; }
         public string DateFormat { get; set; }
         public string TimeFormat { get; set; }
+        public bool IsIndex { get; set; }
 
     }
 }
