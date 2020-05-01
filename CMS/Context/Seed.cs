@@ -11,5 +11,6 @@ namespace CMS.Context
         // TODO seed wpisu ustawienia
         // TODO seed ustawienia e-maila
         // TODO seed polityki prywatnosci
+        // TODO seed integracji
     }
 }

@@ -49,5 +49,21 @@ namespace CMS.Services
             _context.PrivacyPolicySettings.Update(result);
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<IntegrationModel> GetIntegrationSettingsById(int Id)
+        {
+            return await _context.IntegrationSettings.FindAsync(Id);
+        }
+
+        public async Task<IntegrationModel> GetIntegrationSettings()
+        {
+            return await _context.IntegrationSettings.FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> SetIntegrationSettings(IntegrationModel result)
+        {
+            _context.IntegrationSettings.Update(result);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

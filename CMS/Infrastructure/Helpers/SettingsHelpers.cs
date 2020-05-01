@@ -79,5 +79,37 @@ namespace CMS.Infrastructure.Helpers
 
             return model;
         }
+
+        public static IntegrationView ConvertToViewIntegration(IntegrationModel result)
+        {
+            var integrationView = new IntegrationView
+            {
+                Id = result.Id,
+                Tawkto = result.Tawkto,
+                GoogleAnalytics = result.GoogleAnalytics,
+                FacebookPixel = result.FacebookPixel,
+                YandexMetrica = result.YandexMetrica,
+                GoogleMaps = result.GoogleMaps,
+                Recaptcha = result.Recaptcha,
+                Hotjar = result.Hotjar,
+                CustomScripts = result.CustomScripts,
+            };
+
+            return integrationView;
+        }
+
+        public static IntegrationModel MergeViewWithModelIntegration(IntegrationModel model, IntegrationView view)
+        {
+            model.Tawkto = view.Tawkto;
+            model.GoogleAnalytics = view.GoogleAnalytics;
+            model.FacebookPixel = view.FacebookPixel;
+            model.YandexMetrica = view.YandexMetrica;
+            model.GoogleMaps = view.GoogleMaps;
+            model.Recaptcha = view.Recaptcha;
+            model.Hotjar = view.Hotjar;
+            model.CustomScripts = view.CustomScripts;
+
+            return model;
+        }
     }
 }

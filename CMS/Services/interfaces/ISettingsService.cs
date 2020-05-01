@@ -16,5 +16,9 @@ namespace CMS.Services.interfaces
         Task<PrivacyPolicyModel> GetPrivacyPolicySettingsById(int Id);
         Task<PrivacyPolicyModel> GetPrivacyPolicySettings();
         Task<bool> SetPrivacyPolicySettings(PrivacyPolicyModel result);
+
+        Task<IntegrationModel> GetIntegrationSettingsById(int Id);
+        Task<IntegrationModel> GetIntegrationSettings();
+        Task<bool> SetIntegrationSettings(IntegrationModel result);
     }
 }

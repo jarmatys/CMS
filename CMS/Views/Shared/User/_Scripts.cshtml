@@ -1,3 +1,25 @@
 ﻿<script>
-    
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+    window.cookieconsent.initialise({
+        "palette": {
+            "popup": {
+                "background": "#CCB56E",
+                "text": "#fff"
+            },
+            "button": {
+                "background": "#214A36"
+            }
+        },
+        "theme": "classic",
+        "content": {
+            "message": "Ta strona korzysta z ciasteczek aby zapewnić Ci lepsze doświadczenia z korzystania z niej.",
+            "dismiss": "Akceptuje",
+            "link": "Polityka prywatności",
+            "href": `https://${window.location.hostname}/polityka-prywatnosci`
+        }
+    });
 </script>

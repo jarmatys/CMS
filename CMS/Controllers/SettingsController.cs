@@ -71,5 +71,27 @@ namespace CMS.Controllers
             return RedirectToAction("PrivacyPolicy", "Settings");
         }
 
+        // [ GET ] - <domain>/Settings/Integration
+        [HttpGet]
+        public async Task<IActionResult> Integration()
+        {
+            var integration = await _settingsService.GetIntegrationSettings();
+            return View(SettingsHelpers.ConvertToViewIntegration(integration));
+        }
+
+        // [ POST ] - <domain>/Settings/Integration
+        [HttpPost]
+        public async Task<IActionResult> Integration(IntegrationView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            var integrationSettings = await _settingsService.GetIntegrationSettingsById(result.Id);
+            await _settingsService.SetIntegrationSettings(SettingsHelpers.MergeViewWithModelIntegration(integrationSettings, result));
+
+            return RedirectToAction("Integration", "Settings");
+        }
     }
 }

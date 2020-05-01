@@ -28,6 +28,7 @@ namespace CMS.Context
         public DbSet<PageModel> Pages { get; set; }
         public DbSet<EmailModel> EmailSettings { get; set; }
         public DbSet<PrivacyPolicyModel> PrivacyPolicySettings { get; set; }
+        public DbSet<IntegrationModel> IntegrationSettings { get; set; }
 
         // Zaślepka na klasę bazową
         protected override void OnModelCreating(ModelBuilder builder)
