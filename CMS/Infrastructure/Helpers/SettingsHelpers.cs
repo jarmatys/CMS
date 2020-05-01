@@ -9,7 +9,7 @@ namespace CMS.Infrastructure.Helpers
 {
     public static class SettingsHelpers
     {
-        public static EmailView ConvertToView(EmailModel result)
+        public static EmailView ConvertToViewEmail(EmailModel result)
         {
             var emailView = new EmailView
             {
@@ -24,7 +24,7 @@ namespace CMS.Infrastructure.Helpers
             return emailView;
         }
 
-        public static EmailModel ConvertToModel(EmailView result)
+        public static EmailModel ConvertToModelEmail(EmailView result)
         {
             var emailModel = new EmailModel
             {
@@ -39,13 +39,43 @@ namespace CMS.Infrastructure.Helpers
             return emailModel;
         }
 
-        public static EmailModel MergeViewWithModel(EmailModel model, EmailView view)
+        public static EmailModel MergeViewWithModelEmail(EmailModel model, EmailView view)
         {
             model.Host = view.Host;
             model.UserName = view.UserName;
             model.Port = view.Port;
             model.Password = view.Password;
             model.EnableSSL = view.EnableSSL;
+
+            return model;
+        }
+
+        public static PrivacyPolicyView ConvertToViewPrivacePolicy(PrivacyPolicyModel result)
+        {
+            var privacyPolicyView = new PrivacyPolicyView
+            {
+                Id = result.Id,
+                PageUrl = result.PageUrl,
+                CompanyName = result.CompanyName,
+                Street = result.Street,
+                City = result.City,
+                ZipCode = result.ZipCode,
+                Email = result.Email,
+                HostingName = result.HostingName
+            };
+
+            return privacyPolicyView;
+        }
+
+        public static PrivacyPolicyModel MergeViewWithModelPrivacyPolicy(PrivacyPolicyModel model, PrivacyPolicyView view)
+        {
+            model.PageUrl = view.PageUrl;
+            model.CompanyName = view.CompanyName;
+            model.Street = view.Street;
+            model.City = view.City;
+            model.ZipCode = view.ZipCode;
+            model.Email = view.Email;
+            model.HostingName = view.HostingName;
 
             return model;
         }

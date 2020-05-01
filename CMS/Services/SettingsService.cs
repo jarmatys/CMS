@@ -34,6 +34,20 @@ namespace CMS.Services
             return await _context.SaveChangesAsync() > 0;
         }
 
-      
+        public async Task<PrivacyPolicyModel> GetPrivacyPolicySettingsById(int Id)
+        {
+            return await _context.PrivacyPolicySettings.FindAsync(Id);
+        }
+
+        public async Task<PrivacyPolicyModel> GetPrivacyPolicySettings()
+        {
+            return await _context.PrivacyPolicySettings.FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> SetPrivacyPolicySettings(PrivacyPolicyModel result)
+        {
+            _context.PrivacyPolicySettings.Update(result);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

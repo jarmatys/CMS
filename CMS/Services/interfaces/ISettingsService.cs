@@ -12,5 +12,9 @@ namespace CMS.Services.interfaces
         Task<EmailModel> GetEmailSettingsById(int Id);
         Task<EmailModel> GetEmailSettings();
         Task<bool> SetEmailSettings(EmailModel result);
+
+        Task<PrivacyPolicyModel> GetPrivacyPolicySettingsById(int Id);
+        Task<PrivacyPolicyModel> GetPrivacyPolicySettings();
+        Task<bool> SetPrivacyPolicySettings(PrivacyPolicyModel result);
     }
 }

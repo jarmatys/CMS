@@ -30,7 +30,7 @@ namespace CMS.Controllers
         public async Task<IActionResult> Email()
         {
             var emailSettings = await _settingsService.GetEmailSettings();
-            return View(SettingsHelpers.ConvertToView(emailSettings));
+            return View(SettingsHelpers.ConvertToViewEmail(emailSettings));
         }
 
         // [ POST ] - <domain>/Settings/Email
@@ -43,10 +43,33 @@ namespace CMS.Controllers
             }
 
             var emailSettings = await _settingsService.GetEmailSettingsById(result.Id);
-
-            await _settingsService.SetEmailSettings(SettingsHelpers.MergeViewWithModel(emailSettings,result));
+            await _settingsService.SetEmailSettings(SettingsHelpers.MergeViewWithModelEmail(emailSettings,result));
 
             return RedirectToAction("Email","Settings");
         }
+
+        // [ GET ] - <domain>/Settings/PrivacyPolicy
+        [HttpGet]
+        public async Task<IActionResult> PrivacyPolicy()
+        {
+            var privacySettings = await _settingsService.GetPrivacyPolicySettings();
+            return View(SettingsHelpers.ConvertToViewPrivacePolicy(privacySettings));
+        }
+
+        // [ POST ] - <domain>/Settings/PrivacyPolicy
+        [HttpPost]
+        public async Task<IActionResult> PrivacyPolicy(PrivacyPolicyView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            var policyPrivacySetting = await _settingsService.GetPrivacyPolicySettingsById(result.Id);
+            await _settingsService.SetPrivacyPolicySettings(SettingsHelpers.MergeViewWithModelPrivacyPolicy(policyPrivacySetting, result));
+
+            return RedirectToAction("PrivacyPolicy", "Settings");
+        }
+
     }
 }

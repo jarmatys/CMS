@@ -15,7 +15,7 @@ namespace CMS.Context
 {
     public class CMSContext : IdentityDbContext<User>
     {
-        public CMSContext(DbContextOptions<CMSContext> options) : base (options) { }
+        public CMSContext(DbContextOptions<CMSContext> options) : base(options) { }
 
         // Tutaj będziemy dodawać DbSet'y
         public DbSet<OptionsModel> Options { get; set; }
@@ -27,6 +27,7 @@ namespace CMS.Context
         public DbSet<MediaTypeModel> MediaTypes { get; set; }
         public DbSet<PageModel> Pages { get; set; }
         public DbSet<EmailModel> EmailSettings { get; set; }
+        public DbSet<PrivacyPolicyModel> PrivacyPolicySettings { get; set; }
 
         // Zaślepka na klasę bazową
         protected override void OnModelCreating(ModelBuilder builder)
