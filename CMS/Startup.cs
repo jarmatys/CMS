@@ -65,6 +65,7 @@ namespace CMS
             services.AddScoped<IMediaService, MediaService>();
             services.AddScoped<ITaxonomyService, TaxonomyService>();
             services.AddScoped<IPageService, PageService>();
+            services.AddScoped<IAppearanceService, AppearanceService>();
 
             // Konfiguracja platformy cloudinary do przechowywania zdjêæ w chmurze
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));

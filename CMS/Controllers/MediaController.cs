@@ -86,7 +86,7 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string Id)
         {
-            await _cloudinaryService.DeleteFile(Id);
+            var status = await _cloudinaryService.DeleteFile(Id);
             return RedirectToAction("List");
         }
     }

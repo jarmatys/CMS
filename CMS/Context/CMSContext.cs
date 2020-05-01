@@ -31,6 +31,8 @@ namespace CMS.Context
         {
             base.OnModelCreating(builder);
 
+            // Zapytać jak to działa
+
             //builder.Entity<ArticleModel>()
             //    .HasOne(i => i.Image)
             //    .WithOne(a => a.Article)

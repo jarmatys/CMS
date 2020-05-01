@@ -135,53 +135,53 @@
     <script>
         $(document).ready(function () {
 
-                  $('.delete-alert').click(function (e) {
+            $('.delete-alert').click(function (e) {
 
                 swal({
-                title: 'Czy na pewno chcesz usunąć ten wpis?',
-                text: "Tych zmian nie da się odtworzyć!",
-                type: 'warning',
-                buttons: {
-                    confirm: {
-                        text: 'Usuń!',
-                        className: 'btn btn-danger'
-                    },
-                    cancel: {
-                        visible: true,
-                        text: 'Cofnij',
-                        className: 'btn btn-success'
-                    }
-                }
-            }).then((Delete) => {
-                if (Delete) {
-
-                    $.post("@Url.Action("Delete","Article")", { Id: this.dataset.articleid });
-
-                    var row = document.getElementById(`row-${this.dataset.articleid}`);
-                    row.parentNode.removeChild(row);
-
-                    swal({
-                        title: 'Usunieto',
-                        text: 'Twój wpis została usunięty.',
-                        type: 'success',
-                        buttons: {
-                            confirm: {
-                                className: 'btn btn-success'
-                            }
+                    title: 'Czy na pewno chcesz usunąć ten wpis?',
+                    text: "Tych zmian nie da się odtworzyć!",
+                    type: 'warning',
+                    buttons: {
+                        confirm: {
+                            text: 'Usuń!',
+                            className: 'btn btn-danger'
+                        },
+                        cancel: {
+                            visible: true,
+                            text: 'Cofnij',
+                            className: 'btn btn-success'
                         }
-                    });
+                    }
+                }).then((Delete) => {
+                    if (Delete) {
 
-                } else {
-                    swal.close();
-                }
+                        $.post("@Url.Action("Delete","Article")", { Id: this.dataset.articleid });
+
+                        var row = document.getElementById(`row-${this.dataset.articleid}`);
+                        row.parentNode.removeChild(row);
+
+                        swal({
+                            title: 'Usunieto',
+                            text: 'Twój wpis została usunięty.',
+                            type: 'success',
+                            buttons: {
+                                confirm: {
+                                    className: 'btn btn-success'
+                                }
+                            }
+                        });
+
+                    } else {
+                        swal.close();
+                    }
+                });
             });
-                  });
 
-                // Add Row
+            // Add Row
             $('#add-row').DataTable({
                 "pageLength": 10,
             });
-
+        });
     </script>
 }
 

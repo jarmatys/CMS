@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CMS.Models.Db.Media;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,6 +27,9 @@ namespace CMS.Models.Db.Admin
         public string DateFormat { get; set; }
         public string TimeFormat { get; set; }
         public bool IsIndex { get; set; }
+
+        public MediaModel Logo { get; set; }
+        public MediaModel Favicon { get; set; }
 
     }
 }
