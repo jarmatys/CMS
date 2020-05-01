@@ -7,7 +7,8 @@ namespace CMS.Context
 {
     public class Seed
     {
-        // TODO seed administratora
+        // TODO seed konto administratora
         // TODO seed wpisu ustawienia
+        // TODO seed ustawienia e-maila
     }
 }
