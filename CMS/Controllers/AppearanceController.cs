@@ -34,6 +34,22 @@ namespace CMS.Controllers
             return View(options);
         }
 
+        // [ GET ] - <domain>/Appearance/SetTypography
+        [HttpGet]
+        public async Task<IActionResult> SetTypography()
+        {
+            var options = await _appearanceService.GetOptions();
+            return View(options);
+        }
+
+        // [ GET ] - <domain>/Appearance/SetColors
+        [HttpGet]
+        public async Task<IActionResult> SetColors()
+        {
+            var options = await _appearanceService.GetOptions();
+            return View(options);
+        }
+
         // [ POST ] - <domain>/Appearance/SetLogo
         [HttpPost]
         public async Task<IActionResult> SetLogo(IFormFile logo)
