@@ -64,13 +64,26 @@ namespace CMS.Context
                     BlogDescription = "Opis strony",
                     UserCanRegister = false,
                     AdminEmail = "admin@admin.pl",
-                    CommentsNotify = false,
-                    PostPerPage = 12,
-                    AllowComments = false,
                     IsIndex = false
                 };
 
                 await context.Options.AddAsync(options);
+                await context.SaveChangesAsync();
+            }
+
+            // Seed dla ustawień systemu
+            if (!context.BlogSettings.Any())
+            {
+                var blogSettings = new BlogModel
+                {
+                    CommentsNotify = false,
+                    PostPerPage = 12,
+                    AllowComments = false,
+                    DateFormat = "dd-MM-yyyy",
+                    TimeFormat = "H:mm:ss"
+                };
+
+                await context.BlogSettings.AddAsync(blogSettings);
                 await context.SaveChangesAsync();
             }
 

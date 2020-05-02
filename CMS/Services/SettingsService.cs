@@ -65,5 +65,21 @@ namespace CMS.Services
             _context.IntegrationSettings.Update(result);
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<BlogModel> GetBlogSettingsById(int Id)
+        {
+            return await _context.BlogSettings.FindAsync(Id);
+        }
+
+        public async Task<BlogModel> GetBlogSettings()
+        {
+            return await _context.BlogSettings.FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> SetBlogSettings(BlogModel result)
+        {
+            _context.BlogSettings.Update(result);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

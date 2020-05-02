@@ -111,5 +111,31 @@ namespace CMS.Infrastructure.Helpers
 
             return model;
         }
+
+        public static BlogView ConvertToViewBlog(BlogModel result)
+        {
+            var blogView = new BlogView
+            {
+                Id = result.Id,
+                CommentsNotify = result.CommentsNotify,
+                PostPerPage = result.PostPerPage,
+                AllowComments = result.AllowComments,
+                DateFormat = result.DateFormat,
+                TimeFormat = result.TimeFormat
+            };
+
+            return blogView;
+        }
+        
+        public static BlogModel MergeViewWithModelBlog(BlogModel model, BlogView view)
+        {
+            model.CommentsNotify = view.CommentsNotify;
+            model.PostPerPage = view.PostPerPage;
+            model.AllowComments = view.AllowComments;
+            model.DateFormat = view.DateFormat;
+            model.TimeFormat = view.TimeFormat;
+
+            return model;
+        }
     }
 }

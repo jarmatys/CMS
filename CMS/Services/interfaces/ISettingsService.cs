@@ -20,5 +20,9 @@ namespace CMS.Services.interfaces
         Task<IntegrationModel> GetIntegrationSettingsById(int Id);
         Task<IntegrationModel> GetIntegrationSettings();
         Task<bool> SetIntegrationSettings(IntegrationModel result);
+
+        Task<BlogModel> GetBlogSettingsById(int Id);
+        Task<BlogModel> GetBlogSettings();
+        Task<bool> SetBlogSettings(BlogModel result);
     }
 }

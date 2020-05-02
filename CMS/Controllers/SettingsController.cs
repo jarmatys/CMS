@@ -93,5 +93,28 @@ namespace CMS.Controllers
 
             return RedirectToAction("Integration", "Settings");
         }
+
+        // [ GET ] - <domain>/Settings/Blog
+        [HttpGet]
+        public async Task<IActionResult> Blog()
+        {
+            var blogSettings = await _settingsService.GetBlogSettings();
+            return View(SettingsHelpers.ConvertToViewBlog(blogSettings));
+        }
+
+        // [ POST ] - <domain>/Settings/Integration
+        [HttpPost]
+        public async Task<IActionResult> Blog(BlogView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            var blogSettings = await _settingsService.GetBlogSettingsById(result.Id);
+            await _settingsService.SetBlogSettings(SettingsHelpers.MergeViewWithModelBlog(blogSettings, result));
+
+            return RedirectToAction("Blog", "Settings");
+        }
     }
 }

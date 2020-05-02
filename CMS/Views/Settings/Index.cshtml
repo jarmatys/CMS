@@ -1,8 +1,47 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ustawanie";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="page-inner">
+
+    <div class="page-header">
+        <h4 class="page-title">Ustawienia</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="@Url.Action("Index","Admin")">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Ustawienia
+            </li>
+         
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Panel ustawień</h4>
+                        <button class="btn btn-success ml-auto" type="submit">
+                            <i class="fa fa-plus"></i>
+                            Zapisz zmiany
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 

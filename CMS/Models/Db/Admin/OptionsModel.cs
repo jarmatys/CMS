@@ -17,11 +17,6 @@ namespace CMS.Models.Db.Admin
         public string BlogDescription { get; set; }
         public bool UserCanRegister { get; set; }
         public string AdminEmail { get; set; }
-        public bool CommentsNotify { get; set; }
-        public int PostPerPage { get; set; }
-        public bool AllowComments { get; set; }
-        public string DateFormat { get; set; }
-        public string TimeFormat { get; set; }
         public bool IsIndex { get; set; }
 
         public MediaModel Logo { get; set; }
