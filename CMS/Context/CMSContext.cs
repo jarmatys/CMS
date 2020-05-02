@@ -3,6 +3,7 @@ using CMS.Models.Db.Admin;
 using CMS.Models.Db.Article;
 using CMS.Models.Db.Media;
 using CMS.Models.Db.Page;
+using CMS.Models.Db.Seo;
 using CMS.Models.Db.Settings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,8 @@ namespace CMS.Context
         public DbSet<PrivacyPolicyModel> PrivacyPolicySettings { get; set; }
         public DbSet<IntegrationModel> IntegrationSettings { get; set; }
         public DbSet<BlogModel> BlogSettings { get; set; }
+
+        public DbSet<SocialMediaModel> SocialMedia { get; set; }
 
         // Zaślepka na klasę bazową
         protected override void OnModelCreating(ModelBuilder builder)
