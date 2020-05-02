@@ -19,10 +19,6 @@ namespace CMS.Models.Db.Admin
         public string AdminEmail { get; set; }
         public bool CommentsNotify { get; set; }
         public int PostPerPage { get; set; }
-        public string MailServerUrl { get; set; }
-        public string MailServerLogin { get; set; }
-        public string MailServerPassword { get; set; }
-        public int MailPort { get; set; }
         public bool AllowComments { get; set; }
         public string DateFormat { get; set; }
         public string TimeFormat { get; set; }

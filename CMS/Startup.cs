@@ -72,7 +72,6 @@ namespace CMS
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
         }
 
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
