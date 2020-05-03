@@ -44,7 +44,7 @@ namespace CMS.Controllers
                 return View(result);
             }
 
-            await _seoService.CreateSocialMedia(SeoHelpers.ConvertToModel(result));
+            await _seoService.CreateSocialMedia(SeoHelpers.ConvertToModelSocialMedia(result));
 
             return RedirectToAction("SocialMediaList", "Seo");
         }
@@ -54,7 +54,7 @@ namespace CMS.Controllers
         public async Task<IActionResult> SocialMediaEdit(int Id)
         {
             var socialMedia = await _seoService.GetSocialMedia(Id);
-            return View(SeoHelpers.ConvertToView(socialMedia));
+            return View(SeoHelpers.ConvertToViewSocialMedia(socialMedia));
         }
 
         // [ POST ] - <domain>/Seo/SocialMediaEdit
@@ -67,7 +67,7 @@ namespace CMS.Controllers
             }
 
             var socialMedia = await _seoService.GetSocialMedia(result.Id);
-            await _seoService.UpdateSocialMedia(SeoHelpers.MergeViewWithModel(socialMedia, result)); 
+            await _seoService.UpdateSocialMedia(SeoHelpers.MergeViewWithModelSocialMedia(socialMedia, result)); 
 
             return RedirectToAction("SocialMediaList", "Seo");
         }
@@ -80,11 +80,65 @@ namespace CMS.Controllers
             return RedirectToAction("SocialMediaList", "Seo");
         }
 
-        // [ GET ] - <domain>/Seo/Meta
+        // [ GET ] - <domain>/Seo/MetaTagsList
         [HttpGet]
-        public IActionResult Meta()
+        public async Task<IActionResult> MetaTagsList()
         {
+            var metaTags = await _seoService.GetAllMetaTags();
+            return View(metaTags);
+        }
+
+        // [ GET ] - <domain>/Seo/MetaTagsAdd
+        [HttpGet]
+        public IActionResult MetaTagsAdd()
+        {
+            ViewBag.MetaTagsName = _seoService.GetMetaTagsName();
             return View();
+        }
+
+        // [ POST ] - <domain>/Seo/MetaTagsAdd
+        [HttpPost]
+        public async Task<IActionResult> MetaTagsAdd(MetaTagView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            await _seoService.CreateMetaTag(SeoHelpers.ConvertToModelMetaTag(result));
+
+            return RedirectToAction("MetaTagsList", "Seo");
+        }
+
+        // [ GET ] - <domain>/Seo/MetaTagsEdit
+        [HttpGet]
+        public async Task<IActionResult> MetaTagsEdit(int Id)
+        {
+            var metaTag = await _seoService.GetMetaTag(Id);
+            return View(SeoHelpers.ConvertToViewMetaTag(metaTag));
+        }
+
+        // [ POST ] - <domain>/SeoMetaTagsEdit
+        [HttpPost]
+        public async Task<IActionResult> MetaTagsEdit(MetaTagView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            var metaTag = await _seoService.GetMetaTag(result.Id);
+            await _seoService.UpdateMetaTag(SeoHelpers.MergeViewWithModelMetaTag(metaTag, result));
+
+            return RedirectToAction("MetaTagsList", "Seo");
+        }
+
+        // [ POST ] - <domain>/Seo/MetaTagsDelete
+        [HttpPost]
+        public async Task<IActionResult> MetaTagsDelete(int Id)
+        {
+            await _seoService.DeleteMetaTag(Id);
+            return RedirectToAction("MetaTagsList", "Seo");
         }
 
         // [ GET ] - <domain>/Seo/RetrievalLinks

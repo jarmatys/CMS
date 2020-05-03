@@ -1,14 +1,14 @@
-﻿@model SocialMediaView
+﻿@model MetaTagView
 
 @{
-    ViewData["Title"] = "dodaj social media";
+    ViewData["Title"] = "dodaj meta tag";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
 <div class="page-inner">
 
     <div class="page-header">
-        <h4 class="page-title">Social media</h4>
+        <h4 class="page-title">Meta tagi</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
                 <a href="@Url.Action("Index","Admin")">
@@ -25,7 +25,7 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a href="@Url.Action("SocialMediaList","Seo")">Social media</a>
+                <a href="@Url.Action("MetaTagsList","Seo")">Meta tagi</a>
             </li>
             <li class="separator">
                 <i class="flaticon-right-arrow"></i>
@@ -36,16 +36,16 @@
         </ul>
     </div>
 
-    @using (Html.BeginForm("SocialMediaAdd", "Seo", FormMethod.Post, new { @class = "login-form row" }))
+    @using (Html.BeginForm("MetaTagsAdd", "Seo", FormMethod.Post, new { @class = "login-form row" }))
     {
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <h4 class="card-title">Dodaj social medium</h4>
+                        <h4 class="card-title">Dodaj meta tag</h4>
                         <button class="btn btn-success ml-auto" type="submit">
                             <i class="fa fa-plus"></i>
-                            Dodaj kanał
+                            Dodaj tag
                         </button>
                     </div>
                 </div>
@@ -57,16 +57,12 @@
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
                                 <div class="form-group">
-                                    <label class="placeholder"><b>Nazwa</b></label>
+                                    <label class="placeholder"><b>Name</b></label>
                                     @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
                                 </div>
                                 <div class="form-group">
-                                    <label class="placeholder"><b>Link</b></label>
-                                    @Html.TextBoxFor(x => x.Link, new { @class = "form-control" })
-                                </div>
-                                <div class="form-group">
-                                    <label class="placeholder"><b>Ikona</b></label>
-                                    @Html.TextBoxFor(x => x.FontAwesome, new { @class = "form-control" })
+                                    <label class="placeholder"><b>Content</b></label>
+                                    @Html.TextBoxFor(x => x.Content, new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>

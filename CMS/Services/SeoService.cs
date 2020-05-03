@@ -19,35 +19,6 @@ namespace CMS.Services
             _context = context;
         }
 
-        public async Task<bool> CreateSocialMedia(SocialMediaModel socialMedia)
-        {
-            await _context.SocialMedia.AddAsync(socialMedia);
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> DeleteSocialMedia(int id)
-        {
-            var socialMedia = await _context.SocialMedia.SingleOrDefaultAsync(b => b.Id == id);
-
-            if (socialMedia == null)
-            {
-                return false;
-            }
-
-            _context.SocialMedia.Remove(socialMedia);
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<List<SocialMediaModel>> GetAllSocialMedias()
-        {
-            return await _context.SocialMedia.ToListAsync();
-        }
-
-        public async Task<SocialMediaModel> GetSocialMedia(int id)
-        {
-            return await _context.SocialMedia.SingleOrDefaultAsync(b => b.Id == id);
-        }
-
         public List<SelectListItem> GetSocialMediaName()
         {
             var selectList = new List<SelectListItem>
@@ -60,9 +31,84 @@ namespace CMS.Services
             return selectList;
         }
 
+        public List<SelectListItem> GetMetaTagsName()
+        {
+            var selectList = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Description", Text = "Description" },
+                new SelectListItem { Value = "Title", Text = "Title" },
+                new SelectListItem { Value = "Keywords", Text = "Keywords"  }
+            };
+
+            return selectList;
+        }
+
+        public async Task<bool> CreateSocialMedia(SocialMediaModel socialMedia)
+        {
+            await _context.SocialMedias.AddAsync(socialMedia);
+            return await _context.SaveChangesAsync() > 0;
+        }
+        public async Task<SocialMediaModel> GetSocialMedia(int id)
+        {
+            return await _context.SocialMedias.SingleOrDefaultAsync(b => b.Id == id);
+        }
+
+        public async Task<List<SocialMediaModel>> GetAllSocialMedias()
+        {
+            return await _context.SocialMedias.ToListAsync();
+        }
+
         public async Task<bool> UpdateSocialMedia(SocialMediaModel socialMedia)
         {
-            _context.SocialMedia.Update(socialMedia);
+            _context.SocialMedias.Update(socialMedia);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteSocialMedia(int id)
+        {
+            var socialMedia = await _context.SocialMedias.SingleOrDefaultAsync(b => b.Id == id);
+
+            if (socialMedia == null)
+            {
+                return false;
+            }
+
+            _context.SocialMedias.Remove(socialMedia);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> CreateMetaTag(MetaTagModel metaTag)
+        {
+            await _context.MetaTags.AddAsync(metaTag);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<MetaTagModel> GetMetaTag(int id)
+        {
+            return await _context.MetaTags.SingleOrDefaultAsync(b => b.Id == id);
+        }
+
+        public async Task<List<MetaTagModel>> GetAllMetaTags()
+        {
+            return await _context.MetaTags.ToListAsync();
+        }
+
+        public async Task<bool> UpdateMetaTag(MetaTagModel metaTag)
+        {
+            _context.MetaTags.Update(metaTag);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteMetaTag(int id)
+        {
+            var metaTag = await _context.MetaTags.SingleOrDefaultAsync(b => b.Id == id);
+
+            if (metaTag == null)
+            {
+                return false;
+            }
+
+            _context.MetaTags.Remove(metaTag);
             return await _context.SaveChangesAsync() > 0;
         }
     }

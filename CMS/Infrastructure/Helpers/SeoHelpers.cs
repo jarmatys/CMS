@@ -9,7 +9,7 @@ namespace CMS.Infrastructure.Helpers
 {
     public static class SeoHelpers
     {
-        public static SocialMediaView ConvertToView(SocialMediaModel result)
+        public static SocialMediaView ConvertToViewSocialMedia(SocialMediaModel result)
         {
             var socialMediaView = new SocialMediaView
             {
@@ -22,7 +22,7 @@ namespace CMS.Infrastructure.Helpers
             return socialMediaView;
         }
 
-        public static SocialMediaModel ConvertToModel(SocialMediaView result)
+        public static SocialMediaModel ConvertToModelSocialMedia(SocialMediaView result)
         {
             var socialMediaModel = new SocialMediaModel
             {
@@ -34,11 +34,41 @@ namespace CMS.Infrastructure.Helpers
             return socialMediaModel;
         }
 
-        public static SocialMediaModel MergeViewWithModel(SocialMediaModel model, SocialMediaView view)
+        public static SocialMediaModel MergeViewWithModelSocialMedia(SocialMediaModel model, SocialMediaView view)
         {
             model.Link = view.Link;
             model.Name = view.Name;
             model.FontAwesome = view.FontAwesome;
+
+            return model;
+        }
+
+        public static MetaTagModel ConvertToModelMetaTag(MetaTagView result)
+        {
+            var metaTagModel = new MetaTagModel
+            {
+                Name = result.Name,
+                Content = result.Content
+            };
+
+            return metaTagModel;
+        }
+
+        public static MetaTagView ConvertToViewMetaTag(MetaTagModel result)
+        {
+            var metaTagView = new MetaTagView
+            {
+                Name = result.Name,
+                Content = result.Content
+            };
+
+            return metaTagView;
+        }
+
+        public static MetaTagModel MergeViewWithModelMetaTag(MetaTagModel model, MetaTagView view)
+        {
+            model.Content = view.Content;
+            model.Name = view.Name;
 
             return model;
         }

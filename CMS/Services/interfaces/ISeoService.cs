@@ -9,12 +9,20 @@ namespace CMS.Services.interfaces
 {
     public interface ISeoService
     {
+        List<SelectListItem> GetSocialMediaName();
+        List<SelectListItem> GetMetaTagsName();
+
         Task<bool> CreateSocialMedia(SocialMediaModel socialMedia);
         Task<SocialMediaModel> GetSocialMedia(int id);
         Task<List<SocialMediaModel>> GetAllSocialMedias();
         Task<bool> UpdateSocialMedia(SocialMediaModel socialMedia);
         Task<bool> DeleteSocialMedia(int id);
 
-        List<SelectListItem> GetSocialMediaName();
+        Task<bool> CreateMetaTag(MetaTagModel metaTag);
+        Task<MetaTagModel> GetMetaTag(int id);
+        Task<List<MetaTagModel>> GetAllMetaTags();
+        Task<bool> UpdateMetaTag(MetaTagModel metaTag);
+        Task<bool> DeleteMetaTag(int id);
+
     }
 }
