@@ -110,6 +110,48 @@ namespace CMS.Controllers
             return View(AccountHelpers.ConvertToView(user));
         }
 
+        // [ GET ] - <domain>/Account/ChangePassword
+        [HttpGet]
+        public IActionResult ChangePassword(string Id)
+        {
+            var changePassword = new ChangePasswordView();
+            changePassword.Id = Id;
+
+            return View(changePassword);
+        }
+
+        // [ POST ] - <domain>/Account/ChangePassword
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            var user = await _userManager.FindByIdAsync(result.Id);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Nie odnaleziono takiego użytkownika.");
+            }
+
+            var newPassword = _userManager.PasswordHasher.HashPassword(user, result.Password);
+            user.PasswordHash = newPassword;
+            var res = await _userManager.UpdateAsync(user);
+
+            if (res.Succeeded)
+            {
+                return RedirectToAction("List", "Account");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Problem z zapisem nowego hasła.");
+            }
+
+            return View(result);
+
+        }
+
         // [ POST ] - <domain>/Account/Edit
         [HttpPost]
         public async Task<IActionResult> Edit(UserView result)

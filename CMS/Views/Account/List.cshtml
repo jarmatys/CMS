@@ -73,10 +73,13 @@
                                                     <button type="button" data-toggle="tooltip" class="btn btn-link btn-success btn-lg" data-original-title="Nadaj prawa">
                                                         <i class="fas fa-check"></i>
                                                     </button>
-                                                    <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("Edit","Account", new { Id = user.Id })'" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
+                                                    <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("Edit","Account", new { Id = user.Id })'" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj informacje">
                                                         <i class="fa fa-edit"></i>
                                                     </button>
-                                                    <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-userid="@user.Id" >
+                                                    <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("ChangePassword","Account", new { Id = user.Id })'" class="btn btn-link btn-primary btn-lg" data-original-title="Zmiana hasła">
+                                                        <i class="fas fa-key"></i>
+                                                    </button>
+                                                    <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-userid="@user.Id">
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </div>
