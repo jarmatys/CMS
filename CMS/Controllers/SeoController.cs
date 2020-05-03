@@ -80,6 +80,8 @@ namespace CMS.Controllers
             return RedirectToAction("SocialMediaList", "Seo");
         }
 
+
+
         // [ GET ] - <domain>/Seo/MetaTagsList
         [HttpGet]
         public async Task<IActionResult> MetaTagsList()
@@ -141,11 +143,69 @@ namespace CMS.Controllers
             return RedirectToAction("MetaTagsList", "Seo");
         }
 
-        // [ GET ] - <domain>/Seo/RetrievalLinks
+
+
+        // [ GET ] - <domain>/Seo/RetrievalLinksList
         [HttpGet]
-        public IActionResult RetrievalLinks()
+        public async Task<IActionResult> RetrievalLinksList()
+        {
+            var retrievalLinks = await _seoService.GetAllRetrievalLinks();
+            return View(retrievalLinks);
+        }
+
+        // [ GET ] - <domain>/Seo/RetrievalLinksAdd
+        [HttpGet]
+        public IActionResult RetrievalLinksAdd()
         {
             return View();
         }
+
+        // [ POST ] - <domain>/Seo/MetaTagsAdd
+        [HttpPost]
+        public async Task<IActionResult> RetrievalLinksAdd(RetrievalLinksView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            await _seoService.CreateRetrievalLink(SeoHelpers.ConvertToModelRetrievalLink(result));
+
+            return RedirectToAction("RetrievalLinksList", "Seo");
+        }
+
+
+        // [ GET ] - <domain>/Seo/RetrievalLinksEdit
+        [HttpGet]
+        public async Task<IActionResult> RetrievalLinksEdit(int Id)
+        {
+            var retrievalLink = await _seoService.GetRetrievalLink(Id);
+            return View(SeoHelpers.ConvertToViewRetrievalLink(retrievalLink));
+        }
+
+        // [ POST ] - <domain>/Seo/RetrievalLinksEdit
+        [HttpPost]
+        public async Task<IActionResult> RetrievalLinksEdit(RetrievalLinksView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            var retrievalLink = await _seoService.GetRetrievalLink(result.Id);
+            await _seoService.UpdateRetrievalLink(SeoHelpers.MergeViewWithModelRetrievalLink(retrievalLink, result));
+
+            return RedirectToAction("RetrievalLinksList", "Seo");
+        }
+
+        // [ POST ] - <domain>/Seo/RetrievalLinksDelete
+        [HttpPost]
+        public async Task<IActionResult> RetrievalLinksDelete(int Id)
+        {
+            await _seoService.DeleteRetrievalLink(Id);
+            return RedirectToAction("RetrievalLinksList", "Seo");
+        }
+
+
     }
 }

@@ -77,6 +77,8 @@ namespace CMS.Services
             return await _context.SaveChangesAsync() > 0;
         }
 
+
+
         public async Task<bool> CreateMetaTag(MetaTagModel metaTag)
         {
             await _context.MetaTags.AddAsync(metaTag);
@@ -109,6 +111,43 @@ namespace CMS.Services
             }
 
             _context.MetaTags.Remove(metaTag);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+
+
+        public async Task<bool> CreateRetrievalLink(RetrievalLinksModel retrievalLink)
+        {
+            await _context.RetrievalLinks.AddAsync(retrievalLink);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<RetrievalLinksModel> GetRetrievalLink(int id)
+        {
+            return await _context.RetrievalLinks.SingleOrDefaultAsync(b => b.Id == id);
+        }
+
+        public async Task<List<RetrievalLinksModel>> GetAllRetrievalLinks()
+        {
+            return await _context.RetrievalLinks.ToListAsync();
+        }
+
+        public async Task<bool> UpdateRetrievalLink(RetrievalLinksModel retrievalLink)
+        {
+            _context.RetrievalLinks.Update(retrievalLink);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteRetrievalLink(int id)
+        {
+            var retrievalLink = await _context.RetrievalLinks.SingleOrDefaultAsync(b => b.Id == id);
+
+            if (retrievalLink == null)
+            {
+                return false;
+            }
+
+            _context.RetrievalLinks.Remove(retrievalLink);
             return await _context.SaveChangesAsync() > 0;
         }
     }

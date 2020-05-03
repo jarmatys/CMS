@@ -43,6 +43,8 @@ namespace CMS.Infrastructure.Helpers
             return model;
         }
 
+
+
         public static MetaTagModel ConvertToModelMetaTag(MetaTagView result)
         {
             var metaTagModel = new MetaTagModel
@@ -69,6 +71,37 @@ namespace CMS.Infrastructure.Helpers
         {
             model.Content = view.Content;
             model.Name = view.Name;
+
+            return model;
+        }
+
+
+        public static RetrievalLinksModel ConvertToModelRetrievalLink(RetrievalLinksView result)
+        {
+            var retrievalLink = new RetrievalLinksModel
+            {
+                NewUrl = result.NewUrl,
+                OldUrl = result.OldUrl
+            };
+
+            return retrievalLink;
+        }
+
+        public static RetrievalLinksView ConvertToViewRetrievalLink(RetrievalLinksModel result)
+        {
+            var retrievalLink = new RetrievalLinksView
+            {
+                NewUrl = result.NewUrl,
+                OldUrl = result.OldUrl
+            };
+
+            return retrievalLink;
+        }
+
+        public static RetrievalLinksModel MergeViewWithModelRetrievalLink(RetrievalLinksModel model, RetrievalLinksView view)
+        {
+            model.OldUrl = view.OldUrl;
+            model.NewUrl = view.NewUrl;
 
             return model;
         }

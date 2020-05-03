@@ -1,0 +1,152 @@
+﻿@model IEnumerable<RetrievalLinksModel>
+
+@{
+    ViewData["Title"] = "odzyskiwanie linków";
+    Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+}
+
+<div class="page-inner">
+
+    <div class="page-header">
+        <h4 class="page-title">Odzyskiwanie linków</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="@Url.Action("Index","Admin")">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Seo
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Odzyskiwanie linków
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Odzyskiwanie linków</h4>
+                        <button class="btn btn-success ml-auto" onclick="location='@Url.Action("RetrievalLinksAdd","Seo")'">
+                            <i class="fa fa-plus"></i>
+                            Dodaj przekierowanie
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row row-projects">
+                        <div class="table-responsive">
+                            <table id="add-row" class="display table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Stary link</th>
+                                        <th>Nowy link</th>
+                                        <th style="width: 10%">Operacje</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Stary link</th>
+                                        <th>Nowy link</th>
+                                        <th style="width: 10%">Operacje</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @if (Model.Count() == 0)
+                                    {
+                                        <tr>
+                                            <td colspan="3">Brak dodanych przekierowań</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        foreach (var retrievalLink in Model)
+                                        {
+                                            <tr id="row-@retrievalLink.Id">
+                                                <td>@retrievalLink.OldUrl</td>
+                                                <td>@retrievalLink.NewUrl</td>
+                                                <td>
+                                                    <div class="form-button-action">
+                                                        <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("RetrievalLinksEdit","Seo", new { Id = retrievalLink.Id })'" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-retrievalLinksId="@retrievalLink.Id">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('#basic-datatables').DataTable({
+            });
+
+        });
+
+        $('.delete-alert').click(function (e) {
+            swal({
+                title: 'Czy na pewno chcesz usunąć to przekierowanie?',
+                text: "Tych zmian nie da się odtworzyć!",
+                type: 'warning',
+                buttons: {
+                    confirm: {
+                        text: 'Usuń!',
+                        className: 'btn btn-danger'
+                    },
+                    cancel: {
+                        visible: true,
+                        text: 'Cofnij',
+                        className: 'btn btn-success'
+                    }
+                }
+            }).then((Delete) => {
+                if (Delete) {
+
+                    $.post("@Url.Action("RetrievalLinksDelete","Seo")", { Id: this.dataset.retrievallinksid });
+
+                    var row = document.getElementById(`row-${this.dataset.retrievallinksid}`);
+                    row.parentNode.removeChild(row);
+
+                    swal({
+                        title: 'Usunieto',
+                        text: 'Twoje przekierowanie zostało usunięte.',
+                        type: 'success',
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        }
+                    });
+                } else {
+                    swal.close();
+                }
+            });
+        });
+    </script>
+}
+
+

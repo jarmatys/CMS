@@ -24,5 +24,12 @@ namespace CMS.Services.interfaces
         Task<bool> UpdateMetaTag(MetaTagModel metaTag);
         Task<bool> DeleteMetaTag(int id);
 
+
+        Task<bool> CreateRetrievalLink(RetrievalLinksModel retrievalLink);
+        Task<RetrievalLinksModel> GetRetrievalLink(int id);
+        Task<List<RetrievalLinksModel>> GetAllRetrievalLinks();
+        Task<bool> UpdateRetrievalLink(RetrievalLinksModel retrievalLink);
+        Task<bool> DeleteRetrievalLink(int id);
+
     }
 }

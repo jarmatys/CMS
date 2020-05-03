@@ -35,6 +35,7 @@ namespace CMS.Context
 
         public DbSet<SocialMediaModel> SocialMedias { get; set; }
         public DbSet<MetaTagModel> MetaTags { get; set; }
+        public DbSet<RetrievalLinksModel> RetrievalLinks { get; set; }
 
         // Zaślepka na klasę bazową
         protected override void OnModelCreating(ModelBuilder builder)
