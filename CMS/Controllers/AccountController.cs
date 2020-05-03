@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CMS.Infrastructure.Helpers;
 using CMS.Models.Db.Account;
@@ -106,16 +107,33 @@ namespace CMS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string Id)
         {
-            var user = await _userManager.FindByIdAsync(Id);
+            User user = null;
+            if (string.IsNullOrEmpty(Id))
+            {
+                user = await _userManager.GetUserAsync(HttpContext.User);
+            }
+            else
+            {
+                user = await _userManager.FindByIdAsync(Id);
+            }
             return View(AccountHelpers.ConvertToView(user));
         }
 
         // [ GET ] - <domain>/Account/ChangePassword
         [HttpGet]
-        public IActionResult ChangePassword(string Id)
+        public async Task<IActionResult> ChangePassword(string Id)
         {
             var changePassword = new ChangePasswordView();
-            changePassword.Id = Id;
+
+            if (string.IsNullOrEmpty(Id))
+            {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                changePassword.Id = user.Id;
+            }
+            else
+            {
+                changePassword.Id = Id;
+            }
 
             return View(changePassword);
         }

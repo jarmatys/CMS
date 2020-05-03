@@ -2,6 +2,10 @@
 
 @{
     ViewData["Title"] = "konfiguracja e-maila";
+
+    ViewData["Page"] = "SettingsEmail";
+    ViewData["Group"] = "Settings";
+
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
@@ -67,7 +71,7 @@
                                 <div class="form-group">
                                     <label for="password" class="placeholder"><b>Hasło</b></label>
                                     <div class="position-relative">
-                                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @type="password" })
+                                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @type = "password" })
                                         <div class="show-password">
                                             <i class="icon-eye"></i>
                                         </div>

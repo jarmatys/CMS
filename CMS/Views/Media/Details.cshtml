@@ -2,6 +2,10 @@
 
 @{
     ViewData["Title"] = "szczegóły zdjęcia";
+
+    ViewData["Page"] = "MediaList";
+    ViewData["Group"] = "Media";
+
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
@@ -129,7 +133,7 @@
                 if (Delete) {
 
                     $.post("@Url.Action("Delete","Media")", { Id: this.dataset.imgageid });
-                    location = '@Url.Action("List","Media")'; 
+                    location = '@Url.Action("List","Media")';
 
                 } else {
                     swal.close();

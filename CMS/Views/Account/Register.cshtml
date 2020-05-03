@@ -2,6 +2,10 @@
 
 @{
     ViewData["Title"] = "rejestracja";
+
+    ViewData["Page"] = "AccountAdd";
+    ViewData["Group"] = "Account";
+
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 
@@ -40,7 +44,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="login" style="background-color: white;">
-                            
+
                             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
                             @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "login-form" }))

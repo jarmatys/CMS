@@ -2,6 +2,10 @@
 
 @{
     ViewData["Title"] = "dodawanie kategorii";
+
+    ViewData["Page"] = "ArticleCategory";
+    ViewData["Group"] = "Article";
+
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
 }
 <div class="page-inner">
@@ -63,7 +67,7 @@
                 </div>
 
                 <label for="comment">Opis</label>
-                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @placeholder = "Opis kategorii (opcjonalnie)", @id="comment", @rows="5" })
+                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @placeholder = "Opis kategorii (opcjonalnie)", @id = "comment", @rows = "5" })
 
             </div>
 
