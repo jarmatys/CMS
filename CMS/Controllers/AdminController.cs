@@ -24,5 +24,18 @@ namespace CMS.Controllers
             return View();
         }
 
+        // [ GET ] - <domain>/Admin/Help
+        [HttpGet]
+        public IActionResult Help()
+        {
+            return View();
+        }
+
+        // [ GET ] - <domain>/Admin/License
+        [HttpGet]
+        public IActionResult License()
+        {
+            return View();
+        }
     }
 }
