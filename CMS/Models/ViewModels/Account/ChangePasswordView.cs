@@ -10,6 +10,9 @@ namespace CMS.Models.ViewModels.Account
     {
         public string Id { get; set; }
 
+        [Required(ErrorMessage = "Uzupełnij aktualne hasło")]
+        public string CurrentPassword { get; set; }
+
         [Required(ErrorMessage = "Uzupełnij hasło")]
         public string Password { get; set; }
 

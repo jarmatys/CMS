@@ -153,6 +153,13 @@ namespace CMS.Controllers
                 ModelState.AddModelError("", "Nie odnaleziono takiego użytkownika.");
             }
 
+            var checkCurrentPassword = await _userManager.CheckPasswordAsync(user, result.CurrentPassword);
+            if (!checkCurrentPassword)
+            {
+                ModelState.AddModelError("", "Podane aktualne hasło nie jest zgodne");
+                return View(result);
+            }
+
             var newPassword = _userManager.PasswordHasher.HashPassword(user, result.Password);
             user.PasswordHash = newPassword;
             var res = await _userManager.UpdateAsync(user);
