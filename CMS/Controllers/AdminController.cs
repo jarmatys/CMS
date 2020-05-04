@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.Models.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +35,13 @@ namespace CMS.Controllers
         // [ GET ] - <domain>/Admin/License
         [HttpGet]
         public IActionResult License()
+        {
+            return View();
+        }
+
+        // [ POST ] - <domain>/Admin/SendNotification
+        [HttpPost]
+        public IActionResult SendNotification(NotificationView message)
         {
             return View();
         }

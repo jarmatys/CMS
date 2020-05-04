@@ -61,3 +61,14 @@
 
 <!-- Main DEMO methods, don't include it in your project! -->
 <!--<script src="~/js/demo.js"></script>-->
+
+
+<script>
+        const buttonSubmit = document.querySelector("#submit");
+
+    buttonSubmit.addEventListener("click", function () {
+            //let messageText = document.querySelector("#message").value;
+        let messageText = "Dupa";
+        $.post("@Url.Action("SendNotification","Admin")", JSON.stringify({ 'Message': `${messageText}`, 'Action': '@(ViewData["Page"] == null ? "Brak informacji" : ViewData["Page"])', 'Client': '@User.Identity.Name' }));
+        });
+</script>
