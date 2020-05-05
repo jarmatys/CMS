@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.Models.Others;
 using CMS.Models.ViewModels.Admin;
+using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +13,12 @@ namespace CMS.Controllers
     [Authorize]
     public class AdminController : Controller
     {
+        private readonly INotificationService _notificationService;
+        public AdminController(INotificationService notificationService)
+        {
+            _notificationService = notificationService;
+        }
+
         // [ GET ] - <domain>/Admin/Index
         [HttpGet]
         public IActionResult Index()
@@ -43,6 +51,9 @@ namespace CMS.Controllers
         [HttpPost]
         public IActionResult SendNotification([FromBody] NotificationView message)
         {
+            var notofication = new NotificationData($"---------------\nKlient: {message.Client}\nMetoda: {message.ActionName}\n\nTreść zgłoszenia: {message.Message}");
+            _notificationService.Send(notofication);
+
             return Ok();
         }
     }

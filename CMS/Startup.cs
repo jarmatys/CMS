@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CMS.Context;
 using CMS.Infrastructure;
+using CMS.Infrastructure.Settings;
 using CMS.Models.Db.Account;
 using CMS.Services;
 using CMS.Services.interfaces;
@@ -68,9 +69,12 @@ namespace CMS
             services.AddScoped<IAppearanceService, AppearanceService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ISeoService, SeoService>();
+            services.AddScoped<INotificationService, SlackService>();
 
             // Konfiguracja platformy cloudinary do przechowywania zdjêæ w chmurze
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            // Konfiguracja slacka
+            services.Configure<SlackSettings>(Configuration.GetSection("SlackSettings"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
