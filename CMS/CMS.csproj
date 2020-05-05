@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\boundle\js\" />
     <Folder Include="wwwroot\boundle\css\" />
-    <Folder Include="wwwroot\User\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,102 @@
+﻿<!-- Contact & Map starts -->
+<section id="contact" class="bg-light-gray">
+    <div class="container">
+        <div class="row pb-half ">
+            <div class="col-lg-6 col-md-12 col-sm-12 mb-5 wow fadeInUp " data-wow-delay="400ms">
+                <div class="contact-box-shadow">
+                    <div class="text-left sm-text-center w-100">
+                        <h2 class="color-black font-weight-500 mb-2rem"> Skontaktuj się ze mną</h2>
+                        <p class="contact-para-setting">
+                            Jeżeli masz jakiekolwiek pytania, napisz do mnie. Z chęcią wyjaśnię
+                            cały proces powstawania strony, jak i rozwieję wszelkie wątpliwości.
+                        </p>
+                    </div>
+                    <div class="contact-info sm-text-center">
+                        <div class="icon-box">
+                            <i class="ti ti-mobile color-pink"></i>
+                            <p class="color-grey"> +(48) 660 972 497</p>
+                        </div>
+                        <div class="icon-box">
+                            <i class="ti ti-email color-pink"></i>
+                            <p>
+                                <a href="mailto:jaroslaw@armatys.me" class="color-grey">jaroslaw@armatys.me</a>
+                            </p>
+                        </div>
+                        <div class="icon-box">
+                            <i class="ti ti-location-pin color-pink"></i>
+                            <p class="color-grey"> Wrocław i Racibórz</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 mb-5 col-map wow fadeInUp" data-wow-delay="400ms">
+                <div id="google-map" class="bg-light-gray map"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-title wow fadeIn" data-wow-delay="300ms">
+                    <h5> Zostaw wiadomość </h5>
+                    <h2> Formularz kontaktowy </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 contact-form-center wow fadeInUp" data-wow-delay="400ms">
+                <div class="company-contact-form">
+                    <form class="contact-form-outer" method="POST" action="mail/contact_me.php">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="contact-form-textfield pb-4">
+                                    <input type="text" placeholder="Imię" class="form-control" required id="name"
+                                           name="name">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="contact-form-textfield pb-4">
+                                    <input type="email" placeholder="E-mail" class="form-control" required
+                                           id="email" name="email">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="contact-form-textfield pb-4">
+                                    <input type="tel" placeholder="Telefon" class="form-control" id="phone"
+                                           name="phone">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="contact-form-textfield pb-4">
+                                    <input type="text" placeholder="Temat" class="form-control" required
+                                           id="subject" name="subject">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="contact-form-textfield pb-4">
+                                    <textarea placeholder="Wiadomość" class="form-control message" id="message"
+                                              name="message"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 pt-xs-25px text-center">
+                                <button type="submit"
+                                        class="btn-setting btn-hvr-setting-main btn-yellow btn-hvr text-uppercase"
+                                        id="submit_btn">
+                                    Wyślij wiadomość
+                                    <span class="btn-hvr-setting btn-hvr-pink">
+                                        <span class="btn-hvr-setting-inner">
+                                            <span class="btn-hvr-effect"></span>
+                                            <span class="btn-hvr-effect"></span>
+                                            <span class="btn-hvr-effect"></span>
+                                            <span class="btn-hvr-effect"></span>
+                                        </span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact & Map ends -->
