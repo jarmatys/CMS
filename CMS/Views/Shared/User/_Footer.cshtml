@@ -1,35 +1,20 @@
-﻿<!-- Footer starts -->
+﻿@model HomeView
+<!-- Footer starts -->
 <footer class="p-half bg-black2">
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-sm-12 text-center">
                 <ul class="footer-icons mb-4">
-                    <li>
-                        <a target="_blank" href="https://www.facebook.com/jarmatys" class="wow fadeInUp">
-                            <i class="ti ti-facebook"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a target="_blank" href="https://g.page/Kompleksowe-strony-internetowe/"
-                           class="wow fadeInUp"><i class="ti ti-google"></i> </a>
-                    </li>
-                    <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/jarmatys/" class="wow fadeInDown">
-                            <i class="ti ti-linkedin"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a target="_blank" href="https://www.instagram.com/jaro_armi/" class="wow fadeInUp">
-                            <i class="ti ti-instagram"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a target="_blank" href="https://github.com/jarmatys" class="wow fadeInDown">
-                            <i class="ti ti-github"></i>
-                        </a>
-                    </li>
+                    @foreach (var socialMedium in Model.SocialMedias)
+                    {
+                        <li>
+                            <a target="_blank" href="@socialMedium.Link" class="wow fadeInUp">
+                                <i class="@socialMedium.FontAwesome"></i>
+                            </a>
+                        </li>
+                    }
                 </ul>
-                <p class="copyrights mt-2 mb-2">Copyright &copy; Jarosław Armatys 2020</p>
+                <p class="copyrights mt-2 mb-2">Copyright &copy; Jarosław Armatys @DateTime.Now.ToString("yyyy")</p>
             </div>
         </div>
     </div>

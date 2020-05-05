@@ -23,7 +23,7 @@ ol, ul {
     padding: 0;
     list-style: none;
 }
-section, .section-padding {position: relative; padding: 7.5rem 0; overflow: hidden;}
+section, .section-padding {position: relative; padding: 5.5rem 0; overflow: hidden;}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', sans-serif;
@@ -2723,11 +2723,13 @@ header .fixed-menu.navbar-top-default .header-social a:hover {
 }
 /* page header */
 .page_header {
-    background: url(../user/images/page-tittle.jpg) no-repeat;
+    background: url(../images/blog-bg.jpg) no-repeat;
 }
+
 .page_shop_header {
     background: url(../user/images/page-tittle-1.jpg) no-repeat;
 }
+
 .page_header {
     background-size: cover;
     background-position: center center;
@@ -2759,9 +2761,13 @@ header .fixed-menu.navbar-top-default .header-social a:hover {
 /* ===================================
     Blog Pages Starts
 ====================================== */
+.article_container{
+
+}
 .news_item{
     background: #ffffff;
     position: relative;
+    min-height:600px;
 }
 .news_item.shadow{
     -webkit-box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.1);

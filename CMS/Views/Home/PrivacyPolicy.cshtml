@@ -1,20 +1,34 @@
-﻿@model PrivacyPolicyModel
+﻿@model HomeView
 
 @{
     ViewData["Title"] = "polityka prywatności";
     Layout = "~/Views/Shared/User/_Layout.cshtml";
+    var privacyPolicy = Model.TempData as PrivacyPolicyModel;
 }
 
+<section class="page_header pb-0 w-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 page-content position-relative">
+                <h2 class="text-white mt-5 mb-2">Polityka prywatności</h2>
+                <p class="text-white">Opis zasad przedtwarzania danych.</p>
+                <div class="page_nav bg-white d-inline-block">
+                    <span>Jesteś tutaj:</span> <a href="@Url.Action("Index","Home")" class="d-inline-block color-black">Strona główna</a> <span class="color-yellow"><i class="ti ti-angle-double-right"></i>Polityka prywatności</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 Polityka prywatności opisuje zasady przetwarzania przez nas
 informacji na Twój temat, w tym danych osobowych oraz
 ciasteczek, czyli tzw. cookies.
 1. Informacje ogólne
 1. Niniejsza polityka dotyczy Serwisu www, funkcjonującego pod adresem url:
-@Model.PageUrl
+@privacyPolicy.PageUrl
 2. Operatorem serwisu oraz Administratorem danych osobowych jest:
-@Model.CompanyName @Model.Street, @Model.ZipCode @Model.City
-3. Adres kontaktowy poczty elektronicznej operatora: @Model.Email
+@privacyPolicy.CompanyName @privacyPolicy.Street, @privacyPolicy.ZipCode @privacyPolicy.City
+3. Adres kontaktowy poczty elektronicznej operatora: @privacyPolicy.Email
 4. Operator jest Administratorem Twoich danych osobowych w odniesieniu do danych podanych
 dobrowolnie w Serwisie.
 5. Serwis wykorzystuje dane osobowe w następujących celach:
@@ -33,7 +47,7 @@ Operatora
 (certyfkat SSL). Dzięki temu dane osobowe i dane logowania, wprowadzone na stronie, zostają
 zaszyfrowane w komputerze użytkownika i mogą być odczytane jedynie na docelowym serwerze.
 3. Hosting
-1. Serwis jest hostowany (technicznie utrzymywany) na serwera operatora: @Model.HostingName
+1. Serwis jest hostowany (technicznie utrzymywany) na serwera operatora: @privacyPolicy.HostingName
 4. Twoje prawa i dodatkowe informacje o sposobie
 wykorzystania danych
 1. W niektórych sytuacjach Administrator ma prawo przekazywać Twoje dane osobowe innym

@@ -1,126 +1,49 @@
-﻿<!-- Blog start -->
-<section id="blog">
-    <div class="blog-vertical">
-        <h2 class="d-none">Sekcja blogowa</h2>
-        <div class="container-fluid">
+﻿@model HomeView
+
+@if (Model.Articles.Count() == 3)
+{
+    <section id="blog" class="bg-light-gray">
+        <h2 class="d-none">heading</h2>
+        <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 p-0 carousel-img">
-                    <div class="item">
-                        <div class="image hover-effect">
-                            <img alt="stats" src="#" class="video-img-setting">
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="image hover-effect">
-                            <img alt="stats" src="#" class="video-img-setting">
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="image hover-effect">
-                            <img alt="stats" src="#" class="video-img-setting">
-                        </div>
+                <div class="col-md-12">
+                    <div class="main-title wow fadeIn" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeIn;">
+                        <h5>  Aktualności </h5>
+                        <h2> Najnowsze wpisy </h2>
+                        <p> Zobacz moje najnowsze wpisy. Programowanie i tworzenie stron to moja pasja. Z chęcią dziele się swoją wiedza jak i doświadczeniem.</p>
                     </div>
                 </div>
-
-                <div class="col-lg-6 col-md-6 col-sm-12 p-0">
-                    <div class="carousel-content">
-                        <div class="item blog-content-setting">
-                            <div class="text-center mx-auto container-padding">
-                                <div class="pr-3 pl-3 text-xs-center w-100">
-                                    <h5 class="font-secondary font-weight-light color-pink mb-5 mb-xxs-3">
-                                        December
-                                        21, 2018
-                                    </h5>
-                                    <h2 class="color-black font-weight-500 text-capitalize mb-5 mb-xxs-3">
-                                        a
-                                        creative design agency in east london.
-                                    </h2>
-                                    <p class="color-black heading-para-setting mb-5 mb-xxs-3">
-                                        Curabitur mollis
-                                        bibendum luctus. Duis suscipit vitae dui sed suscipit. Vestibulum auctor
-                                        nunc vitae diam eleifend, in maximus metus sollicitudin.
-                                    </p>
-                                    <a href="blog.html" class="btn-setting btn-hvr-setting-main btn-pink">
-                                        Read Full
-                                        Blog
-                                        <span class="btn-hvr-setting btn-hvr-grey">
-                                            <span class="btn-hvr-setting-inner">
-                                                <span class="btn-hvr-effect"></span>
-                                                <span class="btn-hvr-effect"></span>
-                                                <span class="btn-hvr-effect"></span>
-                                                <span class="btn-hvr-effect"></span>
-                                            </span>
+            </div>
+            <div class="row">
+                @foreach (var article in Model.Articles)
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="news_item shadow blog-one">
+                            <img src="@article.Image.Url" alt="@article.Image.Description" class="img-fluid">
+                            <div class="news_desc">
+                                <h3 class="text-capitalize line-height-normal"><a href="@($"blog/{article.Slug}")" class="color-black">@article.Title</a></h3>
+                                <ul class="meta-tags mt-20px mb-20px">
+                                    <li><a href="javascript:void(0)"><i class="ti ti-calendar"></i>@article.AddDate.ToString("dd-MM-yyyy")</a></li>
+                                    <li><a href="javascript:void(0)"> <i class="ti ti-user"></i> @article.User.Name </a></li>
+                                    <li><a href="javascript:void(0)"><i class="ti ti-comment"></i>5 </a></li>
+                                </ul>
+                                <p class="mb-35px">@article.Excerpt</p>
+                                <a href="@($"blog/{article.Slug}")" class="btn-setting btn-hvr-setting-main btn-pink text-white btn-hvr">
+                                    Czytaj więcej
+                                    <span class="btn-hvr-setting btn-hvr-yellow">
+                                        <span class="btn-hvr-setting-inner">
+                                            <span class="btn-hvr-effect"></span>
+                                            <span class="btn-hvr-effect"></span>
+                                            <span class="btn-hvr-effect"></span>
+                                            <span class="btn-hvr-effect"></span>
                                         </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item blog-content-setting">
-                            <div class="text-center mx-auto container-padding">
-                                <div class="pr-3 pl-3 text-xs-center w-100">
-                                    <h5 class="font-secondary font-weight-light color-pink mb-5 mb-xxs-3">
-                                        December
-                                        21, 2018
-                                    </h5>
-                                    <h2 class="color-black font-weight-500 text-capitalize mb-5 mb-xxs-3">
-                                        a
-                                        creative design agency in east london.
-                                    </h2>
-                                    <p class="color-black heading-para-setting  mb-5 mb-xxs-3">
-                                        Curabitur mollis bibendum luctus. Duis suscipit vitae dui sed suscipit.
-                                        Vestibulum auctor nunc vitae diam eleifend, in maximus metus sollicitudin.
-                                    </p>
-                                    <a href="blog.html" class="btn-setting btn-hvr-setting-main btn-pink">
-                                        Read Full
-                                        Blog
-                                        <span class="btn-hvr-setting btn-hvr-grey">
-                                            <span class="btn-hvr-setting-inner">
-                                                <span class="btn-hvr-effect"></span>
-                                                <span class="btn-hvr-effect"></span>
-                                                <span class="btn-hvr-effect"></span>
-                                                <span class="btn-hvr-effect"></span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item blog-content-setting">
-                            <div class="text-center mx-auto container-padding">
-                                <div class="pr-3 pl-3 text-xs-center w-100">
-                                    <h5 class="font-secondary font-weight-light color-pink mb-5 mb-xxs-3">
-                                        December
-                                        21, 2018
-                                    </h5>
-                                    <h2 class="color-black font-weight-500 text-capitalize mb-5 mb-xxs-3">
-                                        a
-                                        creative design agency in east london.
-                                    </h2>
-                                    <p class="color-black heading-para-setting mb-5 mb-xxs-3">
-                                        Curabitur mollis
-                                        bibendum luctus. Duis suscipit vitae dui sed suscipit. Vestibulum auctor
-                                        nunc vitae diam eleifend, in maximus metus sollicitudin.
-                                    </p>
-                                    <a href="blog.html" class="btn-setting btn-hvr-setting-main btn-pink">
-                                        Read Full
-                                        Blog
-                                        <span class="btn-hvr-setting btn-hvr-grey">
-                                            <span class="btn-hvr-setting-inner">
-                                                <span class="btn-hvr-effect"></span>
-                                                <span class="btn-hvr-effect"></span>
-                                                <span class="btn-hvr-effect"></span>
-                                                <span class="btn-hvr-effect"></span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </div>
+                                    </span>
+                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
-
+                }
             </div>
         </div>
-    </div>
-</section>
-<!-- Blog ends -->
+    </section>
+}
