@@ -41,9 +41,9 @@ namespace CMS.Controllers
 
         // [ POST ] - <domain>/Admin/SendNotification
         [HttpPost]
-        public IActionResult SendNotification(NotificationView message)
+        public IActionResult SendNotification([FromBody] NotificationView message)
         {
-            return View();
+            return Ok();
         }
     }
 }

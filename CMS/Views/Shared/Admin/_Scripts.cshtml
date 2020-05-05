@@ -64,11 +64,33 @@
 
 
 <script>
-        const buttonSubmit = document.querySelector("#submit");
+    const buttonSubmit = document.querySelector("#submit");
+    const messageText = document.querySelector("#message");
 
     buttonSubmit.addEventListener("click", function () {
-            //let messageText = document.querySelector("#message").value;
-        let messageText = "Dupa";
-        $.post("@Url.Action("SendNotification","Admin")", JSON.stringify({ 'Message': `${messageText}`, 'Action': '@(ViewData["Page"] == null ? "Brak informacji" : ViewData["Page"])', 'Client': '@User.Identity.Name' }));
+
+        var data = {
+            'Message': `${messageText.value}`,
+            'ActionName': '@(ViewData["Page"] == null ? "Brak informacji" : ViewData["Page"])',
+            'Client': '@User.Identity.Name'
+        };
+
+        messageText.value = "";
+
+        $.ajax(
+                {
+                    url: '@Url.Action("SendNotification","Admin")',
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(data),
+                    success: function(result) {
+                        console.log(result);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+            });
+
         });
 </script>
