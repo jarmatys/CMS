@@ -94,7 +94,7 @@
                     <div class="card-body mx-auto justify-content-center align-items-center flex-column">
                         <div class="form-group">
                             <div class="input-file input-file-image">
-                                <img class="img-upload-preview" height="350" src="~/images/img-placeholder.png" alt="preview" id="img-placeholder">
+                                <img class="img-upload-preview" height="350" src="~/admin/images/img-placeholder.png" alt="preview" id="img-placeholder">
                                 @Html.TextBoxFor(x => x.FeaturedImg, null, new { type = "file", @class = "form-control form-control-file", @id = "input-img-placeholder" })
                             </div>
                         </div>
@@ -316,7 +316,7 @@
         // 7. Usuwanie placeholdera
         deleteButton.addEventListener("click", function (e) {
             e.preventDefault();
-            imgPlaceholder.src = "/images/img-placeholder.png";
+            imgPlaceholder.src = "/admin/images/img-placeholder.png";
             deleteButton.classList.add("d-none");
         });
 

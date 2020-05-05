@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,7 +7,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\boundle\js\" />
     <Folder Include="wwwroot\boundle\css\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\User\" />
   </ItemGroup>
 
   <ItemGroup>

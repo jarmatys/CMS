@@ -95,7 +95,7 @@ namespace CMS.Infrastructure.Helpers
             // Sprawdzamy czy zdjęcie wyrożniające jest ustawione
             if(article.Image == null)
             {
-                articleView.ImageUrl = "/images/img-placeholder.png";
+                articleView.ImageUrl = "/admin/images/img-placeholder.png";
             }
             else
             {

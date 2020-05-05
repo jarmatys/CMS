@@ -69,7 +69,7 @@
                                 <div class="card-body mx-auto justify-content-center align-items-center flex-column">
                                     <div class="form-group">
                                         <div class="input-file input-file-image">
-                                            <img class="img-upload-preview" height="150" src="~/images/img-placeholder.png" alt="preview" id="img-placeholder-logo">
+                                            <img class="img-upload-preview" height="150" src="~/admin/images/img-placeholder.png" alt="preview" id="img-placeholder-logo">
                                             <input type="file" class="form-control form-control-file" name="logo" id="input-img-placeholder-logo" />
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@
                                 <div class="card-body mx-auto justify-content-center align-items-center flex-column">
                                     <div class="form-group">
                                         <div class="input-file input-file-image">
-                                            <img class="img-upload-preview" height="150" src="~/images/img-placeholder.png" alt="preview" id="img-placeholder-favicon">
+                                            <img class="img-upload-preview" height="150" src="~/admin/images/img-placeholder.png" alt="preview" id="img-placeholder-favicon">
                                             <input type="file" class="form-control form-control-file" name="favicon" id="input-img-placeholder-favicon" />
                                         </div>
                                     </div>
@@ -200,7 +200,7 @@
         // 3. Usuwanie placeholdera
         deleteButtonLogo.addEventListener("click", function (e) {
             e.preventDefault();
-            imgPlaceholderLogo.src = "/images/img-placeholder.png";
+            imgPlaceholderLogo.src = "/admin/images/img-placeholder.png";
             deleteButtonLogo.classList.add("d-none");
         });
 
@@ -236,7 +236,7 @@
         // 3. Usuwanie placeholdera
         deleteButtonFavicon.addEventListener("click", function (e) {
             e.preventDefault();
-            imgPlaceholderFavicon.src = "/images/img-placeholder.png";
+            imgPlaceholderFavicon.src = "/admin/images/img-placeholder.png";
             deleteButtonFavicon.classList.add("d-none");
         });
     </script>
