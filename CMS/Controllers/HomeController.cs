@@ -64,7 +64,7 @@ namespace CMS.Controllers
             }
 
             ViewData["HomeData"] = await _homeService.GetHomeProperties();
-            return View();
+            return RedirectToAction("PageNotFound", "Error");
         }
 
         // [ GET ] - <domain>/polityka-prywatnosci

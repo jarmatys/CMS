@@ -31,7 +31,7 @@ namespace CMS.Controllers
         }
 
         // [ GET ] - <domain>/blog/{slug}
-        [HttpGet("{slug}")]
+        [HttpGet("blog/{slug}")]
         [Route("blog/{slug}")]
         public async Task<IActionResult> Details(string slug)
         {

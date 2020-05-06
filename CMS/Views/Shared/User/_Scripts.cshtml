@@ -25,33 +25,35 @@
 
 <script src="~/user/js/functions.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
-<script>
-    window.cookieconsent.initialise({
-        "palette": {
-            "popup": {
-                "background": "#CCB56E",
-                "text": "#fff"
-            },
-            "button": {
-                "background": "#214A36"
-            }
-        },
-        "theme": "classic",
-        "position": "bottom-left",
-        "content": {
-            "message": "Ta strona korzysta z ciasteczek aby zapewnić Ci lepsze doświadczenia z korzystania z niej.",
-            "dismiss": "Akceptuje",
-            "link": "Polityka prywatności",
-            "href": `https://${window.location.hostname}/polityka-prywatnosci`
-        }
-    });
-</script>
+<environment include="Production">
 
-@if (!string.IsNullOrEmpty(homeData.Integrations.Tawkto))
-{
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    <script>
+        window.cookieconsent.initialise({
+            "palette": {
+                "popup": {
+                    "background": "#CCB56E",
+                    "text": "#fff"
+                },
+                "button": {
+                    "background": "#214A36"
+                }
+            },
+            "theme": "classic",
+            "position": "bottom-left",
+            "content": {
+                "message": "Ta strona korzysta z ciasteczek aby zapewnić Ci lepsze doświadczenia z korzystania z niej.",
+                "dismiss": "Akceptuje",
+                "link": "Polityka prywatności",
+                "href": `https://${window.location.hostname}/polityka-prywatnosci`
+            }
+        });
+    </script>
+
+    @if (!string.IsNullOrEmpty(homeData.Integrations.Tawkto))
+    {
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
     (function () {
         var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
@@ -61,18 +63,19 @@
         s1.setAttribute('crossorigin', '*');
         s0.parentNode.insertBefore(s1, s0);
     })();
-    </script>
-    <!--End of Tawk.to Script-->
-}
+        </script>
+        <!--End of Tawk.to Script-->
+    }
 
-@if (!string.IsNullOrEmpty(homeData.Integrations.Recaptcha))
-{
-    <script src="https://www.google.com/recaptcha/api.js?render=@homeData.Integrations.Recaptcha.Trim()"></script>
-    <script>
+    @if (!string.IsNullOrEmpty(homeData.Integrations.Recaptcha))
+    {
+        <script src="https://www.google.com/recaptcha/api.js?render=@homeData.Integrations.Recaptcha.Trim()"></script>
+        <script>
         grecaptcha.ready(function () {
             grecaptcha.execute('@homeData.Integrations.Recaptcha.Trim()', { action: 'homepage' }).then(function (token) {
                 console.log(token);
             });
         });
-    </script>
-}
+        </script>
+    }
+</environment>
