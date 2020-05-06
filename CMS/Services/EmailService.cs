@@ -22,7 +22,7 @@ namespace CMS.Services
         {
             MimeMessage message = new MimeMessage();
 
-            MailboxAddress from = new MailboxAddress(_email.EmailFrom);
+            MailboxAddress from = new MailboxAddress(result.Email);
             message.From.Add(from);
 
             MailboxAddress to = new MailboxAddress(_email.EmailTo);

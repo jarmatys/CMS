@@ -33,7 +33,8 @@ namespace CMS.Services
             {
                 MetaTags = await _context.MetaTags.ToListAsync(),
                 SocialMedias = await _context.SocialMedias.ToListAsync(),
-                Articles = Enumerable.Reverse(await _context.Articles.Where(x => x.IsDraft != true).Include(x => x.Image).Include(x => x.User).ToListAsync()).Take(3).Reverse()
+                Articles = Enumerable.Reverse(await _context.Articles.Where(x => x.IsDraft != true).Include(x => x.Image).Include(x => x.User).ToListAsync()).Take(3).Reverse(),
+                Integrations = await _context.IntegrationSettings.FirstOrDefaultAsync()
             };
 
             return homeView;

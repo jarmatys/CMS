@@ -1,4 +1,30 @@
-﻿
+﻿@{
+    var homeData = ViewData["HomeData"] as HomeView;
+}
+
+<!-- Google Map Api -->
+<script src="https://maps.googleapis.com/maps/api/js?key=@homeData.Integrations.GoogleMaps"></script>
+
+<script src="~/boundle/js/basic.min.js"></script>
+
+<script src="~/user/js/morphext.min.js"></script>
+<script src="~/user/js/jquery.appear.js"></script>
+<script src="~/user/js/isotope.pkgd.min.js"></script>
+<script src="~/user/js/jquery.cubeportfolio.min.js"></script>
+<script src="~/user/js/jquery.matchHeight-min.js"></script>
+<script src="~/user/js/parallaxie.min.js"></script>
+<script src="~/user/js/particles.min.js"></script>
+<script src="~/user/js/jquery.fancybox.min.js"></script>
+<script src="~/user/js/slick.min.js"></script>
+<script src="~/user/js/swiper.min.js"></script>
+<script src="~/user/js/owl.carousel.js"></script>
+<script src="~/user/js/wow.js"></script>
+
+<!--Zapytać o mimifikacje jak to działa i dlaczego się tutaj sypie-->
+<script src="~/user/js/maps.min.js"></script>
+
+<script src="~/user/js/functions.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
 <script>
     window.cookieconsent.initialise({
@@ -21,25 +47,31 @@
     });
 </script>
 
-<!-- Google Map Api -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXPZY69d1vQM6zYpFKP_mS9nN-nLj7dc"></script>
+@if (!string.IsNullOrEmpty(homeData.Integrations.Tawkto))
+{
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/@homeData.Integrations.Tawkto.Trim()/default';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+}
 
-<script src="~/boundle/js/basic.min.js"></script>
-
-<script src="~/user/js/morphext.min.js"></script>
-<script src="~/user/js/jquery.appear.js"></script>
-<script src="~/user/js/isotope.pkgd.min.js"></script>
-<script src="~/user/js/jquery.cubeportfolio.min.js"></script>
-<script src="~/user/js/jquery.matchHeight-min.js"></script>
-<script src="~/user/js/parallaxie.min.js"></script>
-<script src="~/user/js/particles.min.js"></script>
-<script src="~/user/js/jquery.fancybox.min.js"></script>
-<script src="~/user/js/slick.min.js"></script>
-<script src="~/user/js/swiper.min.js"></script>
-<script src="~/user/js/owl.carousel.js"></script>
-<script src="~/user/js/wow.js"></script>
-
-<!--Zapytać o mimifikacje jak to działa i dlaczego się tutaj sypie-->
-<script src="~/user/js/maps.min.js"></script>
-
-<script src="~/user/js/functions.js"></script>
+@if (!string.IsNullOrEmpty(homeData.Integrations.Recaptcha))
+{
+    <script src="https://www.google.com/recaptcha/api.js?render=@homeData.Integrations.Recaptcha.Trim()"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@homeData.Integrations.Recaptcha.Trim()', { action: 'homepage' }).then(function (token) {
+                console.log(token);
+            });
+        });
+    </script>
+}
