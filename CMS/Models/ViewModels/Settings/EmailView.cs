@@ -13,8 +13,10 @@ namespace CMS.Models.ViewModels.Settings
         public string Host { get; set; }
         [Required(ErrorMessage = "Uzupełnij port")]
         public int Port { get; set; }
-        [Required(ErrorMessage = "Uzupełnij adres e-mail")]
-        public string UserName { get; set; }
+        [Required(ErrorMessage = "Uzupełnij adres e-mail odbiorcy")]
+        public string EmailTo { get; set; }
+        [Required(ErrorMessage = "Uzupełnij adres e-mail nadawcy")]
+        public string EmailFrom { get; set; }
         [Required(ErrorMessage = "Uzupełnij hasło")]
         public string Password { get; set; }
         public bool EnableSSL { get; set; }

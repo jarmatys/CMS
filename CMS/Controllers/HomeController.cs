@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.Models.Others;
+using CMS.Models.ViewModels.Admin;
+using CMS.Models.ViewModels.Home;
 using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,19 +15,41 @@ namespace CMS.Controllers
     {
         private readonly ISettingsService _settingsService;
         private readonly IHomeService _homeService;
+        private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
 
-        public HomeController(ISettingsService settingsService, IHomeService homeService)
+        public HomeController(ISettingsService settingsService, IHomeService homeService, IEmailService emailService, INotificationService notoficationService)
         {
             _settingsService = settingsService;
             _homeService = homeService;
+            _emailService = emailService;
+            _notificationService = notoficationService;
         }
 
         // [ GET ] - <domain>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var homeView = await _homeService.GetHomeProperties();
-            return View(homeView);
+            ViewData["HomeData"] = await _homeService.GetHomeProperties();
+            return View();
+        }
+
+        // [ POST ] - <domain>
+        [HttpPost]
+        public async Task<IActionResult> Index(ContactView result)
+        {
+            ViewData["HomeData"] = await _homeService.GetHomeProperties();
+
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            var notification = new NotificationData($"Masz jedną wiadomość z formularza od: {result.Name}");
+            _notificationService.Send(notification);
+            _emailService.SendContactForm(result);
+
+            return RedirectToAction("ContactConfirmation");
         }
 
         // [ GET ] - <domain>/{link}
@@ -38,8 +63,8 @@ namespace CMS.Controllers
                 return RedirectPermanent(newUrl);
             }
 
-            var homeView = await _homeService.GetHomeProperties();
-            return View(homeView);
+            ViewData["HomeData"] = await _homeService.GetHomeProperties();
+            return View();
         }
 
         // [ GET ] - <domain>/polityka-prywatnosci
@@ -47,10 +72,19 @@ namespace CMS.Controllers
         [Route("polityka-prywatnosci")]
         public async Task<IActionResult> PrivacyPolicy()
         {
-            var homeView = await _homeService.GetHomeProperties();
-            homeView.TempData = await _settingsService.GetPrivacyPolicySettings();
-            return View(homeView);
+            ViewData["HomeData"] = await _homeService.GetHomeProperties();
+            var privacyPolicy = await _settingsService.GetPrivacyPolicySettings();
+            return View(privacyPolicy);
         }
 
+        // [ GET ] - <domain>/potwierdzenie-kontaktu
+        [HttpGet]
+        [Route("potwierdzenie-kontaktu")]
+        public async Task<IActionResult> ContactConfirmation()
+        {
+            ViewData["HomeData"] = await _homeService.GetHomeProperties();
+
+            return View();
+        }
     }
 }

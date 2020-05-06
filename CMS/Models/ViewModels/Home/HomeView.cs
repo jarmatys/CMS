@@ -12,6 +12,5 @@ namespace CMS.Models.ViewModels.Home
         public IEnumerable<MetaTagModel> MetaTags { get; set; }
         public IEnumerable<SocialMediaModel> SocialMedias { get; set; }
         public IEnumerable<ArticleModel> Articles { get; set; }
-        public object TempData { get; set; }
     }
 }

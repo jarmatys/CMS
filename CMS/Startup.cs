@@ -71,6 +71,7 @@ namespace CMS
             services.AddScoped<ISeoService, SeoService>();
             services.AddScoped<INotificationService, SlackService>();
             services.AddScoped<IHomeService, HomeService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             // Konfiguracja platformy cloudinary do przechowywania zdjêæ w chmurze
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));

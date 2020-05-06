@@ -1,4 +1,8 @@
-﻿@model HomeView
+﻿@model ContactView
+
+@{ 
+    var homeData = ViewData["HomeData"] as HomeView;
+}
 
 @await Html.PartialAsync("User/_Slider")
 @await Html.PartialAsync("User/_Services")
@@ -7,4 +11,17 @@
 @await Html.PartialAsync("User/_Portfolio")
 @await Html.PartialAsync("User/_CTA")
 @await Html.PartialAsync("User/_Blog")
+@await Html.PartialAsync("User/_Map")
 @await Html.PartialAsync("User/_Contact")
+
+
+@section homeScripts {
+    <script>
+        // Tutaj piszemy skrypty dla głównej strony
+
+        // jeżeli walidacja będzie błędna to przekieruj do sekcji kontaktu
+        if (@((Model != null).ToString().ToLower())) {
+            window.location.href = "#form";
+        }
+    </script>
+}

@@ -1,9 +1,11 @@
-﻿@model HomeView
+﻿@{
+    var homeData = ViewData["HomeData"] as HomeView;
+}
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@foreach (var metaTag in Model.MetaTags)
+@foreach (var metaTag in homeData.MetaTags)
 {
     <meta name="@metaTag.Name" content="@Html.Raw(metaTag.Content)" />
 }

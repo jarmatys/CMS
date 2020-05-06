@@ -18,7 +18,8 @@ namespace CMS.Infrastructure.Helpers
                 Password = result.Password,
                 EnableSSL = result.EnableSSL,
                 Port = result.Port,
-                UserName = result.UserName
+                EmailTo = result.EmailTo,
+                EmailFrom = result.EmailFrom
             };
 
             return emailView;
@@ -33,7 +34,8 @@ namespace CMS.Infrastructure.Helpers
                 Password = result.Password,
                 EnableSSL = result.EnableSSL,
                 Port = result.Port,
-                UserName = result.UserName
+                EmailTo = result.EmailTo,
+                EmailFrom = result.EmailFrom
             };
 
             return emailModel;
@@ -42,7 +44,8 @@ namespace CMS.Infrastructure.Helpers
         public static EmailModel MergeViewWithModelEmail(EmailModel model, EmailView view)
         {
             model.Host = view.Host;
-            model.UserName = view.UserName;
+            model.EmailFrom = view.EmailFrom;
+            model.EmailTo = view.EmailTo;
             model.Port = view.Port;
             model.Password = view.Password;
             model.EnableSSL = view.EnableSSL;

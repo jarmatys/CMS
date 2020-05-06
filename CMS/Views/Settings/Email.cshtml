@@ -57,7 +57,7 @@
                                 @Html.HiddenFor(x => x.Id)
 
                                 <div class="form-group">
-                                    <label class="placeholder"><b>Host</b></label>
+                                    <label class="placeholder"><b>Serwer SMTP</b></label>
                                     @Html.TextBoxFor(x => x.Host, new { @class = "form-control" })
                                 </div>
                                 <div class="form-group">
@@ -65,8 +65,12 @@
                                     @Html.TextBoxFor(x => x.Port, new { @class = "form-control" })
                                 </div>
                                 <div class="form-group">
-                                    <label class="placeholder"><b>E-mail</b></label>
-                                    @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+                                    <label class="placeholder"><b>Adres odbiorcy</b></label>
+                                    @Html.TextBoxFor(x => x.EmailTo, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label class="placeholder"><b>Adres nadawcy</b></label>
+                                    @Html.TextBoxFor(x => x.EmailFrom, new { @class = "form-control" })
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="placeholder"><b>Hasło</b></label>

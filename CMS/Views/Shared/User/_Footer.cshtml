@@ -1,11 +1,14 @@
-﻿@model HomeView
+﻿@{
+    var homeData = ViewData["HomeData"] as HomeView;
+}
+
 <!-- Footer starts -->
 <footer class="p-half bg-black2">
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-sm-12 text-center">
                 <ul class="footer-icons mb-4">
-                    @foreach (var socialMedium in Model.SocialMedias)
+                    @foreach (var socialMedium in homeData.SocialMedias)
                     {
                         <li>
                             <a target="_blank" href="@socialMedium.Link" class="wow fadeInUp">

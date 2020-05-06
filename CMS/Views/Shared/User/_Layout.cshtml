@@ -18,29 +18,7 @@
 
     @await Html.PartialAsync("User/_Footer")
     @await Html.PartialAsync("User/_Scripts")
-
-    <!-- Google Map Api -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXPZY69d1vQM6zYpFKP_mS9nN-nLj7dc"></script>
-
-    <script src="~/boundle/js/basic.min.js"></script>
-
-    <script src="~/user/js/morphext.min.js"></script>
-    <script src="~/user/js/jquery.appear.js"></script>
-    <script src="~/user/js/isotope.pkgd.min.js"></script>
-    <script src="~/user/js/jquery.cubeportfolio.min.js"></script>
-    <script src="~/user/js/jquery.matchHeight-min.js"></script>
-    <script src="~/user/js/parallaxie.min.js"></script>
-    <script src="~/user/js/particles.min.js"></script>
-    <script src="~/user/js/jquery.fancybox.min.js"></script>
-    <script src="~/user/js/slick.min.js"></script>
-    <script src="~/user/js/swiper.min.js"></script>
-    <script src="~/user/js/owl.carousel.js"></script>
-    <script src="~/user/js/wow.js"></script>
-
-    <!--Zapytać o mimifikacje jak to działa i dlaczego się tutaj sypie-->
-    <script src="~/user/js/maps.min.js"></script>
-
-    <script src="~/user/js/functions.js"></script>
+    @RenderSection("homeScripts", required: false)
 
 </body>
 </html>

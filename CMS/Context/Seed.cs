@@ -92,9 +92,10 @@ namespace CMS.Context
             {
                 var emailSettings = new EmailModel
                 {
-                    Host = "test.mailing.pl",
-                    Port = 123,
-                    UserName = "admin@admin.pl",
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EmailTo = "odbiorca@gmail.com",
+                    EmailFrom = "nadawca@gmail.com",
                     Password = "Password",
                     EnableSSL = true,
                 };
