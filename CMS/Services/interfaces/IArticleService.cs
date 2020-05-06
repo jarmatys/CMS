@@ -13,5 +13,6 @@ namespace CMS.Services.interfaces
         Task<List<ArticleModel>> GetAll();
         Task<bool> Update(ArticleModel article);
         Task<bool> Delete(int id);
+        Task<ArticleModel> GetArticleBySlug(string slug);
     }
 }

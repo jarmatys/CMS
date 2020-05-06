@@ -1,0 +1,51 @@
+﻿@{
+    var homeData = ViewData["HomeData"] as HomeView;
+}
+
+<div class="text-left">
+    <!-- Recent Post -->
+    <div class="widget heading-space wow fadeIn" data-wow-delay="350ms">
+        <h5 class="color-black font-weight-600 mb-4">Najnowsze wpisy</h5>
+        @foreach (var article in homeData.Articles)
+        {
+            <div class="single-post mb-3">
+                <a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="post">
+                    <img src="@article.Image.Url" alt="@article.Image.Description">
+                </a>
+                <div class="text">
+                    <a href="@($"blog/{article.Slug}")" class="color-grey">@article.Title</a>
+                    <span>@article.AddDate.ToString("dd-MM-yyyy")</span>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Categories -->
+    <div class="widget heading-space wow fadeIn" data-wow-delay="400ms">
+        <h5 class="color-black font-weight-600">Kategorie</h5>
+        <div>
+            @foreach (var category in homeData.Categories)
+            {
+                <div class="categories-name">
+                    <a href="@Url.Action("Category","Blog", new { slug = category.Slug})">
+                        <p class="font-16 color-grey text-capitalize">@category.Name</p>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- Tags -->
+    <div class="widget heading-space mb-0 wow fadeIn" data-wow-delay="450ms">
+        <h5 class="color-black font-weight-600 mb-4">Tagi</h5>
+        <div>
+            <ul class="tags">
+                @foreach (var tag in homeData.Tags)
+                {
+                    <li>
+                        <p class="font-13 text-capitalize">@tag.Name</p>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

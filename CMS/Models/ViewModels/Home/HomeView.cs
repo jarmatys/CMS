@@ -14,5 +14,7 @@ namespace CMS.Models.ViewModels.Home
         public IEnumerable<SocialMediaModel> SocialMedias { get; set; }
         public IEnumerable<ArticleModel> Articles { get; set; }
         public IntegrationModel Integrations { get; set; }
+        public IEnumerable<CategoryModel> Categories { get; set; }
+        public IEnumerable<TagModel> Tags { get; set; }
     }
 }

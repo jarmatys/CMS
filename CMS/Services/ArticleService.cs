@@ -68,5 +68,15 @@ namespace CMS.Services
             _context.Articles.Remove(article);
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<ArticleModel> GetArticleBySlug(string slug)
+        {
+            return await _context.Articles
+             .Include(x => x.Taxonomies).ThenInclude(x => x.Category)
+             .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
+             .Include(x => x.Image)
+             .Include(x => x.User)
+             .SingleOrDefaultAsync(b => b.Slug == slug);
+        }
     }
 }

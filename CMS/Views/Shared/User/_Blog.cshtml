@@ -26,7 +26,7 @@
 
                             <div class="news_desc">
 
-                                <h3 style="min-height:100px;" class="text-center line-height-normal"><a href="@($"blog/{article.Slug}")" class="color-black">@article.Title</a></h3>
+                                <h3 style="min-height:100px;" class="text-center line-height-normal"><a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="color-black">@article.Title</a></h3>
 
                                 <ul style="min-height:25px;" class="meta-tags mt-20px mb-20px">
                                     <li><a href="javascript:void(0)"><i class="ti ti-calendar"></i>@article.AddDate.ToString("dd-MM-yyyy")</a></li>
@@ -36,7 +36,7 @@
 
                                 <p style="min-height:100px;" class="mb-35px">@article.Excerpt</p>
 
-                                <a style="min-height:25px;" href="@($"blog/{article.Slug}")" class="btn-setting btn-hvr-setting-main btn-pink text-white btn-hvr">
+                                <a style="min-height:25px;" href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="btn-setting btn-hvr-setting-main btn-pink text-white btn-hvr">
                                     Czytaj więcej
                                     <span class="btn-hvr-setting btn-hvr-yellow">
                                         <span class="btn-hvr-setting-inner">
