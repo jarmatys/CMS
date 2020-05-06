@@ -13,6 +13,8 @@ namespace CMS.Services.interfaces
         Task<List<ArticleModel>> GetAll();
         Task<bool> Update(ArticleModel article);
         Task<bool> Delete(int id);
+        Task<int> ArticleCount();
         Task<ArticleModel> GetArticleBySlug(string slug);
+        Task<List<ArticleModel>> GetRangeOfArticle(int start, int count);
     }
 }

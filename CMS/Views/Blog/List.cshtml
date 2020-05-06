@@ -37,14 +37,14 @@
                                 <img src="@article.Image.Url" alt="blog-img">
                             </div>
                             <div class="news_desc">
-                                <h3 class="text-capitalize font-weight-500"><a href="@($"blog/{article.Slug}")" class="color-black">@article.Title</a></h3>
+                                <h3 class="text-capitalize font-weight-500"><a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="color-black">@article.Title</a></h3>
                                 <ul class="meta-tags mt-20px mb-20px">
                                     <li><a href="javascript:void(0)"><i class="ti ti-calendar"></i>@article.AddDate.ToString("dd-MM-yyyy")</a></li>
                                     <li><a href="javascript:void(0)"> <i class="ti ti-user"></i> @article.User.Name </a></li>
                                     <li><a href="javascript:void(0)"><i class="ti ti-comments-smiley"></i>5</a></li>
                                 </ul>
                                 <p class="mb-35px color-grey line-height-25px">@article.Excerpt</p>
-                                <a href="@($"blog/{article.Slug}")" class="btn-setting btn-hvr-setting-main btn-pink">
+                                <a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="btn-setting btn-hvr-setting-main btn-pink">
                                     Czytaj więcej
                                     <span class="btn-hvr-setting">
                                         <span class="btn-hvr-setting-inner">
@@ -62,17 +62,32 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <!--Pagination-->
                         <ul class="pagination justify-content-center mb-xs-5">
-                            <li class="page-item"><a class="page-link" href="#"><i class="ti ti-angle-left"></i></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    <i class="ti ti-angle-right"></i>
-                                </a>
-                            </li>
+
+                            @if (ViewBag.CurrentPage != 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="#">
+                                        <i class="ti ti-angle-left"></i>
+                                    </a>
+                                </li>
+                            }
+
+                            @for (int i = 1; i <= ViewBag.MaxPage; i++)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("List","Blog", new { page = i})"></a>
+                                </li>
+                            }
+
+                            @if (ViewBag.MaxPage != ViewBag.CurrentPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="#">
+                                        <i class="ti ti-angle-right"></i>
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>

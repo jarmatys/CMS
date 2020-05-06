@@ -78,5 +78,24 @@ namespace CMS.Services
              .Include(x => x.User)
              .SingleOrDefaultAsync(b => b.Slug == slug);
         }
+
+        public async Task<List<ArticleModel>> GetRangeOfArticle(int start, int count)
+        {
+            var articleList = await _context.Articles
+           .Include(x => x.Taxonomies).ThenInclude(x => x.Category)
+           .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
+           .Include(x => x.User)
+           .ToListAsync();
+
+            articleList.Reverse();   
+
+            return articleList.Skip(start).Take(count).ToList();
+        }
+
+        public async Task<int> ArticleCount()
+        {
+            var articles = await _context.Articles.ToListAsync();
+            return articles.Count;
+        }
     }
 }
