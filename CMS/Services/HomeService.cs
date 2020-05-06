@@ -1,4 +1,5 @@
 ﻿using CMS.Context;
+using CMS.Models.Db.Page;
 using CMS.Models.ViewModels.Home;
 using CMS.Services.interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,16 @@ namespace CMS.Services
         public HomeService(CMSContext context)
         {
             _context = context;
+        }
+
+        public async Task<PageModel> CheckPageRedirect(string link)
+        {
+            var page = await _context.Pages.SingleOrDefaultAsync(x => x.Slug == link);
+            if (page != null)
+            {
+                return page;
+            }
+            return null;
         }
 
         public async Task<string> CheckRedirect(string link)

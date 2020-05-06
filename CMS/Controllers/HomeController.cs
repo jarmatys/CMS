@@ -17,13 +17,15 @@ namespace CMS.Controllers
         private readonly IHomeService _homeService;
         private readonly IEmailService _emailService;
         private readonly INotificationService _notificationService;
+        private readonly IPageService _pageService;
 
-        public HomeController(ISettingsService settingsService, IHomeService homeService, IEmailService emailService, INotificationService notoficationService)
+        public HomeController(ISettingsService settingsService, IHomeService homeService, IEmailService emailService, INotificationService notoficationService, IPageService pageService)
         {
             _settingsService = settingsService;
             _homeService = homeService;
             _emailService = emailService;
             _notificationService = notoficationService;
+            _pageService = pageService;
         }
 
         // [ GET ] - <domain>
@@ -53,18 +55,41 @@ namespace CMS.Controllers
         }
 
         // [ GET ] - <domain>/{link}
-        [HttpGet("{link}")]
-        public async Task<IActionResult> Index(string link)
+        [HttpGet("{slug}")]
+        public async Task<IActionResult> Index(string slug)
         {
-            var newUrl = await _homeService.CheckRedirect(link);
+            ViewData["HomeData"] = await _homeService.GetHomeProperties();
+
+            var newUrl = await _homeService.CheckRedirect(slug);
+            var page = await _homeService.CheckPageRedirect(slug);
+
+            if (page != null)
+            {
+                return RedirectToAction("Page", page.Slug);
+            }
 
             if (!string.IsNullOrEmpty(newUrl))
             {
                 return RedirectPermanent(newUrl);
             }
 
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
             return RedirectToAction("PageNotFound", "Error");
+        }
+
+        // [ GET ] - <domain>/strona/{slug}
+        [HttpGet("strona/{slug}")]
+        [Route("strona/{slug}")]
+        public async Task<IActionResult> Page(string slug)
+        {
+            ViewData["HomeData"] = await _homeService.GetHomeProperties();
+
+            var page = await _pageService.GetPageBySlug(slug);
+            if(page == null || (page.IsDraft == true && !User.Identity.IsAuthenticated))
+            {
+                return RedirectToAction("PageNotFound", "Error");
+            }
+
+            return View(page);
         }
 
         // [ GET ] - <domain>/polityka-prywatnosci
@@ -86,5 +111,7 @@ namespace CMS.Controllers
 
             return View();
         }
+
+
     }
 }

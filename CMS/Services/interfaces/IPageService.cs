@@ -14,5 +14,6 @@ namespace CMS.Services.interfaces
         Task<bool> Update(PageModel page);
         Task<bool> Delete(int id);
         Task<int> MediaCount();
+        Task<PageModel> GetPageBySlug(string slug);
     }
 }

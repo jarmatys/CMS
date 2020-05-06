@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "lista stron";
-    
+
     ViewData["Page"] = "PageList";
     ViewData["Group"] = "Page";
 
@@ -79,7 +79,7 @@
 
                             <td>
                                 <div class="form-button-action">
-                                    <button type="button" data-toggle="tooltip" onclick="location='@pageModel.FullUrl'" class="btn btn-link btn-success btn-lg" data-original-title="Podgląd">
+                                    <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("Page","Home", new { slug = pageModel.Slug })'" class="btn btn-link btn-success btn-lg" data-original-title="Podgląd">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                     <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("Edit","Page", new { Id = pageModel.Id })'" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
@@ -105,7 +105,7 @@
     <script>
         $(document).ready(function () {
 
-            
+
             $('.delete-alert').click(function (e) {
 
                 swal({

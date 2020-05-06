@@ -1,4 +1,5 @@
-﻿using CMS.Models.ViewModels.Home;
+﻿using CMS.Models.Db.Page;
+using CMS.Models.ViewModels.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace CMS.Services.interfaces
     {
         Task<HomeView> GetHomeProperties();
         Task<string> CheckRedirect(string link);
+        Task<PageModel> CheckPageRedirect(string link);
     }
 }

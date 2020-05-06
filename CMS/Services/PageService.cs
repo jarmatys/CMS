@@ -58,5 +58,10 @@ namespace CMS.Services
 			var pages = await _context.Pages.ToListAsync();
 			return pages.Count();
 		}
+
+		public async Task<PageModel> GetPageBySlug(string slug)
+		{
+			return await _context.Pages.SingleOrDefaultAsync(b => b.Slug == slug);
+		}
 	}
 }
