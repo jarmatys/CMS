@@ -1,4 +1,5 @@
-﻿<!-- Header start -->
+﻿
+<!-- Header start -->
 <header>
     <nav class="navbar navbar-top-default navbar-expand-lg static-nav nav-style seven-links transparent-bg">
         <div class="container">
@@ -9,20 +10,40 @@
             <div class="collapse navbar-collapse d-none d-lg-block">
                 <ul class="nav navbar-nav ml-auto menu__list">
                     <li class="nav-item menu__item">
-                        <a href="#services" class="scroll nav-link menu__link">Usługi</a>
+                        <a href="@Url.Action("List","Blog")" class="nav-link menu__link">Blog</a>
                     </li>
-                    <li class="nav-item menu__item">
-                        <a href="#about" class="scroll nav-link menu__link">O mnie</a>
-                    </li>
-                    <li class="nav-item menu__item">
-                        <a href="#portfolio" class="scroll nav-link menu__link">Portfolio</a>
-                    </li>
-                    <li class="nav-item menu__item">
-                        <a href="#opinion" class="scroll nav-link menu__link">Opinie</a>
-                    </li>
-                    <li class="nav-item menu__item">
-                        <a href="#contact" class="scroll nav-link menu__link">Kontakt</a>
-                    </li>
+
+                    @if (ViewData["isHome"] != null)
+                    {
+                        <li class="nav-item menu__item">
+                            <a href="#services" class="scroll nav-link menu__link">Usługi</a>
+                        </li>
+                        <li class="nav-item menu__item">
+                            <a href="#opinion" class="scroll nav-link menu__link">Opinie</a>
+                        </li>
+                        <li class="nav-item menu__item">
+                            <a href="#portfolio" class="scroll nav-link menu__link">Portfolio</a>
+                        </li>
+                        <li class="nav-item menu__item">
+                            <a href="#contact" class="scroll nav-link menu__link">Kontakt</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item menu__item">
+                            <a href="@Url.Action("Index","Home")#services" class="nav-link menu__link">Usługi</a>
+                        </li>
+                        <li class="nav-item menu__item">
+                            <a href="@Url.Action("Index","Home")#opinion" class=" nav-link menu__link">Opinie</a>
+                        </li>
+                        <li class="nav-item menu__item">
+                            <a href="@Url.Action("Index","Home")#portfolio" class=" nav-link menu__link">Portfolio</a>
+                        </li>
+                        <li class="nav-item menu__item">
+                            <a href="@Url.Action("Index","Home")#contact" class=" nav-link menu__link">Kontakt</a>
+                        </li>
+                    }
+
                 </ul>
             </div>
             <!-- side menu open button -->
