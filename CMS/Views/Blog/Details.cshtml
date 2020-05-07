@@ -1,7 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/User/_Layout.cshtml";
+
     var homeData = ViewData["HomeData"] as HomeView;
     var article = ViewData["Article"] as ArticleModel;
+
     ViewData["Title"] = article.Title;
 }
 
