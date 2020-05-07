@@ -56,7 +56,7 @@ namespace TPay.API
                 //    , url, jsonData, response.StatusCode);
 
             }
-            catch (Exception ex)
+            catch 
             {
                 // Logger.Error(ex.Message, "Error when trying post data.");
             }
