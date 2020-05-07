@@ -1,0 +1,83 @@
+﻿@model CommentView
+
+@{
+    ViewData["Title"] = "edytuj komentarz";
+
+    ViewData["Page"] = "CommentList";
+    ViewData["Group"] = "Comment";
+
+    Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+}
+
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Edytowanie komentarza</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="@Url.Action("Index","Admin")">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("List","Comment")">Komentarze</a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    Edytowanie komentarza
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Edytuj komentarz</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="login" style="background-color: white;">
+
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                                @using (Html.BeginForm("Edit", "Comment", FormMethod.Post, new { @class = "login-form" }))
+                                {
+                                    <div class="form-group">
+                                        <label lass="placeholder"><b>Imię</b></label>
+                                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="placeholder"><b>E-mail</b></label>
+                                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="placeholder"><b>Komentarz</b></label>
+                                        @Html.TextAreaFor(x => x.Content, new { @class = "form-control", @rows = "5" })
+
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            @Html.CheckBoxFor(x => x.IsAccepted, new { @class = "form-check-input" })
+                                            <span class="form-check-sign">Akceptacja</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group form-action-d-flex mb-3">
+                                        <button type="submit" class="btn btn-secondary col-md-5 float-left mt-3 mt-sm-0 fw-bold">Edytuj</button>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

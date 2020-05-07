@@ -13,5 +13,8 @@ namespace CMS.Services.interfaces
         Task<List<CommentModel>> GetAll();
         Task<bool> Update(CommentModel comment);
         Task<bool> Delete(int id);
+        Task<int> CommentCount();
+        Task<bool> Accept(int id);
+        Task<bool> Reject(int id);
     }
 }

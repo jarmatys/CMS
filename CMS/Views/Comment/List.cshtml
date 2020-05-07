@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<CommentModel>
+
 @{
     ViewData["Title"] = "lista komentarzy";
 
@@ -13,7 +14,7 @@
         <div class="nav nav-tabs nav-line nav-color-secondary d-flex align-items-center justify-contents-center w-100">
             <a class="nav-link active show" data-toggle="tab" href="#tab1">
                 Wszystkie komentarze
-                <span class="count ml-1">(30)</span>
+                <span class="count ml-1">(@ViewBag.CommentCount)</span>
             </a>
             <a class="nav-link" data-toggle="tab" href="#tab2">Moje</a>
             <a class="nav-link" data-toggle="tab" href="#tab3">Oczekujące</a>
@@ -30,43 +31,74 @@
                 <thead>
                     <tr>
                         <th>Autor</th>
+                        <th>Email</th>
                         <th>Komentarz</th>
-                        <th>Post</th>
+                        <th>Wpis</th>
+                        <th>Link</th>
                         <th>Data</th>
+                        <th>Status</th>
                         <th style="width: 10%">Operacje</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>Autor</th>
+                        <th>Email</th>
                         <th>Komentarz</th>
-                        <th>Post</th>
+                        <th>Wpis</th>
+                        <th>Link</th>
                         <th>Data</th>
+                        <th>Status</th>
                         <th style="width: 10%">Operacje</th>
                     </tr>
                 </tfoot>
                 <tbody>
-
-                    <tr>
-                        <td>Andrzej kowalski</td>
-                        <td>Treść komentarza</td>
-                        <td>link do artykułu</td>
-                        <td>02-02-2020</td>
+                    @foreach (var comment in Model)
+                    {
+                    <tr id="row-@comment.Id">
+                        <td>@comment.Name</td>
+                        <td>@comment.Email</td>
+                        <td>@comment.Content</td>
+                        <td>@comment.Article.Title</td>
+                        <td>
+                            <span onclick="location='@Url.Action("Details","Blog", new { slug = comment.Article.Slug })'" class="badge badge-info cursor-pointer">Artykuł</span>
+                        </td>
+                        <td>@comment.AddDate.ToString("dd-MM-yyyy")</td>
+                        <td>
+                            @if (comment.IsAccepted)
+                            {
+                                <span class="badge badge-success">Zaakceptowany</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-warning">Oczekujący</span>
+                            }
+                        </td>
                         <td>
                             <div class="form-button-action">
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Edit Task">
-                                    <i class="fas fa-check"></i>
-                                </button>
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                @if (comment.IsAccepted)
+                                {
+                                    <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("Reject","Comment",new { Id= comment.Id})'" class="btn btn-link btn-warning btn-lg" data-original-title="Cofnij">
+                                        <i class="fas fa-directions"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("Accept","Comment",new { Id= comment.Id})'" class="btn btn-link btn-success btn-lg" data-original-title="Zatwierdź">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                }
+
+                                <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("Edit","Comment",new { Id= comment.Id})'" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-commentid="@comment.Id">
                                     <i class="fa fa-times"></i>
                                 </button>
                             </div>
                         </td>
                     </tr>
-
+                    }
                 </tbody>
             </table>
         </div>
@@ -75,13 +107,55 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {       
+        $(document).ready(function () {
+
+             $('.delete-alert').click(function (e) {
+
+                swal({
+                    title: 'Czy na pewno chcesz usunąć ten komentarz',
+                    text: "Tych zmian nie da się odtworzyć!",
+                    type: 'warning',
+                    buttons: {
+                        confirm: {
+                            text: 'Usuń!',
+                            className: 'btn btn-danger'
+                        },
+                        cancel: {
+                            visible: true,
+                            text: 'Cofnij',
+                            className: 'btn btn-success'
+                        }
+                    }
+                }).then((Delete) => {
+                    if (Delete) {
+
+                        $.post("@Url.Action("Delete","Comment")", { Id: this.dataset.commentid });
+
+                        var row = document.getElementById(`row-${this.dataset.commentid}`);
+                        row.parentNode.removeChild(row);
+
+                        swal({
+                            title: 'Usunieto',
+                            text: 'Twój komentarz został usunięty.',
+                            type: 'success',
+                            buttons: {
+                                confirm: {
+                                    className: 'btn btn-success'
+                                }
+                            }
+                        });
+
+                    } else {
+                        swal.close();
+                    }
+                });
+            });
 
             // Add Row
             $('#add-row').DataTable({
                 "pageLength": 10,
             });
-        
+
         });
     </script>
 }

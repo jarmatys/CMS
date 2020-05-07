@@ -17,6 +17,12 @@ namespace CMS.Services
             _context = context;
         }
 
+        public async Task<int> CommentCount()
+        {
+            var articles = await _context.Comments.ToListAsync();
+            return articles.Count;
+        }
+
         public async Task<bool> Create(CommentModel comment)
         {
             await _context.Comments.AddAsync(comment);
@@ -44,11 +50,38 @@ namespace CMS.Services
 
         public async Task<List<CommentModel>> GetAll()
         {
-            return await _context.Comments.ToListAsync();
+            var comments = await _context.Comments
+                .Include(a => a.Article)
+                .ToListAsync();
+
+            comments.Reverse();
+
+            return comments;
         }
 
         public async Task<bool> Update(CommentModel comment)
         {
+            _context.Comments.Update(comment);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+
+        public async Task<bool> Reject(int id)
+        {
+            var comment = await _context.Comments.FindAsync(id);
+
+            comment.IsAccepted = false;
+
+            _context.Comments.Update(comment);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> Accept(int id)
+        {
+            var comment = await _context.Comments.FindAsync(id);
+
+            comment.IsAccepted = true;
+
             _context.Comments.Update(comment);
             return await _context.SaveChangesAsync() > 0;
         }
