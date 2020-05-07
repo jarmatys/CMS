@@ -1,5 +1,6 @@
 ﻿using CMS.Context;
 using CMS.Models.Db.Settings;
+using CMS.Models.ViewModels.Article;
 using CMS.Models.ViewModels.Home;
 using CMS.Services.interfaces;
 using MailKit.Net.Smtp;
@@ -18,6 +19,37 @@ namespace CMS.Services
             _context = context;
         }
 
+        public bool SendCommentConfirmation(CommentView result)
+        {
+            MimeMessage message = new MimeMessage();
+
+            MailboxAddress from = new MailboxAddress(result.Email);
+            message.From.Add(from);
+
+            MailboxAddress to = new MailboxAddress(_email.EmailTo);
+            message.To.Add(to);
+
+            message.Subject = $"[ Nowy komentarz ] Od {result.Name}";
+
+            BodyBuilder bodyBuilder = new BodyBuilder();
+
+            var text = $"Nowa komentarz \n\nOD: {result.Name} \nEMAIL: {result.Email} \n\nTREŚĆ: {result.Content}";
+
+            bodyBuilder.HtmlBody = text;
+            bodyBuilder.TextBody = text;
+
+            message.Body = bodyBuilder.ToMessageBody();
+
+            SmtpClient client = new SmtpClient();
+            client.Connect(_email.Host, _email.Port, true);
+            client.Authenticate(_email.EmailFrom, _email.Password);
+
+            client.Send(message);
+            client.Disconnect(true);
+            client.Dispose();
+
+            return true;
+        }
         public bool SendContactForm(ContactView result)
         {
             MimeMessage message = new MimeMessage();
@@ -49,5 +81,7 @@ namespace CMS.Services
 
             return true;
         }
+
+
     }
 }

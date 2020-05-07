@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CMS.Infrastructure.Helpers;
+using CMS.Models.Others;
 using CMS.Models.ViewModels.Article;
 using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,17 @@ namespace CMS.Controllers
         private readonly IHomeService _homeService;
         private readonly ISettingsService _settingsService;
         private readonly ICommentService _commentService;
+        private readonly INotificationService _notificationService;
+        private readonly IEmailService _emailService;
 
-        public BlogController(IArticleService articleService, IHomeService homeService, ISettingsService settingsService, ICommentService commentService)
+        public BlogController(IArticleService articleService, IHomeService homeService, ISettingsService settingsService, ICommentService commentService, INotificationService notificationService, IEmailService emailService)
         {
             _articleService = articleService;
             _homeService = homeService;
             _settingsService = settingsService;
             _commentService = commentService;
+            _notificationService = notificationService;
+            _emailService = emailService;
         }
 
         // [ GET ] - <domain>/blog/
@@ -91,12 +96,22 @@ namespace CMS.Controllers
                 return BadRequest(ModelState);
             }
 
+            var settings = await _settingsService.GetBlogSettings();
+
             var article = await _articleService.Get(result.ArticleId);
 
             var comment = await _commentService.Create(CommentHelpers.ConvertToModel(result, article));
 
             if (comment)
             {
+                var notification = new NotificationData($"Wpadł Ci nowy komentarz od {result.Name} | {result.Email}");
+                _notificationService.Send(notification);
+
+                if (settings.CommentsNotify)
+                {
+                   _emailService.SendCommentConfirmation(result);
+                }
+
                 return Ok(new { status = "Komentarz zapisany pomyślnie" });
             }
             else
