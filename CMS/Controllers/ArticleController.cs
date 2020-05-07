@@ -152,6 +152,13 @@ namespace CMS.Controllers
             // a. Jeżeli nastąpiła zamiana zdjęcia do zapisujemy
             if (result.IsPhotoEdited)
             {
+                // Usuwanie starego zdjęcia tylko pod warunkiem jeżeli istnieje
+                if (article.Image != null)
+                {
+                    // usuwanie starego zdjęcia
+                    await _cloudService.DeleteFile(article.ImageId);
+                }
+
                 // Jeżeli zostało wgrane nowe zdjęcie to je zapisz i przypisz
                 if (result.FeaturedImg != null)
                 {
@@ -159,12 +166,6 @@ namespace CMS.Controllers
                     article.Image = medium;
                 }
                 
-                // Usuwanie starego zdjęcia tylko pod warunkiem jeżeli istnieje
-                if(article.Image != null)
-                {
-                    // usuwanie starego zdjęcia
-                    await _cloudService.DeleteFile(article.ImageId);
-                }
             }
 
             // b. Aktualizacja wpisu
