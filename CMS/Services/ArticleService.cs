@@ -96,11 +96,28 @@ namespace CMS.Services
 
             return articleList.Skip(start).Take(count).ToList();
         }
+        public async Task<List<ArticleModel>> GetRangeOfArticleCategory(int start, int count, string category)
+        {
+            var articleList = await _context.Articles
+           .Include(x => x.Taxonomies).ThenInclude(x => x.Category)
+           .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
+           .Include(x => x.User)
+           .Include(x => x.Comments)
+           .Where(x => x.IsDraft != true && x.Taxonomies != null)
+           .ToListAsync();
 
+            articleList.Reverse();
+
+            // TODO: zaimplementować filtracje po danej kategorii
+
+            return articleList.Skip(start).Take(count).ToList();
+        }
         public async Task<int> ArticleCount()
         {
             var articles = await _context.Articles.ToListAsync();
             return articles.Count;
         }
+
+       
     }
 }

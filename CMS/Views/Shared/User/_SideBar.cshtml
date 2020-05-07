@@ -6,6 +6,11 @@
     <!-- Recent Post -->
     <div class="widget heading-space wow fadeIn" data-wow-delay="350ms">
         <h5 class="color-black font-weight-600 mb-4">Najnowsze wpisy</h5>
+        @if(homeData.Articles.Count() == 0)
+        {
+            <h6>Brak najnowszych wpisów</h6>
+        }
+
         @foreach (var article in homeData.Articles)
         {
             <div class="single-post mb-3">
@@ -27,10 +32,15 @@
     <div class="widget heading-space wow fadeIn" data-wow-delay="400ms">
         <h5 class="color-black font-weight-600">Kategorie</h5>
         <div>
+            @if (homeData.Categories.Count() == 0)
+            {
+                <h6>Brak kategorii</h6>
+            }
+
             @foreach (var category in homeData.Categories)
             {
                 <div class="categories-name">
-                    <a href="@Url.Action("Category","Blog", new { slug = category.Slug})">
+                    <a href="@Url.Action("Category","Blog", new { category = category.Name.ToLower()})">
                         <p class="font-16 color-grey text-capitalize">@category.Name</p>
                     </a>
                 </div>
@@ -41,6 +51,11 @@
     <div class="widget heading-space mb-0 wow fadeIn" data-wow-delay="450ms">
         <h5 class="color-black font-weight-600 mb-4">Tagi</h5>
         <div>
+            @if (homeData.Tags.Count() == 0)
+            {
+                <h6>Brak tagów</h6>
+            }
+
             <ul class="tags">
                 @foreach (var tag in homeData.Tags)
                 {

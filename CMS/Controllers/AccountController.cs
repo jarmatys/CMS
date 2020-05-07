@@ -99,7 +99,7 @@ namespace CMS.Controllers
         public async Task<IActionResult> List()
         {
             // ZAPYTAĆ jak pobrać includem artykuły tego usera jak menadżer jest już gotowy (?)
-            var users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.Users.Include(u => u.Articles).ToListAsync();
             return View(users);
         }
 

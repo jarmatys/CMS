@@ -18,8 +18,9 @@ namespace CMS.Controllers
         private readonly ICommentService _commentService;
         private readonly INotificationService _notificationService;
         private readonly IEmailService _emailService;
+        private readonly ICategoryService _categoryService;
 
-        public BlogController(IArticleService articleService, IHomeService homeService, ISettingsService settingsService, ICommentService commentService, INotificationService notificationService, IEmailService emailService)
+        public BlogController(IArticleService articleService, IHomeService homeService, ISettingsService settingsService, ICommentService commentService, INotificationService notificationService, IEmailService emailService, ICategoryService categoryService)
         {
             _articleService = articleService;
             _homeService = homeService;
@@ -27,6 +28,7 @@ namespace CMS.Controllers
             _commentService = commentService;
             _notificationService = notificationService;
             _emailService = emailService;
+            _categoryService = categoryService;
         }
 
         // [ GET ] - <domain>/blog/
@@ -45,7 +47,7 @@ namespace CMS.Controllers
             ViewData["HomeData"] = await _homeService.GetHomeProperties();
 
             var blogSettings = await _settingsService.GetBlogSettings();
-            var maxPax = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage);
+            var maxPax = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage) + 1;
 
             // sprawdzamy aby użytkownik nie przekręcił "licznika" paginacji
             if (page < 1 || page > maxPax)
@@ -62,7 +64,7 @@ namespace CMS.Controllers
             return View(articles);
         }
 
-        // [ GET ] - <domain>/blog/{slug}
+        // [ GET ] - <domain>/blog/wpis/{slug}
         [HttpGet("blog/wpis/{slug}")]
         [Route("blog/wpis/{slug}")]
         public async Task<IActionResult> Details(string slug, string status)
@@ -78,12 +80,55 @@ namespace CMS.Controllers
 
             ViewData["Article"] = article;
 
-            if(status == "AddCommentSucces")
+            if (status == "AddCommentSucces")
             {
                 ViewData["AddCommentSucces"] = "Komentarz został dodany, pojawi się on po mojej akceptacji :)";
             }
 
             return View();
+        }
+
+        // [ GET ] - <domain>/blog/kategoria/{category}
+        [HttpGet("blog/kategoria/{category}")]
+        [Route("blog/kategoria/{category}")]
+        public IActionResult Category(string category)
+        {
+            return RedirectToAction("Category", new { category = category, page = 1 });
+        }
+
+        // [ GET ] - <domain>/blog/kategoria/{category}
+        [HttpGet("blog/kategoria/{category}/{page:int}")]
+        [Route("blog/kategoria/{category}/{page:int}")]
+        public async Task<IActionResult> Category(string category, int page)
+        {
+            ViewData["HomeData"] = await _homeService.GetHomeProperties();
+
+            // pobieranie informacji o kategorii i sprawdzanie czy taka kategoria istnieje
+            var categoryModel = await _categoryService.GetCategoryByName(category);
+            if (categoryModel == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.CategoryName = categoryModel.Name;
+            ViewBag.CategoryDesc = categoryModel.Description;
+
+            var blogSettings = await _settingsService.GetBlogSettings();
+            var maxPax = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage) + 1;
+
+            // sprawdzamy aby użytkownik nie przekręcił "licznika" paginacji
+            if (page < 1 || page > maxPax)
+            {
+                page = 1;
+            }
+
+            var skip = (page - 1) * blogSettings.PostPerPage;
+            var articles = await _articleService.GetRangeOfArticleCategory(skip, blogSettings.PostPerPage, category);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.MaxPage = maxPax;
+
+            return View(articles);
         }
 
         // [ POST ] - <domain>/Blog/AddComment
@@ -109,7 +154,7 @@ namespace CMS.Controllers
 
                 if (settings.CommentsNotify)
                 {
-                   _emailService.SendCommentConfirmation(result);
+                    _emailService.SendCommentConfirmation(result);
                 }
 
                 return Ok(new { status = "Komentarz zapisany pomyślnie" });

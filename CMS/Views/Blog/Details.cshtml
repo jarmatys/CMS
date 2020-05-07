@@ -47,7 +47,7 @@
                             <ul class="meta-tags mt-20px mb-20px">
                                 <li><i class="ti ti-calendar"></i> @article.AddDate.ToString("dd-MM-yyyy")</li>
                                 <li><i class="ti ti-user"></i> @article.User.Name</li>
-                                <li><i class="ti ti-comments"></i> 5</li>
+                                <li><i class="ti ti-comments"></i> @article.Comments.Where(x => x.IsAccepted != false).Count()</li>
 
                                 <li>
                                     <i class="ti ti-tag"></i>
@@ -66,7 +66,7 @@
                                     {
                                         if (taxonomy.Category != null)
                                         {
-                                            <span> @taxonomy.Category.Name</span>
+                                            <span style="cursor:pointer;" onclick="location='@Url.Action("Category","Blog", new { category = taxonomy.Category.Name.ToLower()})'"> @taxonomy.Category.Name</span>
                                         }
                                     }
                                 </li>

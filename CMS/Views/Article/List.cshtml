@@ -99,7 +99,7 @@
                                             }
                                         </td>
 
-                                        <td>0</td>
+                                        <td>@article.Comments.Where(x => x.IsAccepted != false).Count()</td>
 
                                         <td>@article.AddDate.ToString("dd-MM-yyyy")</td>
 

@@ -66,5 +66,10 @@ namespace CMS.Services
 			}	
 			return categoriesList;
 		}
+
+		public async Task<CategoryModel> GetCategoryByName(string name)
+		{
+			return await _context.Categories.SingleOrDefaultAsync(b => b.Name == name);
+		}
 	}
 }
