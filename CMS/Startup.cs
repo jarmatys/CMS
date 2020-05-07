@@ -66,6 +66,7 @@ namespace CMS
             services.AddScoped<IMediaService, MediaService>();
             services.AddScoped<ITaxonomyService, TaxonomyService>();
             services.AddScoped<IPageService, PageService>();
+            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IAppearanceService, AppearanceService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ISeoService, SeoService>();

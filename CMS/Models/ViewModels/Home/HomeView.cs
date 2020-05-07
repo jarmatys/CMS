@@ -16,5 +16,6 @@ namespace CMS.Models.ViewModels.Home
         public IntegrationModel Integrations { get; set; }
         public IEnumerable<CategoryModel> Categories { get; set; }
         public IEnumerable<TagModel> Tags { get; set; }
+        public BlogModel BlogSettings { get; set; }
     }
 }

@@ -2877,11 +2877,12 @@ header .fixed-menu.navbar-top-default .header-social a:hover {
     width: 60px;
 }
 .single-post .post > img {
+    padding-top: 10px;
     width: 100%;
 }
 .single-post .text {
     vertical-align: middle;
-    padding-left: 10px;
+    padding-left: 15px;
     font-size: 15px;
 }
 .single-post span{

@@ -27,6 +27,7 @@ namespace CMS.Context
         public DbSet<MediaModel> Medias { get; set; }
         public DbSet<MediaTypeModel> MediaTypes { get; set; }
         public DbSet<PageModel> Pages { get; set; }
+        public DbSet<CommentModel> Comments { get; set; }
 
         public DbSet<EmailModel> EmailSettings { get; set; }
         public DbSet<PrivacyPolicyModel> PrivacyPolicySettings { get; set; }

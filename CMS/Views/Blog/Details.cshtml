@@ -1,8 +1,8 @@
-﻿@model ArticleModel
-
-@{
-    ViewData["Title"] = Model.Title;
+﻿@{
     Layout = "~/Views/Shared/User/_Layout.cshtml";
+    var homeData = ViewData["HomeData"] as HomeView;
+    var article = ViewData["Article"] as ArticleModel;
+    ViewData["Title"] = article.Title;
 }
 
 <!-- Page Header -->
@@ -10,10 +10,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 page-content position-relative">
-                <h2 class="text-white mt-5 mb-2">@Model.Title</h2>
-                <p class="text-white">@Model.Excerpt</p>
+                <h2 class="text-white mt-5 mb-2">@article.Title</h2>
+                <p class="text-white">@article.Excerpt</p>
                 <div class="page_nav bg-white d-inline-block">
-                    <span>Jesteś tutaj:</span> <a href="@Url.Action("Index","Home")" class="d-inline-block color-black">Strona główna</a> <i class="ti ti-angle-double-right"></i> <a href="@Url.Action("List","Blog")" class="d-inline-block color-black">Blog</a> <span class="color-yellow"><i class="ti ti-angle-double-right"></i>@Model.Title</span>
+                    <span>Jesteś tutaj:</span> <a href="@Url.Action("Index","Home")" class="d-inline-block color-black">Strona główna</a> <i class="ti ti-angle-double-right"></i> <a href="@Url.Action("List","Blog")" class="d-inline-block color-black">Blog</a> <span class="color-yellow"><i class="ti ti-angle-double-right"></i>@article.Title</span>
                 </div>
             </div>
         </div>
@@ -27,25 +27,31 @@
         <div class="row">
             <!-- Blog Left Listing -->
             <div class="col-lg-8 col-md-7">
+                @if (ViewData["AddCommentSucces"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show with-icon">@ViewData["AddCommentSucces"]</div>
+                }
+
                 <div class="blog-box heading-space">
                     <!-- Blog List Inner -->
+
                     <div class="blog-listing-inner news_item">
-                        @if (Model.Image != null)
+                        @if (article.Image != null)
                         {
                             <div class="image hover-effect">
-                                <img src="@Model.Image.Url" alt="@Model.Image.Description">
+                                <img src="@article.Image.Url" alt="@article.Image.Description">
                             </div>
                         }
                         <div class="news_desc">
-                            <h3 class="font-weight-500">@Model.Title</h3>
+                            <h3 class="font-weight-500">@article.Title</h3>
                             <ul class="meta-tags mt-20px mb-20px">
-                                <li><i class="ti ti-calendar"></i> @Model.AddDate.ToString("dd-MM-yyyy")</li>
-                                <li><i class="ti ti-user"></i> @Model.User.Name</li>
+                                <li><i class="ti ti-calendar"></i> @article.AddDate.ToString("dd-MM-yyyy")</li>
+                                <li><i class="ti ti-user"></i> @article.User.Name</li>
                                 <li><i class="ti ti-comments"></i> 5</li>
 
                                 <li>
                                     <i class="ti ti-tag"></i>
-                                    @foreach (var taxonomy in Model.Taxonomies)
+                                    @foreach (var taxonomy in article.Taxonomies)
                                     {
                                         if (taxonomy.Tag != null)
                                         {
@@ -56,7 +62,7 @@
 
                                 <li>
                                     <i class="ti ti-folder"></i>
-                                    @foreach (var taxonomy in Model.Taxonomies)
+                                    @foreach (var taxonomy in article.Taxonomies)
                                     {
                                         if (taxonomy.Category != null)
                                         {
@@ -66,41 +72,63 @@
                                 </li>
 
                             </ul>
-                            @Html.Raw(Model.Content)
+                            @Html.Raw(article.Content)
 
                         </div>
                     </div>
                 </div>
 
-                <div class="blog-box heading-space ">
-                    <!-- Blog List Inner -->
-                    <div class="blog-listing-inner news_item p-5 pb-0 mb-0">
-                        <div class="text-left w-100">
-                            <h4 class="color-black mt-2 mb-2"> Dodaj swój komenatrz</h4>
-                            <p class="color-grey line-height-25px mb-2rem">
-                                Nie będę publikował twojego adresu e-mail
-                            </p>
-                        </div>
-                        <div class="company-contact-form">
-                            <form class="contact-form-outer" onsubmit="return false;">
+                @if (homeData.BlogSettings.AllowComments && article.CommentStatus)
+                {
+                    <div class="blog-box heading-space ">
+                        <!-- Blog List Inner -->
+                        <div class="blog-listing-inner news_item p-5 pb-0 mb-0">
+
+                            @if (article.Comments.Where(c => c.IsAccepted != false).Count() != 0)
+                            {
+                                <div class="profile-authors heading-space">
+                                    <h4 class="text-capitalize color-black mb-35px">Komentarze</h4>
+                                    @foreach (var comment in article.Comments.Where(c => c.IsAccepted != false))
+                                    {
+                                        <div class="any-profile mb-30px">
+                                            <div class="profile-text pl-3">
+                                                <h6><b>@comment.Name</b> - @comment.AddDate.ToString("dd-MM-yyyy")</h6>
+                                                <p class="mt-10px">@comment.Content</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+
+                            <div class="text-left w-100">
+                                <h4 class="color-black mt-2 mb-2"> Dodaj swój komenatrz</h4>
+                                <p class="color-grey line-height-25px mb-2rem">
+                                    Nie będę publikował twojego adresu e-mail
+                                </p>
+                            </div>
+
+                            <div class="alert alert-warning alert-dismissible fade show with-icon d-none" id="alert-add-comment"></div>
+
+                            <div class="company-contact-form">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-12">
                                         <div class="contact-form-textfield pb-4">
-                                            <input type="text" placeholder="Imię *" class="form-control" required id="name" name="name">
+                                            <input type="text" placeholder="Imię *" class="form-control" id="name" name="Name">
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
                                         <div class="contact-form-textfield pb-4">
-                                            <input type="email" placeholder="Adres e-mail *" class="form-control" required id="email" name="email">
+                                            <input type="text" placeholder="Adres e-mail *" class="form-control" id="email" name="Email">
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="contact-form-textfield pb-4">
-                                            <textarea placeholder="Treść komenentarza *" class="form-control message" id="message" name="message"></textarea>
+                                            <textarea placeholder="Treść komentarza *" class="form-control message" id="content" name="Content"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 pt-xs-25px">
-                                        <button type="submit" class="btn-setting btn-hvr-setting-main btn-yellow btn-hvr text-uppercase w-100" id="submit_btn">
+                                        <button type="submit" class="btn-setting btn-hvr-setting-main btn-yellow btn-hvr text-uppercase w-100" id="submit-add-comment">
                                             SKOMENTUJ
                                             <span class="btn-hvr-setting btn-hvr-pink">
                                                 <span class="btn-hvr-setting-inner">
@@ -113,10 +141,10 @@
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
 
             <!-- Blog Widgets -->
@@ -127,3 +155,56 @@
     </div>
 </section>
 <!-- Blog ends -->
+
+@section homeScripts {
+    <script>
+        const buttonSubmit = document.querySelector("#submit-add-comment");
+        const alertField = document.querySelector("#alert-add-comment");
+        const contentText = document.querySelector("#content");
+        const emailText = document.querySelector("#email");
+        const nameText = document.querySelector("#name");
+
+        buttonSubmit.addEventListener("click", function () {
+
+            var data = {
+                'Name': nameText.value,
+                'Email': emailText.value,
+                'Content': contentText.value,
+                'ArticleId': @article.Id
+            };
+
+            $.ajax(
+                    {
+                        url: '@Url.Action("AddComment","Blog")',
+                        type: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(data),
+                        success: function (result) {
+                            window.location.href = "@Url.Action("Details","Blog", new { slug = article.Slug, status = "AddCommentSucces"})";
+                        },
+                        error: function (error) {
+
+                            alertField.innerHTML = "";
+                            alertField.classList.remove("d-none");
+
+                            let errors = error.responseJSON;
+                            for (let name in errors) {
+                                // jeżeli jest więcej błędów jednego typu to przeiteruj po nich
+                                if (errors[name].length != 1) {
+                                    for (let subError of errors[name]) {
+                                        alertField.innerHTML += `<p> ${subError} </p>`;
+                                    }
+                                }
+                                else {
+                                    alertField.innerHTML += `<p> ${errors[name]} </p>`;
+                                }
+                            }
+                            console.log(errors);
+
+                        }
+                });
+
+            });
+    </script>
+}

@@ -35,6 +35,7 @@ namespace CMS.Models.Db.Article
         public MediaModel Image { get; set; }
 
         public ICollection<TaxonomyModel> Taxonomies { get; set; }
+        public ICollection<CommentModel> Comments { get; set; }
         
     }
 }

@@ -47,7 +47,8 @@ namespace CMS.Services
                 Articles = Enumerable.Reverse(await _context.Articles.Where(x => x.IsDraft != true).Include(x => x.Image).Include(x => x.User).ToListAsync()).Take(3),
                 Integrations = await _context.IntegrationSettings.FirstOrDefaultAsync(),
                 Categories = await _context.Categories.ToListAsync(),
-                Tags = await _context.Tags.ToListAsync()
+                Tags = await _context.Tags.ToListAsync(),
+                BlogSettings = await _context.BlogSettings.FirstOrDefaultAsync()
             };
 
             return homeView;

@@ -16,7 +16,7 @@
                     }
                 </a>
                 <div class="text">
-                    <a href="@($"blog/{article.Slug}")" class="color-grey">@article.Title</a>
+                    <a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="color-grey">@article.Title</a>
                     <span>@article.AddDate.ToString("dd-MM-yyyy")</span>
                 </div>
             </div>

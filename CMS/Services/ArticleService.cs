@@ -31,6 +31,7 @@ namespace CMS.Services
                 .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
                 .Include(x => x.Image)
                 .Include(x => x.User)
+                .Include(x => x.Comments)
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
 
@@ -41,6 +42,7 @@ namespace CMS.Services
                 .Include(x => x.Taxonomies).ThenInclude(x => x.Category)
                 .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
                 .Include(x => x.User)
+                .Include(x => x.Comments)
                 .ToListAsync();
 
             articleList.Reverse();
@@ -76,6 +78,7 @@ namespace CMS.Services
              .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
              .Include(x => x.Image)
              .Include(x => x.User)
+             .Include(x => x.Comments)
              .SingleOrDefaultAsync(b => b.Slug == slug);
         }
 
@@ -85,6 +88,7 @@ namespace CMS.Services
            .Include(x => x.Taxonomies).ThenInclude(x => x.Category)
            .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
            .Include(x => x.User)
+           .Include(x => x.Comments)
            .Where(x => x.IsDraft != true)
            .ToListAsync();
 
