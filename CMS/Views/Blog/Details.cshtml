@@ -30,9 +30,12 @@
                 <div class="blog-box heading-space">
                     <!-- Blog List Inner -->
                     <div class="blog-listing-inner news_item">
-                        <div class="image hover-effect">
-                            <img src="@Model.Image.Url" alt="@Model.Image.Description">
-                        </div>
+                        @if (Model.Image != null)
+                        {
+                            <div class="image hover-effect">
+                                <img src="@Model.Image.Url" alt="@Model.Image.Description">
+                            </div>
+                        }
                         <div class="news_desc">
                             <h3 class="font-weight-500">@Model.Title</h3>
                             <ul class="meta-tags mt-20px mb-20px">

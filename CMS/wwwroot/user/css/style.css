@@ -2767,7 +2767,6 @@ header .fixed-menu.navbar-top-default .header-social a:hover {
 .news_item{
     background: #ffffff;
     position: relative;
-    min-height:600px;
 }
 .news_item.shadow{
     -webkit-box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.1);

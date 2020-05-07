@@ -10,7 +10,10 @@
         {
             <div class="single-post mb-3">
                 <a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="post">
-                    <img src="@article.Image.Url" alt="@article.Image.Description">
+                    @if (article.Image != null)
+                    {
+                        <img src="@article.Image.Url" alt="@article.Image.Description">
+                    }
                 </a>
                 <div class="text">
                     <a href="@($"blog/{article.Slug}")" class="color-grey">@article.Title</a>

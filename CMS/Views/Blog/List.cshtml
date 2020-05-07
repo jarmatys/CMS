@@ -33,9 +33,12 @@
                     <div class="blog-box heading-space">
                         <!-- Blog List Inner -->
                         <div class="blog-listing-inner news_item">
-                            <div class="image hover-effect">
-                                <img src="@article.Image.Url" alt="blog-img">
-                            </div>
+                            @if (article.Image != null)
+                            {
+                                <div class="image hover-effect">
+                                    <img src="@article.Image.Url" alt="@article.Image.Description">
+                                </div>
+                            }
                             <div class="news_desc">
                                 <h3 class="text-capitalize font-weight-500"><a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="color-black">@article.Title</a></h3>
                                 <ul class="meta-tags mt-20px mb-20px">

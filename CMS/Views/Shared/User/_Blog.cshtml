@@ -22,7 +22,14 @@
                     <div class="col-md-4 col-sm-12">
                         <div class="news_item shadow blog-one">
 
-                            <img style="height:200px;width:100%" src="@article.Image.Url" alt="@article.Image.Description" class="img-fluid">
+                            @if (article.Image != null)
+                            {
+                                <img style="height:200px;width:100%" src="@article.Image.Url" alt="@article.Image.Description" class="img-fluid">
+                            }
+                            else
+                            {
+                                <div style="height:200px"></div>
+                            }
 
                             <div class="news_desc">
 
