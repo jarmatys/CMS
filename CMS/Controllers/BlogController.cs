@@ -20,20 +20,34 @@ namespace CMS.Controllers
             _settingsService = settingsService;
         }
 
-        // [ GET ] - <domain>/blog/{page?}
-        [HttpGet("blog/{page?}")]
-        [Route("blog/{page?}")]
-        public async Task<IActionResult> List(int page = 0)
+        // [ GET ] - <domain>/blog/
+        [HttpGet("blog")]
+        [Route("blog")]
+        public IActionResult List()
+        {
+            return RedirectToAction("List", new { page = 1 });
+        }
 
+        // [ GET ] - <domain>/blog/{page}
+        [HttpGet("blog/{page:int}")]
+        [Route("blog/{page:int}")]
+        public async Task<IActionResult> List(int page)
         {
             ViewData["HomeData"] = await _homeService.GetHomeProperties();
 
             var blogSettings = await _settingsService.GetBlogSettings();
-            var skip = page * blogSettings.PostPerPage;
+            var maxPax = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage) + 1;
 
+            // sprawdzamy aby użytkownik nie przekręcił "licznika" paginacji
+            if (page < 1 || page > maxPax)
+            {
+                page = 1;
+            }
+
+            var skip = (page - 1) * blogSettings.PostPerPage;
             var articles = await _articleService.GetRangeOfArticle(skip, blogSettings.PostPerPage);
 
-            ViewBag.CurrentPage = page + 1;
+            ViewBag.CurrentPage = page;
             ViewBag.MaxPage = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage) + 1;
 
             return View(articles);
@@ -50,7 +64,7 @@ namespace CMS.Controllers
 
             if (article == null)
             {
-                return RedirectToAction("PageNotFound", "Error");
+                return NotFound();
             }
 
             return View(article);

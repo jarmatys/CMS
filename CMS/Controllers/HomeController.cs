@@ -73,7 +73,7 @@ namespace CMS.Controllers
                 return RedirectPermanent(newUrl);
             }
 
-            return RedirectToAction("PageNotFound", "Error");
+            return NotFound();
         }
 
         // [ GET ] - <domain>/strona/{slug}
@@ -86,7 +86,7 @@ namespace CMS.Controllers
             var page = await _pageService.GetPageBySlug(slug);
             if(page == null || (page.IsDraft == true && !User.Identity.IsAuthenticated))
             {
-                return RedirectToAction("PageNotFound", "Error");
+                return NotFound();
             }
 
             return View(page);

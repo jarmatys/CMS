@@ -67,23 +67,23 @@
                             @if (ViewBag.CurrentPage != 1)
                             {
                                 <li class="page-item">
-                                    <a class="page-link" href="#">
+                                    <a class="page-link" href="@Url.Action("List","Blog", new { page = ViewBag.CurrentPage - 1})">
                                         <i class="ti ti-angle-left"></i>
                                     </a>
                                 </li>
                             }
 
-                            @for (int i = 1; i <= ViewBag.MaxPage; i++)
+                            @for (int num = 1; num <= ViewBag.MaxPage; num++)
                             {
-                                <li class="page-item">
-                                    <a class="page-link" href="@Url.Action("List","Blog", new { page = i})"></a>
+                                <li class="page-item @(ViewBag.CurrentPage == num ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("List","Blog", new { page = num})">@num</a>
                                 </li>
                             }
 
                             @if (ViewBag.MaxPage != ViewBag.CurrentPage)
                             {
                                 <li class="page-item">
-                                    <a class="page-link" href="#">
+                                    <a class="page-link" href="@Url.Action("List","Blog", new { page = ViewBag.CurrentPage + 1})">
                                         <i class="ti ti-angle-right"></i>
                                     </a>
                                 </li>
