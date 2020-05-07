@@ -2878,8 +2878,6 @@ header .fixed-menu.navbar-top-default .header-social a:hover {
 }
 .single-post .post > img {
     width: 100%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
 }
 .single-post .text {
     vertical-align: middle;

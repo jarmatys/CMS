@@ -36,8 +36,8 @@ namespace CMS.Controllers
             ViewData["HomeData"] = await _homeService.GetHomeProperties();
 
             var blogSettings = await _settingsService.GetBlogSettings();
-            var maxPax = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage) + 1;
-
+            var maxPax = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage);
+   
             // sprawdzamy aby użytkownik nie przekręcił "licznika" paginacji
             if (page < 1 || page > maxPax)
             {
@@ -48,7 +48,7 @@ namespace CMS.Controllers
             var articles = await _articleService.GetRangeOfArticle(skip, blogSettings.PostPerPage);
 
             ViewBag.CurrentPage = page;
-            ViewBag.MaxPage = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage) + 1;
+            ViewBag.MaxPage = maxPax;
 
             return View(articles);
         }

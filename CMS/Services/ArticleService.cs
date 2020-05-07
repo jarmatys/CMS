@@ -85,6 +85,7 @@ namespace CMS.Services
            .Include(x => x.Taxonomies).ThenInclude(x => x.Category)
            .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
            .Include(x => x.User)
+           .Where(x => x.IsDraft != true)
            .ToListAsync();
 
             articleList.Reverse();   
