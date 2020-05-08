@@ -4,6 +4,8 @@ on:
   push:
     branches: 
       - 'master'
+    paths:
+      - 'CMS/appsettings.json'
 
 jobs:
   build:
@@ -13,6 +15,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
+    - name: Add configuration file
+      uses: azure/appconfiguration-sync@v1
+      with:
+          configurationFile: 'appsettings.json'
+          format: 'json'
+          connectionString: ${{ secrets.ConnectionString }}
+          separator: ':'
+          
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
