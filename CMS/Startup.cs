@@ -23,23 +23,31 @@ namespace CMS
     {
         // Wstrzykiwanie pliku konfiguracyjnego do naszej aplikacji
         public IConfiguration Configuration { get; }
-        private readonly IWebHostEnvironment _env;
 
         public Startup(IWebHostEnvironment env)
         {
             var config = new ConfigurationBuilder();
-            config.AddJsonFile("secrets.json");
-            Configuration = config.Build();
 
-            _env = env;
+            if (env.IsDevelopment())
+            {
+                // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane konfiguracyjne z secrets.json
+                config.AddJsonFile("secrets.json");
+            }
+
+            if (env.IsProduction())
+            {
+                // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane ze zmniennych œrodowiskowych
+                config.AddEnvironmentVariables("ASPNETCORE_CMS_");
+            }
+
+            Configuration = config.Build();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             // £¹czenie z baz¹ danych
             services.AddDbContext<CMSContext>(builder =>
-            {
-         
+            {   
                 // Dodajemy dostawcê do obs³ugi MySql'a i przekazujemy connection string pobrany z pliku konfiguracyjnego z naszej aplikacji
                 builder.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -77,7 +85,7 @@ namespace CMS
             services.AddScoped<INotificationService, SlackService>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IEmailService, EmailService>();
-
+            
             // Konfiguracja platformy cloudinary do przechowywania zdjêæ w chmurze
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             // Konfiguracja slacka
@@ -86,6 +94,8 @@ namespace CMS
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var test = env.EnvironmentName;
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
