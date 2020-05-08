@@ -27,11 +27,11 @@ jobs:
     - name: TEST print env
       run: |
           echo "MY_ENV_VAR=${MY_ENV_VAR}"
-          echo "CloudAPI=${ASPNETCORE_CMS_CloudinarySettings:ApiKey}"
+          echo "CloudAPI=${ASPNETCORE_CMS_CloudinarySettings__ApiKey}"
           printenv
           
     - name: Setting environment variables
-      run: echo "Ustawione > ${ASPNETCORE_CMS_CloudinarySettings:ApiKey} | Drugi parametr > ${TestEnv}"
+      run: echo "Ustawione > ${ASPNETCORE_CMS_CloudinarySettings__ApiKey} | Drugi parametr > ${TestEnv}"
       env:
         TestEnv: testvalue
         ASPNETCORE_ENVIRONMENT: Production
