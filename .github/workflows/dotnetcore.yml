@@ -17,23 +17,10 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-        
-    - name: TEST set env
-      uses: allenevans/set-env@v1.0.0
-      with:
-          MY_ENV_VAR: 'my value'
-          ASPNETCORE_CMS_CloudinarySettings__ApiKey: ${{ secrets.CloudinaryApiKey }}
-
-    - name: TEST print env
-      run: |
-          echo "MY_ENV_VAR=${MY_ENV_VAR}"
-          echo "CloudAPI=${ASPNETCORE_CMS_CloudinarySettings__ApiKey}"
-          printenv
-          
+                 
     - name: Setting environment variables
-      run: echo "Ustawione > ${ASPNETCORE_CMS_CloudinarySettings__ApiKey} | Drugi parametr > ${TestEnv}"
+      run: echo "ApiKey = ${ASPNETCORE_CMS_CloudinarySettings__ApiKey} | Secret = ${ASPNETCORE_CMS_CloudinarySettings__ApiSecret} | cloudname = ${ ASPNETCORE_CMS_CloudinarySettings__CloudName} | Conn = ${ASPNETCORE_CMS_ConnectionStrings__DefaultConnection} | slack = ${ASPNETCORE_CMS_SlackSettings__Url}"
       env:
-        TestEnv: testvalue
         ASPNETCORE_ENVIRONMENT: Production
         ASPNETCORE_CMS_CloudinarySettings__ApiKey: ${{ secrets.CloudinaryApiKey }}
         ASPNETCORE_CMS_CloudinarySettings__ApiSecret: ${{ secrets.CloudinaryApiSecret }}
