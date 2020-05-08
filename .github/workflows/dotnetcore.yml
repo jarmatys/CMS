@@ -18,14 +18,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
                  
-    - name: Setting environment variables
-      run: 
-        echo "ApiKey = ${ASPNETCORE_CMS_CloudinarySettings__ApiKey}"
-        echo "Secret = ${ASPNETCORE_CMS_CloudinarySettings__ApiSecret}"
-        echo "name = ${ASPNETCORE_CMS_CloudinarySettings__CloudName}"
-        echo "con = ${ASPNETCORE_CMS_ConnectionStrings__DefaultConnection}"
-        echo "slack = ${ASPNETCORE_CMS_SlackSettings__Url}"
-        
+    - name: Setting environment variables     
       env:
         ASPNETCORE_ENVIRONMENT: Production
         ASPNETCORE_CMS_CloudinarySettings__ApiKey: ${{ secrets.CloudinaryApiKey }}
