@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
     paths:
-      - 'appsettings.json'
+      - 'CMS/appsettings.json'
 
 jobs:
   build:
