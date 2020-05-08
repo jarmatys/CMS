@@ -18,7 +18,8 @@ jobs:
       with:
         dotnet-version: 3.1.101
                  
-    - name: Setting environment variables     
+    - name: Setting environment variables   
+      run: echo "Enviroment variables are set"  
       env:
         ASPNETCORE_ENVIRONMENT: Production
         ASPNETCORE_CMS_CloudinarySettings__ApiKey: ${{ secrets.CloudinaryApiKey }}
