@@ -8,14 +8,14 @@
     }
   },
   "profiles": {
-    "IIS Express": {
+    "CMS_development": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "CMS": {
+    "CMS_production": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
