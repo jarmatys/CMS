@@ -23,12 +23,15 @@ namespace CMS
     {
         // Wstrzykiwanie pliku konfiguracyjnego do naszej aplikacji
         public IConfiguration Configuration { get; }
+        private readonly IWebHostEnvironment _env;
 
-        public Startup()
+        public Startup(IWebHostEnvironment env)
         {
             var config = new ConfigurationBuilder();
             config.AddJsonFile("appsettings.json");
             Configuration = config.Build();
+
+            _env = env;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -36,6 +39,7 @@ namespace CMS
             // £¹czenie z baz¹ danych
             services.AddDbContext<CMSContext>(builder =>
             {
+         
                 // Dodajemy dostawcê do obs³ugi MySql'a i przekazujemy connection string pobrany z pliku konfiguracyjnego z naszej aplikacji
                 builder.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -85,6 +89,11 @@ namespace CMS
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            if (env.IsProduction())
+            {
+                app.UseExceptionHandler("/blad");
             }
 
             // dodajemy obs³ugê plików statycznych z ~/wwwroot

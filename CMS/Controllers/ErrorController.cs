@@ -15,10 +15,20 @@ namespace CMS.Controllers
             _homeService = homeService;
         }
 
-        // [ GET ] - <domain>/404
+        // [ GET ] - <domain>/nie-odnaleziono
         [HttpGet]
         [Route("nie-odnaleziono")]
         public async Task<IActionResult> PageNotFound()
+        {
+            ViewData["HomeData"] = await _homeService.GetHomeProperties();
+
+            return View();
+        }
+
+        // [ GET ] - <domain>/blad
+        [HttpGet]
+        [Route("blad")]
+        public async Task<IActionResult> PageBadRequest()
         {
             ViewData["HomeData"] = await _homeService.GetHomeProperties();
 
