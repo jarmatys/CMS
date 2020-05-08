@@ -2,7 +2,8 @@ name: .NET Core
 
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - 'master'
     paths:
       - 'CMS/appsettings.json'
 
