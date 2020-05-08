@@ -3,8 +3,8 @@ name: .NET Core
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    paths:
+      - 'CMS/appsettings.json'
 
 jobs:
   build:
@@ -13,13 +13,35 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    - name: Configure appsettings
+      uses: azure/appconfiguration-sync@v1
+      with:
+          configurationFile: 'appsettings.json'
+          format: 'json'
+          ConnectionStrings: ${{ secrets.ConnectionString }}
+          separator: ':'
+      
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+        
     - name: Install dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --configuration Release --no-restore
+      
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+      
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2.1.1
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: ""
+          SOURCE: "CMS/bin/Release"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: "/var/CMSarmatys"
