@@ -340,4 +340,4 @@ ASALocalRun/
 healthchecksdb
 
 # Configure file
-appsettings.json
+secrets.json

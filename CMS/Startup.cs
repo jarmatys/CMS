@@ -28,7 +28,7 @@ namespace CMS
         public Startup(IWebHostEnvironment env)
         {
             var config = new ConfigurationBuilder();
-            config.AddJsonFile("appsettings.json");
+            config.AddJsonFile("secrets.json");
             Configuration = config.Build();
 
             _env = env;
