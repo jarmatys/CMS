@@ -15,8 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
-    - name: Add configuration file
-      uses: azure/appconfiguration-sync@v1
+    - uses: azure/appconfiguration-sync@v1
       with:
           configurationFile: 'appsettings.json'
           format: 'json'
