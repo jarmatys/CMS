@@ -22,7 +22,7 @@ jobs:
       uses: allenevans/set-env@v1.0.0
       with:
           MY_ENV_VAR: 'my value'
-          ASPNETCORE_CMS_CloudinarySettings:ApiKey: ${{ secrets.CloudinaryApiKey }}
+          ASPNETCORE_CMS_CloudinarySettings__ApiKey: ${{ secrets.CloudinaryApiKey }}
 
     - name: TEST print env
       run: |
@@ -35,11 +35,11 @@ jobs:
       env:
         TestEnv: testvalue
         ASPNETCORE_ENVIRONMENT: Production
-        ASPNETCORE_CMS_CloudinarySettings:ApiKey: ${{ secrets.CloudinaryApiKey }}
-        ASPNETCORE_CMS_CloudinarySettings:ApiSecret: ${{ secrets.CloudinaryApiSecret }}
-        ASPNETCORE_CMS_CloudinarySettings:CloudName: ${{ secrets.CloudinaryCloudName }}
-        ASPNETCORE_CMS_ConnectionStrings:DefaultConnection: ${{ secrets.ConnectionString }}
-        ASPNETCORE_CMS_SlackSettings:Url: ${{ secrets.SlackSettingsUrl}}
+        ASPNETCORE_CMS_CloudinarySettings__ApiKey: ${{ secrets.CloudinaryApiKey }}
+        ASPNETCORE_CMS_CloudinarySettings__ApiSecret: ${{ secrets.CloudinaryApiSecret }}
+        ASPNETCORE_CMS_CloudinarySettings__CloudName: ${{ secrets.CloudinaryCloudName }}
+        ASPNETCORE_CMS_ConnectionStrings__DefaultConnection: ${{ secrets.ConnectionString }}
+        ASPNETCORE_CMS_SlackSettings__Url: ${{ secrets.SlackSettingsUrl}}
         
     - name: Install dependencies
       run: dotnet restore
