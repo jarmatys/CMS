@@ -23,7 +23,7 @@ jobs:
       env:
         TestEnv: testvalue
         ASPNETCORE_ENVIRONMENT: Production
-        ASPNETCORE_CMS_CloudinarySettings:ApiKey: ${{ secrets.CloudinaryApiKey }}
+        'ASPNETCORE_CMS_CloudinarySettings:ApiKey': ${{ secrets.CloudinaryApiKey }}
         ASPNETCORE_CMS_CloudinarySettings:ApiSecret: ${{ secrets.CloudinaryApiSecret }}
         ASPNETCORE_CMS_CloudinarySettings:CloudName: ${{ secrets.CloudinaryCloudName }}
         ASPNETCORE_CMS_ConnectionStrings:DefaultConnection: ${{ secrets.ConnectionString }}
