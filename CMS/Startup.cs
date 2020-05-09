@@ -49,8 +49,7 @@ namespace CMS
             services.AddDbContext<CMSContext>(builder =>
             {   
                 // Dodajemy dostawcê do obs³ugi MySql'a i przekazujemy connection string pobrany z pliku konfiguracyjnego z naszej aplikacji
-                // builder.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
-                builder.UseMySql(Configuration.GetConnectionString("VipservConnection"));
+                builder.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             // Wstrzykujemy zale¿noœci o identifykacji u¿ytkowników
