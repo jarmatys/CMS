@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CMS.Migrations
 {
     [DbContext(typeof(CMSContext))]
-    [Migration("20200423160135_cascadedelteimg")]
-    partial class cascadedelteimg
+    [Migration("20200509141916_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,46 +98,32 @@ namespace CMS.Migrations
                     b.Property<string>("AdminEmail")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<bool>("AllowComments")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("BlogDescription")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("BlogName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<bool>("CommentsNotify")
+                    b.Property<string>("FaviconId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("IsIndex")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("DateFormat")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("MailPort")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MailServerLogin")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("MailServerPassword")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("MailServerUrl")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("PostPerPage")
-                        .HasColumnType("int");
+                    b.Property<string>("LogoId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("SiteUrl")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("TimeFormat")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("UserCanRegister")
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FaviconId");
+
+                    b.HasIndex("LogoId");
 
                     b.ToTable("Options");
                 });
@@ -218,6 +204,37 @@ namespace CMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Article.CommentModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AddDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("CMS.Models.Db.Article.TagModel", b =>
@@ -308,6 +325,226 @@ namespace CMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MediaTypes");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Page.PageModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AddDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("FullUrl")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("IsCannonical")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsDraft")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsIndex")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("KeyWords")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pages");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Seo.MetaTagModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MetaTags");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Seo.RetrievalLinksModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("NewUrl")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("OldUrl")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RetrievalLinks");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Seo.SocialMediaModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("FontAwesome")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SocialMedias");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Settings.BlogModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("AllowComments")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("CommentsNotify")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("DateFormat")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("PostPerPage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TimeFormat")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BlogSettings");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Settings.EmailModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmailFrom")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("EmailTo")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("EnableSSL")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Host")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("Port")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailSettings");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Settings.IntegrationModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CustomScripts")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("FacebookPixel")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("GoogleAnalytics")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("GoogleMaps")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Hotjar")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Recaptcha")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Tawkto")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("YandexMetrica")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IntegrationSettings");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Settings.PrivacyPolicyModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("HostingName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("PageUrl")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PrivacyPolicySettings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -438,16 +675,35 @@ namespace CMS.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CMS.Models.Db.Admin.OptionsModel", b =>
+                {
+                    b.HasOne("CMS.Models.Db.Media.MediaModel", "Favicon")
+                        .WithMany()
+                        .HasForeignKey("FaviconId");
+
+                    b.HasOne("CMS.Models.Db.Media.MediaModel", "Logo")
+                        .WithMany()
+                        .HasForeignKey("LogoId");
+                });
+
             modelBuilder.Entity("CMS.Models.Db.Article.ArticleModel", b =>
                 {
                     b.HasOne("CMS.Models.Db.Media.MediaModel", "Image")
                         .WithOne("Article")
-                        .HasForeignKey("CMS.Models.Db.Article.ArticleModel", "ImageId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CMS.Models.Db.Article.ArticleModel", "ImageId");
 
                     b.HasOne("CMS.Models.Db.Account.User", "User")
                         .WithMany("Articles")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Article.CommentModel", b =>
+                {
+                    b.HasOne("CMS.Models.Db.Article.ArticleModel", "Article")
+                        .WithMany("Comments")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CMS.Models.Db.Article.TaxonomyModel", b =>

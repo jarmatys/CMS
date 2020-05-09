@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace CMS.Models.Db.Settings
 {
+
     public class IntegrationModel
     {
         public int Id { get; set; }

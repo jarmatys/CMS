@@ -87,20 +87,20 @@ namespace CMS.Context
                 await context.SaveChangesAsync();
             }
 
-            // Seed dla ustawień e-maila
+            // seed dla ustawień e-maila
             if (!context.EmailSettings.Any())
             {
-                var emailSettings = new EmailModel
+                var emailsettings = new EmailModel
                 {
                     Host = "smtp.gmail.com",
                     Port = 587,
                     EmailTo = "odbiorca@gmail.com",
                     EmailFrom = "nadawca@gmail.com",
-                    Password = "Password",
+                    Password = "password",
                     EnableSSL = true,
                 };
 
-                await context.EmailSettings.AddAsync(emailSettings);
+                await context.EmailSettings.AddAsync(emailsettings);
                 await context.SaveChangesAsync();
             }
 
