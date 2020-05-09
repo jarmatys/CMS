@@ -17,16 +17,16 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
- 
-    - name: Setting environment variables
-      run: echo Hello world $ASPNETCORE_CMS_CloudinarySettings:ApiKey $SPNETCORE_CMS_CloudinarySettings:ApiSecret $ASPNETCORE_CMS_CloudinarySettings:CloudName $ASPNETCORE_CMS_ConnectionStrings:DefaultConnection $ASPNETCORE_CMS_SlackSettings:Url
+                 
+    - name: Setting environment variables test
+      run: echo $ASPNETCORE_CMS_CloudinarySettings__ApiSecret 
       env:
         ASPNETCORE_ENVIRONMENT: Production
-        ASPNETCORE_CMS_CloudinarySettings:ApiKey: ${{ secrets.CloudinaryApiKey }}
-        ASPNETCORE_CMS_CloudinarySettings:ApiSecret: ${{ secrets.CloudinaryApiSecret }}
-        ASPNETCORE_CMS_CloudinarySettings:CloudName: ${{ secrets.CloudinaryCloudName }}
-        ASPNETCORE_CMS_ConnectionStrings:DefaultConnection: ${{ secrets.ConnectionString }}
-        ASPNETCORE_CMS_SlackSettings:Url: ${{ secrets.SlackSettingsUrl}}
+        ASPNETCORE_CMS_CloudinarySettings__ApiKey: ${{ secrets.CloudinaryApiKey }}
+        ASPNETCORE_CMS_CloudinarySettings__ApiSecret: ${{ secrets.CloudinaryApiSecret }}
+        ASPNETCORE_CMS_CloudinarySettings__CloudName: ${{ secrets.CloudinaryCloudName }}
+        ASPNETCORE_CMS_ConnectionStrings__DefaultConnection: ${{ secrets.ConnectionString }}
+        ASPNETCORE_CMS_SlackSettings__Url: ${{ secrets.SlackSettingsUrl}}
         
     - name: Install dependencies
       run: dotnet restore
