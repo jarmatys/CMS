@@ -8,6 +8,7 @@ using CMS.Infrastructure.Settings;
 using CMS.Models.Db.Account;
 using CMS.Services;
 using CMS.Services.interfaces;
+using Google.Apis.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace CMS
 {
@@ -23,21 +25,28 @@ namespace CMS
     {
         // Wstrzykiwanie pliku konfiguracyjnego do naszej aplikacji
         public IConfiguration Configuration { get; }
+        public ILogger<Startup> Logger { get; }
 
-        public Startup(IWebHostEnvironment env)
+        public Startup(IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            var config = new ConfigurationBuilder();
+            Logger = logger;
 
+            var config = new ConfigurationBuilder();
+            
             if (env.IsDevelopment())
             {
                 // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane konfiguracyjne z secrets.json
                 config.AddJsonFile("secrets.json");
+
+                Logger.LogInformation($"Apka w³¹czona w trypie developerskim. ConnectionString: {Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")}");
             }
 
             if (env.IsProduction())
             {
                 // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane ze zmniennych œrodowiskowych
                 config.AddEnvironmentVariables("ASPNETCORE_CMS_");
+
+                Logger.LogInformation($"Apka w³¹czona w trypie produkcyjnym. ConnectionString: {Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")}");
             }
 
             Configuration = config.Build();
