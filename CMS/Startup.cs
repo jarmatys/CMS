@@ -36,7 +36,8 @@ namespace CMS
             if (env.IsDevelopment())
             {
                 // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane konfiguracyjne z secrets.json
-                config.AddJsonFile("secrets.json");
+                //config.AddJsonFile("secrets.json");
+                config.AddEnvironmentVariables("ASPNETCORE_CMS_");
 
                 //Logger.LogInformation($"Apka w³¹czona w trypie developerskim.");
             }
@@ -44,7 +45,8 @@ namespace CMS
             if (env.IsProduction())
             {
                 // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane ze zmniennych œrodowiskowych
-                config.AddEnvironmentVariables("ASPNETCORE_CMS_");
+                //config.AddEnvironmentVariables("ASPNETCORE_CMS_");
+                config.AddJsonFile("secrets.json");
 
                 //Logger.LogInformation($"Apka w³¹czona w trypie produkcyjnym.");
             }
