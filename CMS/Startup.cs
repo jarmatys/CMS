@@ -32,13 +32,13 @@ namespace CMS
             Logger = logger;
 
             var config = new ConfigurationBuilder();
-            
+
             if (env.IsDevelopment())
             {
                 // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane konfiguracyjne z secrets.json
                 config.AddJsonFile("secrets.json");
 
-                Logger.LogInformation($"Apka w³¹czona w trypie developerskim. ConnectionString: {Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")}");
+                Logger.LogInformation($"Apka w³¹czona w trypie developerskim.");
             }
 
             if (env.IsProduction())
@@ -46,17 +46,19 @@ namespace CMS
                 // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane ze zmniennych œrodowiskowych
                 config.AddEnvironmentVariables("ASPNETCORE_CMS_");
 
-                Logger.LogInformation($"Apka w³¹czona w trypie produkcyjnym. ConnectionString: {Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")}");
+                Logger.LogInformation($"Apka w³¹czona w trypie produkcyjnym.");
             }
 
             Configuration = config.Build();
+
+            Logger.LogInformation($"ConnectionString: { Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")}");
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             // £¹czenie z baz¹ danych
             services.AddDbContext<CMSContext>(builder =>
-            {   
+            {
                 // Dodajemy dostawcê do obs³ugi MySql'a i przekazujemy connection string pobrany z pliku konfiguracyjnego z naszej aplikacji
                 builder.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -94,7 +96,7 @@ namespace CMS
             services.AddScoped<INotificationService, SlackService>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IEmailService, EmailService>();
-            
+
             // Konfiguracja platformy cloudinary do przechowywania zdjêæ w chmurze
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             // Konfiguracja slacka
