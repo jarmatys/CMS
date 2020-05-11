@@ -19,12 +19,15 @@ namespace CMS
     {
         public static void Main(string[] args)
         {
+
             var host = CreateWebHostBuilder(args).Build();
             //var host = CreateHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                var logger = services.GetRequiredService<ILogger<Program>>();
+
                 try
                 {
                     var context = services.GetRequiredService<CMSContext>();
@@ -32,11 +35,13 @@ namespace CMS
 
                     context.Database.Migrate();
                     Seed.SeedData(context, userManager).Wait();
+
+                    logger.LogInformation("Migracja zakoñczona pomyœlnie");
+
                 }
                 catch (Exception ex)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "Wyst¹pi³ problem przy migracji danych.");
+                    logger.LogError(ex, "Wystapil problem przy migracji danych.");
                 }
             }
 
