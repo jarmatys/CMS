@@ -44,7 +44,7 @@ namespace CMS
             if (env.IsProduction())
             {
                 // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane ze zmniennych œrodowiskowych
-                config.AddEnvironmentVariables("ARMATYS_CMS_");
+                config.AddEnvironmentVariables("CMSOPEN_");
 
                 //Logger.LogInformation($"Apka w³¹czona w trypie produkcyjnym.");
             }
