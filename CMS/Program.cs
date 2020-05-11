@@ -30,11 +30,11 @@ namespace CMS
 
                 try
                 {
-                    var context = services.GetRequiredService<CMSContext>();
-                    var userManager = services.GetRequiredService<UserManager<User>>();
+                    // var context = services.GetRequiredService<CMSContext>();
+                    // var userManager = services.GetRequiredService<UserManager<User>>();
 
-                    context.Database.Migrate();
-                    Seed.SeedData(context, userManager).Wait();
+                    //context.Database.Migrate();
+                    //Seed.SeedData(context, userManager).Wait();
 
                     logger.LogInformation("Migracja zakoñczona pomyœlnie");
 
