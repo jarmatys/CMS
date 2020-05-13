@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using CMS.Context;
@@ -87,7 +88,8 @@ namespace CMS
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var test = env.EnvironmentName;
+            var cultureInfo = new CultureInfo("pl-PL");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 
             if (env.IsDevelopment())
             {
