@@ -25,33 +25,15 @@ namespace CMS
     {
         // Wstrzykiwanie pliku konfiguracyjnego do naszej aplikacji
         public IConfiguration Configuration { get; }
-        //public ILogger<Startup> Logger { get; }
 
-        public Startup(IWebHostEnvironment env)
+        public Startup()
         {
-            //Logger = logger;
-
             var config = new ConfigurationBuilder();
 
-            if (env.IsDevelopment())
-            {
-                // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane konfiguracyjne z secrets.json
-                config.AddJsonFile("secrets.json");
-
-                //Logger.LogInformation($"Apka w³¹czona w trypie developerskim.");
-            }
-
-            if (env.IsProduction())
-            {
-                // Je¿eli jesteœmy w trybie produkcyjnym to zaci¹gnij dane ze zmniennych œrodowiskowych
-                config.AddEnvironmentVariables("CMSOPEN_");
-
-                //Logger.LogInformation($"Apka w³¹czona w trypie produkcyjnym.");
-            }
+            // Zaci¹gnij dane konfiguracyjne z secrets.json
+            config.AddJsonFile("secrets.json");
 
             Configuration = config.Build();
-
-            //Logger.LogInformation($"ConnectionString: { Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")}");
         }
 
         public void ConfigureServices(IServiceCollection services)

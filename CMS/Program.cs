@@ -21,7 +21,6 @@ namespace CMS
         {
 
             var host = CreateWebHostBuilder(args).Build();
-            //var host = CreateHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
             {
@@ -36,7 +35,7 @@ namespace CMS
                     context.Database.Migrate();
                     Seed.SeedData(context, userManager).Wait();
 
-                    logger.LogInformation("Migracja zakoñczona pomyœlnie");
+                    logger.LogInformation("Migracja zakonczona pomyœlnie");
 
                 }
                 catch (Exception ex)
@@ -47,15 +46,6 @@ namespace CMS
 
             host.Run();
         }
-
-        //public static IHostBuilder CreateHostBuilder(string[] args) =>
-        //    Host.CreateDefaultBuilder(args)
-        //        .ConfigureWebHostDefaults(webBuilder =>
-        //        {
-        //            webBuilder.UseStartup<Startup>();
-        //        })
-        //        .ConfigureAppConfiguration(configurationBuilder => { configurationBuilder.AddEnvironmentVariables("ASPNETCORE_CMS_"); }); 
-
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
