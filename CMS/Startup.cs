@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -27,29 +27,37 @@ namespace CMS
         // Wstrzykiwanie pliku konfiguracyjnego do naszej aplikacji
         public IConfiguration Configuration { get; }
 
-        public Startup()
+        public Startup(IWebHostEnvironment env)
         {
             var config = new ConfigurationBuilder();
 
-            // Zaciπgnij dane konfiguracyjne z secrets.json
-            config.AddJsonFile("secrets.json");
+            if (env.IsDevelopment())
+            {
+                // Je≈ºeli jeste≈õmy w trybie produkcyjnym to zaciƒÖgnij dane konfiguracyjne z secrets.json
+                config.AddJsonFile("secrets.json");
+            }
+            if (env.IsProduction())
+            {
+                // Je¬øeli jeste≈õmy w trybie produkcyjnym to zaciƒÖgnij dane ze zmniennych ≈õrodowiskowych
+                config.AddEnvironmentVariables("CMSOPEN_");
+            }
 
             Configuration = config.Build();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // £πczenie z bazπ danych
+            // ≈ÅƒÖczenie z bazƒÖ danych
             services.AddDbContext<CMSContext>(builder =>
             {
-                // Dodajemy dostawcÍ do obs≥ugi MySql'a i przekazujemy connection string pobrany z pliku konfiguracyjnego z naszej aplikacji
+                // Dodajemy dostawcƒô do obs≈Çugi MySql'a i przekazujemy connection string pobrany z pliku konfiguracyjnego z naszej aplikacji
                 builder.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            // Wstrzykujemy zaleønoúci o identifykacji uøytkownikÛw
+            // Wstrzykujemy zale≈ºno≈õci o identifykacji u≈ºytkownik√≥w
             services.AddIdentity<User, IdentityRole>(options =>
             {
-                // Opcje dotyczπce has≥a
+                // Opcje dotyczƒÖce has≈Ça
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 2;
                 options.Password.RequireNonAlphanumeric = false;
@@ -58,13 +66,13 @@ namespace CMS
 
             }).AddEntityFrameworkStores<CMSContext>();
 
-            // Dodajemy obs≥ugÍ silnika razor oraz controllerÛw
+            // Dodajemy obs≈Çugƒô silnika razor oraz controller√≥w
             services.AddRazorPages();
             services.AddControllersWithViews();
-            // Dodajemy obs≥ugÍ dodawania opcji w konfiguracji
+            // Dodajemy obs≈Çugƒô dodawania opcji w konfiguracji
             services.AddOptions();
 
-            // Tutaj dodajemy zaleønoúci do wstrzykiwania
+            // Tutaj dodajemy zale≈ºno≈õci do wstrzykiwania
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IArticleService, ArticleService>();
@@ -80,7 +88,7 @@ namespace CMS
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IEmailService, EmailService>();
 
-            // Konfiguracja platformy cloudinary do przechowywania zdjÍÊ w chmurze
+            // Konfiguracja platformy cloudinary do przechowywania zdjƒôƒá w chmurze
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             // Konfiguracja slacka
             services.Configure<SlackSettings>(Configuration.GetSection("SlackSettings"));
@@ -98,21 +106,21 @@ namespace CMS
 
             if (env.IsProduction())
             {
-                app.UseHttpsRedirection();
+                // app.UseHttpsRedirection();
                 app.UseExceptionHandler("/blad");
             }
 
-            // dodajemy obs≥ugÍ plikÛw statycznych z ~/wwwroot
+            // dodajemy obs≈Çugƒô plik√≥w statycznych z ~/wwwroot
             app.UseStaticFiles();
 
-            // w≥πczamy uøywanie autoryzacji i autentykacji z .NET Core Identity
+            // w≈ÇƒÖczamy u≈ºywanie autoryzacji i autentykacji z .NET Core Identity
             app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                // ustawiamy routing na domyúlny Model - View - Controller
+                // ustawiamy routing na domy≈õlny Model - View - Controller
                 endpoints.MapDefaultControllerRoute();
             });
         }
