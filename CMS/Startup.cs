@@ -31,17 +31,8 @@ namespace CMS
         {
             var config = new ConfigurationBuilder();
 
-            if (env.IsDevelopment())
-            {
-                // Jeżeli jesteśmy w trybie produkcyjnym to zaciągnij dane konfiguracyjne z secrets.json
-                config.AddJsonFile("secrets.json");
-            }
-            if (env.IsProduction())
-            {
-                // Je¿eli jesteśmy w trybie produkcyjnym to zaciągnij dane ze zmniennych środowiskowych
-                config.AddEnvironmentVariables("CMSOPEN_");
-            }
-
+            config.AddJsonFile("secrets.json");
+        
             Configuration = config.Build();
         }
 
