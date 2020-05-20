@@ -97,7 +97,7 @@ namespace CMS
 
             if (env.IsProduction())
             {
-                app.UseHttpsRedirection();
+                //app.UseHttpsRedirection();
                 app.UseExceptionHandler("/blad");
             }
 
