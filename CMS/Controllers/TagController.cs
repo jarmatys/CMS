@@ -42,6 +42,11 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(TagView result)
         {
+            if (await _tagService.CheckIfTagExist(result.Name))
+            {
+                ModelState.AddModelError("", "Tag o tej nazwie już istnieje");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(result);
@@ -64,6 +69,11 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(TagView result)
         {
+            if (await _tagService.CheckIfTagExist(result.Name))
+            {
+                ModelState.AddModelError("", "Tag o tej nazwie już istnieje");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(result);

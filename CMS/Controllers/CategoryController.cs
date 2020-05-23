@@ -25,7 +25,7 @@ namespace CMS.Controllers
         public async Task<IActionResult> List()
         {
             // 1. Pobieranie z bazy kategorii na blogu i przekazujemy do widoku
-            var categories = await _categoryService.GetAll();    
+            var categories = await _categoryService.GetAll();
 
             return View(categories);
         }
@@ -41,6 +41,11 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CategoryView result)
         {
+            if (await _categoryService.CheckIfCategoryExist(result.Name))
+            {
+                ModelState.AddModelError("", "Kategoria o tej nazwie już istnieje");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(result);
@@ -54,7 +59,7 @@ namespace CMS.Controllers
         // [ GET ] - <domain>/Category/Edit
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)
-        {   
+        {
             var category = await _categoryService.Get(Id);
             return View(CategoryHelpers.ConvertToView(category));
         }
@@ -63,6 +68,11 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(CategoryView result)
         {
+            if (await _categoryService.CheckIfCategoryExist(result.Name))
+            {
+                ModelState.AddModelError("", "Kategoria o tej nazwie już istnieje");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(result);
@@ -70,7 +80,7 @@ namespace CMS.Controllers
 
             var category = await _categoryService.Get(result.Id);
 
-            await _categoryService.Update(CategoryHelpers.MergeViewWithModel(category,result));
+            await _categoryService.Update(CategoryHelpers.MergeViewWithModel(category, result));
 
             return RedirectToAction("List");
         }

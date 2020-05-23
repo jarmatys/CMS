@@ -66,5 +66,10 @@ namespace CMS.Services
 			}	
 			return tagList;
 		}
+
+		public async Task<bool> CheckIfTagExist(string name)
+		{
+			return await _context.Tags.AnyAsync(c => c.Name == name);
+		}
 	}
 }

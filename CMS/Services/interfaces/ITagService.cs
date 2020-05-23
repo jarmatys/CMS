@@ -14,6 +14,7 @@ namespace CMS.Services.interfaces
         Task<bool> Update(TagModel tag);
         Task<bool> Delete(int id);
         Task<List<TagModel>> GetCategoriesByNames(IEnumerable<string> tagsName);
-
+        Task<bool> CheckIfTagExist(string name);
+        
     }
 }

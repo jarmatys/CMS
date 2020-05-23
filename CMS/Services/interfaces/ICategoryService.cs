@@ -15,5 +15,6 @@ namespace CMS.Services.interfaces
         Task<bool> Delete(int id);
         Task<List<CategoryModel>> GetCategoriesByNames(IEnumerable<string> categoriesName);
         Task<CategoryModel> GetCategoryByName(string name);
+        Task<bool> CheckIfCategoryExist(string name);
     }
 }
