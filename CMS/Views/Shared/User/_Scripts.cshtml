@@ -79,4 +79,12 @@
         });
         </script>
     }
+
+
+    @if (!string.IsNullOrEmpty(homeData.Integrations.CustomFooterScripts))
+    {
+        <text>
+            @Html.Raw(homeData.Integrations.CustomFooterScripts)
+        </text>
+    }
 </environment>

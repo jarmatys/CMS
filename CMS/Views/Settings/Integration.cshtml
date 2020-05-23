@@ -87,7 +87,8 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(x => x.CustomScripts, new { @class = "form-control", @rows = "30", @placeholder = "Tutaj umieszczamy skrypty JS, których nie mozna skonfigurować w panelu po lewej stronie." })
+                            @Html.TextAreaFor(x => x.CustomHeaderScripts, new { @class = "form-control", @rows = "15", @placeholder = "Tutaj umieszczamy skrypty z nagłówka JS, których nie mozna skonfigurować w panelu po lewej stronie." })
+                            @Html.TextAreaFor(x => x.CustomFooterScripts, new { @class = "form-control", @rows = "15", @placeholder = "Tutaj umieszczamy skrypty JS z stopki, których nie mozna skonfigurować w panelu po lewej stronie." })
                         </div>
                     </div>
 

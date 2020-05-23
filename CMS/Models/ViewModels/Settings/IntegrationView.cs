@@ -15,6 +15,7 @@ namespace CMS.Models.ViewModels.Settings
         public string GoogleMaps { get; set; }
         public string Recaptcha { get; set; }
         public string Hotjar { get; set; }
-        public string CustomScripts { get; set; }
+        public string CustomHeaderScripts { get; set; }
+        public string CustomFooterScripts { get; set; }
     }
 }

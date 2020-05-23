@@ -107,10 +107,10 @@
         </script>
     }
 
-    @if (!string.IsNullOrEmpty(homeData.Integrations.CustomScripts))
+    @if (!string.IsNullOrEmpty(homeData.Integrations.CustomHeaderScripts))
     {
         <text>
-            @Html.Raw(homeData.Integrations.CustomScripts)
+            @Html.Raw(homeData.Integrations.CustomHeaderScripts)
         </text>
     }
 </environment>
