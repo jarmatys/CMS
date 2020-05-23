@@ -56,7 +56,7 @@ namespace CMS.Infrastructure.Helpers
             return new DateTime(year, mounth, day, hour, minutes, 0);
         }
 
-        public static ArticleModel ConvertToModel(ArticleView article, User user, MediaModel media)
+        public static ArticleModel ConvertToModel(ArticleView article, User user)
         {
             var articleModel = new ArticleModel
             {
@@ -71,8 +71,7 @@ namespace CMS.Infrastructure.Helpers
                 FullUrl = null,
                 MenuOrder = null,
                 CommentCount = 0,
-                User = user,
-                Image = media,
+                User = user
             };
 
             return articleModel;

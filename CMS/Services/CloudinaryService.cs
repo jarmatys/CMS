@@ -2,6 +2,7 @@
 using CloudinaryDotNet.Actions;
 using CMS.Context;
 using CMS.Infrastructure;
+using CMS.Models.Db.Article;
 using CMS.Models.Db.Media;
 using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,7 @@ namespace CMS.Services
             _context = context;
         }
 
-        protected async Task<MediaModel> UploadToCloudinary(IFormFile file)
+        protected async Task<MediaModel> UploadToCloudinary(IFormFile file, ArticleModel article = null)
         {
             var uploadResult = new ImageUploadResult();
 
@@ -56,7 +57,8 @@ namespace CMS.Services
                     Url = uploadResult.SecureUri.AbsoluteUri,
                     Name = Path.GetFileNameWithoutExtension(file.FileName),
                     Description = Path.GetFileNameWithoutExtension(file.FileName),
-                    Type = _context.MediaTypes.SingleOrDefault(x => x.Name == uploadResult.ResourceType)
+                    Type = _context.MediaTypes.SingleOrDefault(x => x.Name == uploadResult.ResourceType),
+                    Article = article
                 };
 
                 await _context.Medias.AddAsync(medium);
@@ -69,9 +71,9 @@ namespace CMS.Services
             return null;
         }
 
-        public async Task<MediaModel> AddFile(IFormFile file)
+        public async Task<MediaModel> AddFile(IFormFile file, ArticleModel article = null)
         {
-            return await UploadToCloudinary(file);
+            return await UploadToCloudinary(file, article);
         }
 
         public async Task<bool> AddMultipleFiles(List<IFormFile> files)
@@ -97,7 +99,7 @@ namespace CMS.Services
             {
                 var toRemove = await _context.Medias.FindAsync(publicId);
                 _context.Medias.Remove(toRemove);
-                
+
                 return await _context.SaveChangesAsync() > 0;
             }
 

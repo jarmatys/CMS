@@ -1,4 +1,5 @@
-﻿using CMS.Models.Db.Media;
+﻿using CMS.Models.Db.Article;
+using CMS.Models.Db.Media;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace CMS.Services.interfaces
 {
     public interface ICloudService
     {
-        Task<MediaModel> AddFile(IFormFile file);
+        Task<MediaModel> AddFile(IFormFile file, ArticleModel article = null);
         Task<bool> AddMultipleFiles(List<IFormFile> files);
         Task<bool> DeleteFile(string publicId);
     }

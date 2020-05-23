@@ -70,20 +70,20 @@ namespace CMS.Controllers
                 return View(result);
             }
 
-            // TODO: sprawdzić czy występuje już artykuł o tym tyle bądź slugu
-
             // 2.Poprawnie zwalidowane post zapisuję do bazy danych
 
             // a. Pobranie usera
             var user = await _userManager.GetUserAsync(User);
 
-            // b. Zapis zdjęcia
-            var medium = await _cloudService.AddFile(result.FeaturedImg);
-
-            // c. Utworzenie wpisu
-            var articleModel = ArticleHelpers.ConvertToModel(result, user, medium);
+            // b. Utworzenie wpisu
+            var articleModel = ArticleHelpers.ConvertToModel(result, user);
             var article = await _articleService.Create(articleModel);
-            if (article == false) { return RedirectToAction("Index", "Admin"); } // TODO: przekieruj na stronę z błędem
+            if(article == false) { return RedirectToAction("Index", "Admin"); } // TODO: przekieruj na stronę z błędem
+
+            // c. Zapis zdjęcia
+            var medium = await _cloudService.AddFile(result.FeaturedImg, articleModel);
+
+            // d. Zapis fullUrl
 
             // d. Wygenerowanie taxonomies
             await _taxonomyService.SaveCategories(await _categoryService.GetCategoriesByNames(result.Categories), articleModel);
@@ -101,7 +101,7 @@ namespace CMS.Controllers
             // Usuwamy zdjęcie przypisane do artykułu
             if (article.Image != null)
             {
-                await _cloudService.DeleteFile(article.ImageId);
+                await _cloudService.DeleteFile(article.Image.Id);
             }
 
             // Usuwamy taxonomies artykułu
@@ -166,7 +166,7 @@ namespace CMS.Controllers
                 if (article.Image != null)
                 {
                     // usuwanie starego zdjęcia
-                    await _cloudService.DeleteFile(article.ImageId);
+                    await _cloudService.DeleteFile(article.Image.Id);
                 }
 
                 // Jeżeli zostało wgrane nowe zdjęcie to je zapisz i przypisz

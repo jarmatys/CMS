@@ -61,7 +61,7 @@ namespace CMS.Services
 
         public async Task<bool> Delete(int id)
         {
-            var article = await _context.Articles.SingleOrDefaultAsync(b => b.Id == id);
+            var article = await _context.Articles.Include(x => x.Image).SingleOrDefaultAsync(b => b.Id == id);
 
             if (article == null)
             {
