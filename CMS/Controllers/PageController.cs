@@ -52,6 +52,8 @@ namespace CMS.Controllers
 
             await _pageService.Create(PageHelpers.ConvertToModel(result));
 
+            // d. Zapis fullUrl do bazki edycja helpery itp TODO
+
             return RedirectToAction("List", "Page");
         }
 

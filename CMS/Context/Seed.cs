@@ -43,18 +43,6 @@ namespace CMS.Context
                 }
             }
 
-            // Seed dla typów mediów
-            if (!context.MediaTypes.Any())
-            {
-                var mediaTypes = new MediaTypeModel
-                {
-                    Name = "image"
-                };
-
-                await context.MediaTypes.AddAsync(mediaTypes);
-                await context.SaveChangesAsync();
-            }
-
             // Seed dla ustawień systemu
             if (!context.Options.Any())
             {

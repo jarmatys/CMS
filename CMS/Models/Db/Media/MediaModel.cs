@@ -23,7 +23,7 @@ namespace CMS.Models.Db.Media
         public DateTime AddDate { get; set; }
 
         public int TypeId { get; set; }
-        public MediaTypeModel Type { get; set; }
+        public string Type { get; set; }
 
         [ForeignKey("ArticleModel")]
         // poczytac o isunique żeby dane zdjęcie było w relacji jeden do jeden z articlem

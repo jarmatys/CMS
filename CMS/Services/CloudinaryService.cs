@@ -51,13 +51,14 @@ namespace CMS.Services
                     return null;
                 }
 
+                var fileName = Path.GetFileNameWithoutExtension(file.FileName);
                 var medium = new MediaModel
                 {
                     Id = uploadResult.PublicId,
                     Url = uploadResult.SecureUri.AbsoluteUri,
-                    Name = Path.GetFileNameWithoutExtension(file.FileName),
-                    Description = Path.GetFileNameWithoutExtension(file.FileName),
-                    Type = _context.MediaTypes.SingleOrDefault(x => x.Name == uploadResult.ResourceType),
+                    Name = fileName,
+                    Description = fileName,
+                    Type = uploadResult.ResourceType,
                     Article = article
                 };
 

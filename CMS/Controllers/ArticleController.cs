@@ -83,7 +83,7 @@ namespace CMS.Controllers
             // c. Zapis zdjęcia
             var medium = await _cloudService.AddFile(result.FeaturedImg, articleModel);
 
-            // d. Zapis fullUrl
+            // d. Zapis fullUrl do bazki edycja helpery itp TODO
 
             // d. Wygenerowanie taxonomies
             await _taxonomyService.SaveCategories(await _categoryService.GetCategoriesByNames(result.Categories), articleModel);

@@ -25,7 +25,6 @@ namespace CMS.Context
         public DbSet<TagModel> Tags { get; set; }
         public DbSet<TaxonomyModel> Taxonomies { get; set; }
         public DbSet<MediaModel> Medias { get; set; }
-        public DbSet<MediaTypeModel> MediaTypes { get; set; }
         public DbSet<PageModel> Pages { get; set; }
         public DbSet<CommentModel> Comments { get; set; }
 
