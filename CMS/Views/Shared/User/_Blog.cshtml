@@ -1,6 +1,8 @@
 ﻿@{
-    var homeData = ViewData["HomeData"] as HomeView;
+    @inject IHomeService HomeService
+    var homeData = await HomeService.GetHomeProperties();
 }
+
 
 @if (homeData.Articles.Count() == 3)
 {
@@ -38,7 +40,7 @@
                                 <ul style="min-height:25px;" class="meta-tags mt-20px mb-20px">
                                     <li><a href="javascript:void(0)"><i class="ti ti-calendar"></i>@article.AddDate.ToString("dd-MM-yyyy")</a></li>
                                     <li><a href="javascript:void(0)"> <i class="ti ti-user"></i> @article.User.Name </a></li>
-                                    <li><a href="javascript:void(0)"><i class="ti ti-comment"></i>5 </a></li>
+                                    <li><a href="javascript:void(0)"><i class="ti ti-comment"></i>@article.Comments.Where(x => x.IsAccepted != false).Count() </a></li>
                                 </ul>
 
                                 <p style="min-height:100px;" class="mb-35px">@article.Excerpt</p>

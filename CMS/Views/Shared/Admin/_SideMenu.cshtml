@@ -1,4 +1,6 @@
-﻿<div class="sidebar-wrapper scrollbar scrollbar-inner">
+﻿@inject ICommentService CommentService
+
+<div class="sidebar-wrapper scrollbar scrollbar-inner">
     <div class="sidebar-content">
         <div class="user">
             <div class="avatar-sm float-left mr-2">
@@ -74,7 +76,7 @@
                 <a href="@Url.Action("List","Comment")">
                     <i class="far fa-comments"></i>
                     <p>Komentarze</p>
-                    <span class="badge badge-info">-</span>
+                    <span class="badge badge-info">@await CommentService.Count()</span>
                 </a>
             </li>
 

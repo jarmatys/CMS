@@ -43,6 +43,7 @@ namespace CMS.Services
                 .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
                 .Include(x => x.User)
                 .Include(x => x.Comments)
+                .OrderBy(x => x.AddDate)
                 .ToListAsync();
 
             articleList.Reverse();
@@ -89,10 +90,11 @@ namespace CMS.Services
            .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
            .Include(x => x.User)
            .Include(x => x.Comments)
+           .OrderBy(x => x.AddDate)
            .Where(x => x.IsDraft != true)
            .ToListAsync();
 
-            articleList.Reverse();   
+            articleList.Reverse();
 
             return articleList.Skip(start).Take(count).ToList();
         }
@@ -103,8 +105,12 @@ namespace CMS.Services
            .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
            .Include(x => x.User)
            .Include(x => x.Comments)
+           .OrderBy(x => x.AddDate)
+           // Zapytać
            .Where(x => x.IsDraft != true && x.Taxonomies != null)
            .ToListAsync();
+
+            
 
             articleList.Reverse();
 
@@ -118,6 +124,6 @@ namespace CMS.Services
             return articles.Count;
         }
 
-       
+
     }
 }

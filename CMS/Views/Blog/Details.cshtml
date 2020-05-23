@@ -1,11 +1,16 @@
 ﻿@{
     Layout = "~/Views/Shared/User/_Layout.cshtml";
 
-    var homeData = ViewData["HomeData"] as HomeView;
+    @inject IHomeService HomeService
+    var homeData = await HomeService.GetHomeProperties();
+
     var article = ViewData["Article"] as ArticleModel;
 
     ViewData["Title"] = article.Title;
+    ViewData["Description"] = article.Excerpt;
+    ViewData["canonical"] = article.FullUrl;
 }
+
 
 <!-- Page Header -->
 <section class="page_header pb-0 w-100">
@@ -44,36 +49,43 @@
                                 <img src="@article.Image.Url" alt="@article.Image.Description">
                             </div>
                         }
-                        <div class="news_desc">
+                        <div class="news_desc overflow-visible">
                             <h3 class="font-weight-500">@article.Title</h3>
                             <ul class="meta-tags mt-20px mb-20px">
                                 <li><i class="ti ti-calendar"></i> @article.AddDate.ToString("dd-MM-yyyy")</li>
                                 <li><i class="ti ti-user"></i> @article.User.Name</li>
                                 <li><i class="ti ti-comments"></i> @article.Comments.Where(x => x.IsAccepted != false).Count()</li>
 
-                                <li>
-                                    <i class="ti ti-tag"></i>
-                                    @foreach (var taxonomy in article.Taxonomies)
-                                    {
-                                        if (taxonomy.Tag != null)
+                                @if (article.Taxonomies.Where(x => x.Tag != null).Count() != 0)
+                                {
+                                    <li>
+                                        <i class="ti ti-tag"></i>
+                                        @foreach (var taxonomy in article.Taxonomies)
                                         {
-                                            <span> @taxonomy.Tag.Name</span>
+                                            if (taxonomy.Tag != null)
+                                            {
+                                                <span> @taxonomy.Tag.Name</span>
+                                            }
                                         }
-                                    }
-                                </li>
+                                    </li>
+                                }
 
-                                <li>
-                                    <i class="ti ti-folder"></i>
-                                    @foreach (var taxonomy in article.Taxonomies)
-                                    {
-                                        if (taxonomy.Category != null)
+
+                                @if (article.Taxonomies.Where(x => x.Category != null).Count() != 0)
+                                {
+                                    <li>
+                                        <i class="ti ti-folder"></i>
+                                        @foreach (var taxonomy in article.Taxonomies)
                                         {
-                                            <span style="cursor:pointer;" onclick="location='@Url.Action("Category","Blog", new { category = taxonomy.Category.Name.ToLower()})'"> @taxonomy.Category.Name</span>
+                                            if (taxonomy.Category != null)
+                                            {
+                                                <span style="cursor:pointer;" onclick="location='@Url.Action("Category", "Blog", new { category = taxonomy.Category.Name.ToLower() })'"> @taxonomy.Category.Name</span>
+                                            }
                                         }
-                                    }
-                                </li>
-
+                                    </li>
+                                }
                             </ul>
+
                             @Html.Raw(article.Content)
 
                         </div>

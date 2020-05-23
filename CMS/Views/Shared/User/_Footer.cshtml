@@ -1,6 +1,8 @@
 ﻿@{
-    var homeData = ViewData["HomeData"] as HomeView;
+    @inject IHomeService HomeService
+    var homeData = await HomeService.GetHomeProperties();
 }
+
 
 <!-- Footer starts -->
 <footer class="p-half bg-black2">

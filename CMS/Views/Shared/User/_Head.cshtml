@@ -1,17 +1,30 @@
 ﻿@{
-    var homeData = ViewData["HomeData"] as HomeView;
+    @inject IHomeService HomeService
+    var homeData = await HomeService.GetHomeProperties();
 }
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+@if (!string.IsNullOrEmpty(ViewData["canonical"] as string))
+{
+    <link rel="canonical" href="@Html.Raw(ViewData["canonical"])" />
+}
+
 @foreach (var metaTag in homeData.MetaTags)
 {
-    <meta name="@metaTag.Name" content="@Html.Raw(metaTag.Content)" />
+    if (!string.IsNullOrEmpty(ViewData["Description"] as string))
+    {
+        <meta name="Description" content="@Html.Raw(ViewData["Description"])" />
+    }
+    else
+    {
+        <meta name="@metaTag.Name" content="@Html.Raw(metaTag.Content)" />
+    }
 }
 
 
-<title>@ViewData["Title"] @(ViewData["Title"] != null ? "-" : "") Profesjonalne strony internetowe i aplikacje WWW</title>
+<title>@Html.Raw(ViewData["Title"]) @(ViewData["Title"] != null ? "-" : "") Profesjonalne Strony Internetowe i Aplikacje WWW</title>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 

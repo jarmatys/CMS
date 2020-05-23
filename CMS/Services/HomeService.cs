@@ -44,7 +44,7 @@ namespace CMS.Services
             {
                 MetaTags = await _context.MetaTags.ToListAsync(),
                 SocialMedias = await _context.SocialMedias.ToListAsync(),
-                Articles = Enumerable.Reverse(await _context.Articles.Where(x => x.IsDraft != true).Include(x => x.Image).Include(x => x.User).ToListAsync()).Take(3),
+                Articles = Enumerable.Reverse(await _context.Articles.Where(x => x.IsDraft != true).Include(x => x.Image).Include(x => x.User).Include(x => x.Comments).ToListAsync()).Take(3),
                 Integrations = await _context.IntegrationSettings.FirstOrDefaultAsync(),
                 Categories = await _context.Categories.ToListAsync(),
                 Tags = await _context.Tags.ToListAsync(),
@@ -53,5 +53,6 @@ namespace CMS.Services
 
             return homeView;
         }
+
     }
 }

@@ -1,12 +1,13 @@
 ﻿@{
-    var homeData = ViewData["HomeData"] as HomeView;
+    @inject IHomeService HomeService
+    var homeData = await HomeService.GetHomeProperties();
 }
 
 <div class="text-left">
     <!-- Recent Post -->
     <div class="widget heading-space wow fadeIn" data-wow-delay="350ms">
         <h5 class="color-black font-weight-600 mb-4">Najnowsze wpisy</h5>
-        @if(homeData.Articles.Count() == 0)
+        @if (homeData.Articles.Count() == 0)
         {
             <h6>Brak najnowszych wpisów</h6>
         }
@@ -30,7 +31,7 @@
 
     <!-- Categories -->
     <div class="widget heading-space wow fadeIn" data-wow-delay="400ms">
-        <h5 class="color-black font-weight-600">Kategorie</h5>
+        <h5 class="color-black font-weight-600 mb-4">Kategorie</h5>
         <div>
             @if (homeData.Categories.Count() == 0)
             {

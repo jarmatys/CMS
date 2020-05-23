@@ -14,25 +14,24 @@ namespace CMS.Controllers
     public class HomeController : Controller
     {
         private readonly ISettingsService _settingsService;
-        private readonly IHomeService _homeService;
         private readonly IEmailService _emailService;
         private readonly INotificationService _notificationService;
+        private readonly IHomeService _homeService;
         private readonly IPageService _pageService;
 
         public HomeController(ISettingsService settingsService, IHomeService homeService, IEmailService emailService, INotificationService notoficationService, IPageService pageService)
         {
             _settingsService = settingsService;
-            _homeService = homeService;
             _emailService = emailService;
             _notificationService = notoficationService;
             _pageService = pageService;
+            _homeService = homeService;
         }
 
         // [ GET ] - <domain>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
             return View();
         }
 
@@ -40,8 +39,6 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(ContactView result)
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
-
             if (!ModelState.IsValid)
             {
                 return View(result);
@@ -58,8 +55,6 @@ namespace CMS.Controllers
         [HttpGet("{slug}")]
         public async Task<IActionResult> Index(string slug)
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
-
             var newUrl = await _homeService.CheckRedirect(slug);
             var page = await _homeService.CheckPageRedirect(slug);
 
@@ -81,8 +76,6 @@ namespace CMS.Controllers
         [Route("strona/{slug}")]
         public async Task<IActionResult> Page(string slug)
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
-
             var page = await _pageService.GetPageBySlug(slug);
             if(page == null || (page.IsDraft == true && !User.Identity.IsAuthenticated))
             {
@@ -97,7 +90,6 @@ namespace CMS.Controllers
         [Route("polityka-prywatnosci")]
         public async Task<IActionResult> PrivacyPolicy()
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
             var privacyPolicy = await _settingsService.GetPrivacyPolicySettings();
             return View(privacyPolicy);
         }
@@ -107,8 +99,6 @@ namespace CMS.Controllers
         [Route("potwierdzenie-kontaktu")]
         public async Task<IActionResult> ContactConfirmation()
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
-
             return View();
         }
 

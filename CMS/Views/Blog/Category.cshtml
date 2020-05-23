@@ -1,9 +1,13 @@
 ﻿@model IEnumerable<ArticleModel>
 
 @{
-    ViewData["Title"] = "kategorie";
+    ViewData["Title"] = $"Kategoria {ViewBag.CategoryName}";
+    ViewData["Description"] = $"Lista wpisów z kategorii {ViewBag.CategoryName}";
+
     Layout = "~/Views/Shared/User/_Layout.cshtml";
-    var homeData = ViewData["HomeData"] as HomeView;
+
+    @inject IHomeService HomeService
+    var homeData = await HomeService.GetHomeProperties();
 }
 
 <section class="page_header pb-0 w-100">
@@ -16,7 +20,7 @@
                 </p>
                 <div class="page_nav bg-white d-inline-block">
                     <span>Jesteś tutaj:</span> <a href="@Url.Action("Index","Home")" class="d-inline-block color-black">Strona główna</a> <i class="ti ti-angle-double-right"></i> <a href="@Url.Action("List","Blog")" class="d-inline-block color-black">Blog</a> <span class="color-yellow"><i class="ti ti-angle-double-right"></i> @ViewBag.CategoryName</span>
-</div>
+                </div>
             </div>
         </div>
     </div>

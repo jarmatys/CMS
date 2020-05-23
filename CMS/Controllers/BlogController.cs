@@ -44,8 +44,6 @@ namespace CMS.Controllers
         [Route("blog/{page:int}")]
         public async Task<IActionResult> List(int page)
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
-
             var blogSettings = await _settingsService.GetBlogSettings();
             var maxPax = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage) + 1;
 
@@ -69,8 +67,6 @@ namespace CMS.Controllers
         [Route("blog/wpis/{slug}")]
         public async Task<IActionResult> Details(string slug, string status)
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
-
             var article = await _articleService.GetArticleBySlug(slug);
 
             if (article == null)
@@ -101,8 +97,6 @@ namespace CMS.Controllers
         [Route("blog/kategoria/{category}/{page:int}")]
         public async Task<IActionResult> Category(string category, int page)
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
-
             // pobieranie informacji o kategorii i sprawdzanie czy taka kategoria istnieje
             var categoryModel = await _categoryService.GetCategoryByName(category);
             if (categoryModel == null)

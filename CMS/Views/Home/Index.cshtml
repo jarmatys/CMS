@@ -1,8 +1,8 @@
 ﻿@model ContactView
 
-@{ 
-    var homeData = ViewData["HomeData"] as HomeView;
+@{
     ViewData["isHome"] = true;
+    ViewData["canonical"] = "https://armatys.me";
 }
 
 @await Html.PartialAsync("User/_Slider")
@@ -20,9 +20,10 @@
     <script>
         // Tutaj piszemy skrypty dla głównej strony
 
-        // jeżeli walidacja będzie błędna to przekieruj do sekcji kontaktu
+        // Jeżeli walidacja będzie błędna to przekieruj do sekcji kontaktu
         if (@((Model != null).ToString().ToLower())) {
             window.location.href = "#form";
         }
+
     </script>
 }
