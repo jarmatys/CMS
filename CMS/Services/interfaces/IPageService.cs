@@ -15,5 +15,6 @@ namespace CMS.Services.interfaces
         Task<bool> Delete(int id);
         Task<int> MediaCount();
         Task<PageModel> GetPageBySlug(string slug);
+        Task<bool> CheckIfSlugExist(string slug);
     }
 }

@@ -14,6 +14,7 @@ namespace CMS.Services.interfaces
         Task<bool> Update(ArticleModel article);
         Task<bool> Delete(int id);
         Task<int> ArticleCount();
+        Task<bool> CheckIfSlugExist(string slug);
         Task<ArticleModel> GetArticleBySlug(string slug);
         Task<List<ArticleModel>> GetRangeOfArticle(int start, int count);
         Task<List<ArticleModel>> GetRangeOfArticleCategory(int start, int count, string category);

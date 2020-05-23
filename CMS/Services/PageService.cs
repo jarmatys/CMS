@@ -63,5 +63,10 @@ namespace CMS.Services
 		{
 			return await _context.Pages.SingleOrDefaultAsync(b => b.Slug == slug);
 		}
+
+		public async Task<bool> CheckIfSlugExist(string slug)
+		{
+			return await _context.Pages.AnyAsync(x => x.Slug == slug);
+		}
 	}
 }

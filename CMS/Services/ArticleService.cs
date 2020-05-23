@@ -110,7 +110,7 @@ namespace CMS.Services
            .Where(x => x.IsDraft != true && x.Taxonomies != null)
            .ToListAsync();
 
-            
+
 
             articleList.Reverse();
 
@@ -124,6 +124,10 @@ namespace CMS.Services
             return articles.Count;
         }
 
+        public async Task<bool> CheckIfSlugExist(string slug)
+        {
+            return await _context.Articles.AnyAsync(x => x.Slug == slug);
+        }
 
     }
 }

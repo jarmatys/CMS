@@ -56,6 +56,11 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ArticleView result)
         {
+            if(await _articleService.CheckIfSlugExist(result.Slug))
+            {
+                ModelState.AddModelError("", "Wpis o podanym linku istnieje");
+            }
+
             if (!ModelState.IsValid)
             {
                 // 1. Pobieranie listy tagów oraz kategorii
@@ -136,6 +141,11 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ArticleView result)
         {
+            if (await _articleService.CheckIfSlugExist(result.Slug))
+            {
+                ModelState.AddModelError("", "Wpis o podanym linku istnieje");
+            }
+
             if (!ModelState.IsValid)
             {
                 // 1. Pobieranie listy tagów oraz kategorii

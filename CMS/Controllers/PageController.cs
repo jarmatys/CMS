@@ -40,6 +40,11 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PageView result)
         {
+            if (await _pageService.CheckIfSlugExist(result.Slug))
+            {
+                ModelState.AddModelError("", "Strona o podanym linku istnieje");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(result);
@@ -62,6 +67,11 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(PageView result)
         {
+            if (await _pageService.CheckIfSlugExist(result.Slug))
+            {
+                ModelState.AddModelError("", "Strona o podanym linku istnieje");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(result);
