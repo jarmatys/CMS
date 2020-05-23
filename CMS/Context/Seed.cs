@@ -1,6 +1,7 @@
 ﻿using CMS.Models.Db.Account;
 using CMS.Models.Db.Admin;
 using CMS.Models.Db.Media;
+using CMS.Models.Db.Seo;
 using CMS.Models.Db.Settings;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -47,7 +48,7 @@ namespace CMS.Context
             {
                 var mediaTypes = new MediaTypeModel
                 {
-                   Name = "image"
+                    Name = "image"
                 };
 
                 await context.MediaTypes.AddAsync(mediaTypes);
@@ -128,6 +129,19 @@ namespace CMS.Context
                 var integrationSettings = new IntegrationModel { };
 
                 await context.IntegrationSettings.AddAsync(integrationSettings);
+                await context.SaveChangesAsync();
+            }
+
+            // Seed dla ogólnych ustawień seo
+            if (!context.SeoSettings.Any())
+            {
+                var generalSettings = new GeneralSeoSettingsModel
+                {
+                    MainUrl = "https://cmsopen.net",
+                    Title = "Twoja pierwsza strona w systemie CMSOPEN"
+                };
+
+                await context.SeoSettings.AddAsync(generalSettings);
                 await context.SaveChangesAsync();
             }
         }

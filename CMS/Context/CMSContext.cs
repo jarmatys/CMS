@@ -33,10 +33,11 @@ namespace CMS.Context
         public DbSet<PrivacyPolicyModel> PrivacyPolicySettings { get; set; }
         public DbSet<IntegrationModel> IntegrationSettings { get; set; }
         public DbSet<BlogModel> BlogSettings { get; set; }
-
+        
         public DbSet<SocialMediaModel> SocialMedias { get; set; }
         public DbSet<MetaTagModel> MetaTags { get; set; }
         public DbSet<RetrievalLinksModel> RetrievalLinks { get; set; }
+        public DbSet<GeneralSeoSettingsModel> SeoSettings { get; set; }
 
         // Zaślepka na klasę bazową
         protected override void OnModelCreating(ModelBuilder builder)

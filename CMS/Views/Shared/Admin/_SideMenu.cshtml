@@ -218,6 +218,11 @@
                 </a>
                 <div class="collapse @(ViewData["Group"] as string == "Seo" ? "show" : "")" id="seo">
                     <ul class="nav nav-collapse">
+                        <li class="@(ViewData["Page"] as string == "SeoGeneralSettings" ? "active" : "")">
+                            <a href="@Url.Action("General","Seo")">
+                                <span class="sub-item">Główne ustawienia</span>
+                            </a>
+                        </li>
                         <li class="@(ViewData["Page"] as string == "SeoRetrievalLinks" ? "active" : "")">
                             <a href="@Url.Action("RetrievalLinksList","Seo")">
                                 <span class="sub-item">Odzyskiwanie linków</span>

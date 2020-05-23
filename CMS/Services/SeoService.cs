@@ -150,5 +150,21 @@ namespace CMS.Services
             _context.RetrievalLinks.Remove(retrievalLink);
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<GeneralSeoSettingsModel> GetSeoSettingsById(int Id)
+        {
+            return await _context.SeoSettings.FindAsync(Id);
+        }
+
+        public async Task<GeneralSeoSettingsModel> GetSeoSettings()
+        {
+            return await _context.SeoSettings.FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> SetSeoSettings(GeneralSeoSettingsModel result)
+        {
+            _context.SeoSettings.Update(result);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

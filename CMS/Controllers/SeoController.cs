@@ -19,6 +19,32 @@ namespace CMS.Controllers
             _seoService = seoService;
         }
 
+
+        // [ GET ] - <domain>/Seo/General
+        [HttpGet]
+        public async Task<IActionResult> General()
+        {
+            var generalSettings = await _seoService.GetSeoSettings();
+            return View(SeoHelpers.ConvertToViewGeneralSettings(generalSettings));
+        }
+
+        // [ POST ] - <domain>/Seo/General
+        [HttpPost]
+        public async Task<IActionResult> General(GeneralSeoSettingsView result)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(result);
+            }
+
+            var generalSettings = await _seoService.GetSeoSettingsById(result.Id);
+            await _seoService.SetSeoSettings(SeoHelpers.MergeViewWithModelGeneralSettings(generalSettings, result));
+
+            return RedirectToAction("General", "Seo");
+        }
+
+
+
         // [ GET ] - <domain>/Seo/SocialMedia
         [HttpGet]
         public async Task<IActionResult> SocialMediaList()

@@ -105,5 +105,25 @@ namespace CMS.Infrastructure.Helpers
 
             return model;
         }
+
+        public static GeneralSeoSettingsView ConvertToViewGeneralSettings(GeneralSeoSettingsModel result)
+        {
+            var generalSettings = new GeneralSeoSettingsView
+            {
+                Id = result.Id,
+                Title = result.Title,
+                MainUrl = result.MainUrl
+            };
+
+            return generalSettings;
+        }
+
+        public static GeneralSeoSettingsModel MergeViewWithModelGeneralSettings(GeneralSeoSettingsModel model, GeneralSeoSettingsView view)
+        {
+            model.Title = view.Title;
+            model.MainUrl = view.MainUrl;
+
+            return model;
+        }
     }
 }

@@ -31,5 +31,8 @@ namespace CMS.Services.interfaces
         Task<bool> UpdateRetrievalLink(RetrievalLinksModel retrievalLink);
         Task<bool> DeleteRetrievalLink(int id);
 
+        Task<GeneralSeoSettingsModel> GetSeoSettingsById(int Id);
+        Task<GeneralSeoSettingsModel> GetSeoSettings();
+        Task<bool> SetSeoSettings(GeneralSeoSettingsModel result);
     }
 }
