@@ -75,7 +75,7 @@ namespace CMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var login = await _signInManager.PasswordSignInAsync(result.Login, result.Password, false, false);
+                var login = await _signInManager.PasswordSignInAsync(result.Login, result.Password, result.RemberMe, false);
 
                 if (login.Succeeded)
                     return RedirectToAction("Index", "Admin");
