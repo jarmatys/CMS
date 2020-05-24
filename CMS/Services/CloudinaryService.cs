@@ -46,7 +46,7 @@ namespace CMS.Services
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
 
-                if (uploadResult.Error != null)
+                if (uploadResult.Error == null)
                 {
                     return uploadResult;
                 }
@@ -55,7 +55,7 @@ namespace CMS.Services
             return null;
         }
 
-        private async Task<MediaModel> SaveToDatabase(ImageUploadResult uploadResult,string fileNameLong, ArticleModel article = null)
+        private async Task<MediaModel> SaveToDatabase(ImageUploadResult uploadResult, string fileNameLong, ArticleModel article = null)
         {
             var fileName = Path.GetFileNameWithoutExtension(fileNameLong);
             var medium = new MediaModel
@@ -77,19 +77,19 @@ namespace CMS.Services
         public async Task<MediaModel> AddFile(IFormFile file, ArticleModel article = null)
         {
             var uploadResult = UploadToCloudinary(file);
-            return await SaveToDatabase(uploadResult, file.FileName, article);
+            if(uploadResult != null)
+            {
+                return await SaveToDatabase(uploadResult, file.FileName, article);
+            }
+            return null;
         }
 
-        public async Task<bool> AddMultipleFiles(List<IFormFile> files)
+        public bool AddMultipleFiles(List<IFormFile> files)
         {
             bool status = true;
             foreach (var file in files)
             {
-                // jeżeli zapis, któregoś zdjęcia się nie powiedzie to zwróć false
-                if (await UploadToCloudinary(file) == null)
-                {
-                    status = false;
-                }
+                UploadToCloudinary(file);
             }
             return status;
         }

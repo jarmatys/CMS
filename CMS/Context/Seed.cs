@@ -44,23 +44,6 @@ namespace CMS.Context
             }
 
             // Seed dla ustawień systemu
-            if (!context.Options.Any())
-            {
-                var options = new OptionsModel
-                {
-                    SiteUrl = "https://test.pl",
-                    BlogName = "Tytył strony",
-                    BlogDescription = "Opis strony",
-                    UserCanRegister = false,
-                    AdminEmail = "admin@admin.pl",
-                    IsIndex = false
-                };
-
-                await context.Options.AddAsync(options);
-                await context.SaveChangesAsync();
-            }
-
-            // Seed dla ustawień systemu
             if (!context.BlogSettings.Any())
             {
                 var blogSettings = new BlogModel
