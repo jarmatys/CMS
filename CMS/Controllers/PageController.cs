@@ -69,17 +69,22 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(PageView result)
         {
-            if (await _pageService.CheckIfSlugExist(result.Slug))
-            {
-                ModelState.AddModelError("", "Strona o podanym linku istnieje");
-            }
+            var page = await _pageService.Get(result.Id);
 
+            if(page.Slug != result.Slug)
+            {
+                if (await _pageService.CheckIfSlugExist(result.Slug))
+                {
+                    ModelState.AddModelError("", "Strona o podanym linku istnieje");
+                }
+            }
+           
             if (!ModelState.IsValid)
             {
                 return View(result);
             }
 
-            var page = await _pageService.Get(result.Id);
+            
 
             await _pageService.Update(PageHelpers.MergeViewWithModel(page, result));
 
