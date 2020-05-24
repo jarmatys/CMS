@@ -21,9 +21,10 @@ namespace CMS.Controllers
         private readonly ITagService _tagService;
         private readonly ICloudService _cloudService;
         private readonly ITaxonomyService _taxonomyService;
+        private readonly ISeoService _seoService;
         private readonly UserManager<User> _userManager;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, ITagService tagService, ICloudService cloudService, ITaxonomyService taxonomyService, UserManager<User> userManager)
+        public ArticleController(ISeoService seoService, IArticleService articleService, ICategoryService categoryService, ITagService tagService, ICloudService cloudService, ITaxonomyService taxonomyService, UserManager<User> userManager)
         {
             _articleService = articleService;
             _categoryService = categoryService;
@@ -31,6 +32,7 @@ namespace CMS.Controllers
             _cloudService = cloudService;
             _taxonomyService = taxonomyService;
             _userManager = userManager;
+            _seoService = seoService;
         }
 
         // [ GET ] - <domain>/Article/Lists
@@ -72,18 +74,17 @@ namespace CMS.Controllers
 
             // 2.Poprawnie zwalidowane post zapisuję do bazy danych
 
-            // a. Pobranie usera
+            // a. Pobranie dodatkowych informacji do artykułu | usera, url strony
             var user = await _userManager.GetUserAsync(User);
+            var seoSettings = await _seoService.GetSeoSettings();
 
             // b. Utworzenie wpisu
-            var articleModel = ArticleHelpers.ConvertToModel(result, user);
+            var articleModel = ArticleHelpers.ConvertToModel(result, user, seoSettings.MainUrl);
             var article = await _articleService.Create(articleModel);
             if(article == false) { return RedirectToAction("Index", "Admin"); } // TODO: przekieruj na stronę z błędem
 
             // c. Zapis zdjęcia
             var medium = await _cloudService.AddFile(result.FeaturedImg, articleModel);
-
-            // d. Zapis fullUrl do bazki edycja helpery itp TODO
 
             // d. Wygenerowanie taxonomies
             await _taxonomyService.SaveCategories(await _categoryService.GetCategoriesByNames(result.Categories), articleModel);
@@ -141,10 +142,17 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ArticleView result)
         {
-            if (await _articleService.CheckIfSlugExist(result.Slug))
+            var article = await _articleService.Get(result.Id);
+
+            // sprawdzamy dopiero jeżeli tytuł się 
+            if(result.Slug != article.Slug)
             {
-                ModelState.AddModelError("", "Wpis o podanym linku istnieje");
-            }
+                // sprawdzic czy sam sobą nie jest czasem
+                if (await _articleService.CheckIfSlugExist(result.Slug))
+                {
+                    ModelState.AddModelError("", "Wpis o podanym linku istnieje");
+                }
+            }      
 
             if (!ModelState.IsValid)
             {
@@ -153,9 +161,7 @@ namespace CMS.Controllers
                 ViewBag.Tags = await _tagService.GetAll();
 
                 return View(result);
-            }
-
-            var article = await _articleService.Get(result.Id);
+            }  
 
             // 2. Poprawnie zwalidowane post zapisuję do bazy danych
 
@@ -179,7 +185,8 @@ namespace CMS.Controllers
             }
 
             // b. Aktualizacja wpisu
-            await _articleService.Update(ArticleHelpers.MergeViewWithModel(article, result));
+            var seoSettings = await _seoService.GetSeoSettings();
+            await _articleService.Update(ArticleHelpers.MergeViewWithModel(article, result, seoSettings.MainUrl));
 
             // c. Aktualizacja taxonomies
             await _taxonomyService.Delete(result.Id);
