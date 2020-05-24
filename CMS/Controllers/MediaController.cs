@@ -37,8 +37,9 @@ namespace CMS.Controllers
 
         // [ GET ] - <domain>/Media/Add
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
+            ViewData["FilesSize"] = await _mediaService.GetFilesSize();
             return View();
         }
 
@@ -46,7 +47,9 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(List<IFormFile> files)
         {
-            var check = await _cloudinaryService.AddMultipleFiles(files);
+            ViewData["FilesSize"] = await _mediaService.GetFilesSize();
+
+            await _cloudinaryService.AddMultipleFiles(files);
             return RedirectToAction("List","Media");
         }
 
@@ -84,9 +87,9 @@ namespace CMS.Controllers
 
         // [ POST ] - <domain>/Media/Delete
         [HttpPost]
-        public async Task<IActionResult> Delete(string Id)
+        public IActionResult Delete(string Id)
         {
-            var status = await _cloudinaryService.DeleteFile(Id);
+            var status = _cloudinaryService.DeleteFile(Id);
             return RedirectToAction("List");
         }
     }

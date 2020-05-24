@@ -41,7 +41,14 @@
                 <div id="row-@medium.Id" class="col-sm-6 col-lg-3">
                     <div class="card">
                         <div class="p-2">
-                            <img class="card-img-top rounded" src="@medium.Url" alt="@medium.Description">
+                            @if (medium.Type == "pdf")
+                            {
+                                <img class="card-img-top rounded" src="~/admin/images/FilePlaceholders/pdf-placeholder.png" alt="@medium.Description">
+                            }
+                            else
+                            {
+                                <img class="card-img-top rounded" src="@medium.Url" alt="@medium.Description">
+                            }
                         </div>
                         <div class="card-body pt-2">
                             <h4 class="mb-1 fw-bold">@medium.Name</h4>
@@ -53,9 +60,19 @@
                                 <button onclick="location='@Url.Action("Edit","Media", new { id = medium.Id })'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-imgageid="@medium.Id">
-                                    <i class="fa fa-times"></i>
-                                </button>
+                                @if (medium.Article == null)
+                                {
+                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-imgageid="@medium.Id">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Zdjęcie przypisane do artykułu">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                }
+
                             </div>
                         </div>
                     </div>

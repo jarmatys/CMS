@@ -21,9 +21,10 @@ namespace CMS.Controllers
         private readonly ITagService _tagService;
         private readonly ICloudService _cloudService;
         private readonly ITaxonomyService _taxonomyService;
+        private readonly ISeoService _seoService;
         private readonly UserManager<User> _userManager;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, ITagService tagService, ICloudService cloudService, ITaxonomyService taxonomyService, UserManager<User> userManager)
+        public ArticleController(ISeoService seoService, IArticleService articleService, ICategoryService categoryService, ITagService tagService, ICloudService cloudService, ITaxonomyService taxonomyService, UserManager<User> userManager)
         {
             _articleService = articleService;
             _categoryService = categoryService;
@@ -31,6 +32,7 @@ namespace CMS.Controllers
             _cloudService = cloudService;
             _taxonomyService = taxonomyService;
             _userManager = userManager;
+            _seoService = seoService;
         }
 
         // [ GET ] - <domain>/Article/Lists
@@ -56,6 +58,11 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ArticleView result)
         {
+            if(await _articleService.CheckIfSlugExist(result.Slug))
+            {
+                ModelState.AddModelError("", "Wpis o podanym linku istnieje");
+            }
+
             if (!ModelState.IsValid)
             {
                 // 1. Pobieranie listy tagów oraz kategorii
@@ -65,20 +72,19 @@ namespace CMS.Controllers
                 return View(result);
             }
 
-            // TODO: sprawdzić czy występuje już artykuł o tym tyle bądź slugu
-
             // 2.Poprawnie zwalidowane post zapisuję do bazy danych
 
-            // a. Pobranie usera
+            // a. Pobranie dodatkowych informacji do artykułu | usera, url strony
             var user = await _userManager.GetUserAsync(User);
+            var seoSettings = await _seoService.GetSeoSettings();
 
-            // b. Zapis zdjęcia
-            var medium = await _cloudService.AddFile(result.FeaturedImg);
-
-            // c. Utworzenie wpisu
-            var articleModel = ArticleHelpers.ConvertToModel(result, user, medium);
+            // b. Utworzenie wpisu
+            var articleModel = ArticleHelpers.ConvertToModel(result, user, seoSettings.MainUrl);
             var article = await _articleService.Create(articleModel);
-            if (article == false) { return RedirectToAction("Index", "Admin"); } // TODO: przekieruj na stronę z błędem
+            if(article == false) { return RedirectToAction("Index", "Admin"); } // TODO: przekieruj na stronę z błędem
+
+            // c. Zapis zdjęcia
+            var medium = await _cloudService.AddFile(result.FeaturedImg, articleModel);
 
             // d. Wygenerowanie taxonomies
             await _taxonomyService.SaveCategories(await _categoryService.GetCategoriesByNames(result.Categories), articleModel);
@@ -96,7 +102,7 @@ namespace CMS.Controllers
             // Usuwamy zdjęcie przypisane do artykułu
             if (article.Image != null)
             {
-                await _cloudService.DeleteFile(article.ImageId);
+                _cloudService.DeleteFile(article.Image.Id);
             }
 
             // Usuwamy taxonomies artykułu
@@ -136,6 +142,18 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ArticleView result)
         {
+            var article = await _articleService.Get(result.Id);
+
+            // sprawdzamy dopiero jeżeli tytuł się 
+            if(result.Slug != article.Slug)
+            {
+                // sprawdzic czy sam sobą nie jest czasem
+                if (await _articleService.CheckIfSlugExist(result.Slug))
+                {
+                    ModelState.AddModelError("", "Wpis o podanym linku istnieje");
+                }
+            }      
+
             if (!ModelState.IsValid)
             {
                 // 1. Pobieranie listy tagów oraz kategorii
@@ -143,9 +161,7 @@ namespace CMS.Controllers
                 ViewBag.Tags = await _tagService.GetAll();
 
                 return View(result);
-            }
-
-            var article = await _articleService.Get(result.Id);
+            }  
 
             // 2. Poprawnie zwalidowane post zapisuję do bazy danych
 
@@ -156,7 +172,7 @@ namespace CMS.Controllers
                 if (article.Image != null)
                 {
                     // usuwanie starego zdjęcia
-                    await _cloudService.DeleteFile(article.ImageId);
+                    _cloudService.DeleteFile(article.Image.Id);
                 }
 
                 // Jeżeli zostało wgrane nowe zdjęcie to je zapisz i przypisz
@@ -169,7 +185,8 @@ namespace CMS.Controllers
             }
 
             // b. Aktualizacja wpisu
-            await _articleService.Update(ArticleHelpers.MergeViewWithModel(article, result));
+            var seoSettings = await _seoService.GetSeoSettings();
+            await _articleService.Update(ArticleHelpers.MergeViewWithModel(article, result, seoSettings.MainUrl));
 
             // c. Aktualizacja taxonomies
             await _taxonomyService.Delete(result.Id);

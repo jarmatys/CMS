@@ -95,7 +95,8 @@ namespace CMS.Infrastructure.Helpers
                 GoogleMaps = result.GoogleMaps,
                 Recaptcha = result.Recaptcha,
                 Hotjar = result.Hotjar,
-                CustomScripts = result.CustomScripts,
+                CustomHeaderScripts = result.CustomHeaderScripts,
+                CustomFooterScripts = result.CustomFooterScripts
             };
 
             return integrationView;
@@ -110,7 +111,8 @@ namespace CMS.Infrastructure.Helpers
             model.GoogleMaps = view.GoogleMaps;
             model.Recaptcha = view.Recaptcha;
             model.Hotjar = view.Hotjar;
-            model.CustomScripts = view.CustomScripts;
+            model.CustomHeaderScripts = view.CustomHeaderScripts;
+            model.CustomFooterScripts = view.CustomFooterScripts;
 
             return model;
         }

@@ -116,24 +116,12 @@ namespace CMS.Migrations
                     GoogleMaps = table.Column<string>(nullable: true),
                     Recaptcha = table.Column<string>(nullable: true),
                     Hotjar = table.Column<string>(nullable: true),
-                    CustomScripts = table.Column<string>(nullable: true)
+                    CustomHeaderScripts = table.Column<string>(nullable: true),
+                    CustomFooterScripts = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IntegrationSettings", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MediaTypes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MediaTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,6 +195,20 @@ namespace CMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SeoSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(nullable: true),
+                    MainUrl = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SeoSettings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SocialMedias",
                 columns: table => new
                 {
@@ -256,6 +258,36 @@ namespace CMS.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AddDate = table.Column<DateTime>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    Excerpt = table.Column<string>(nullable: true),
+                    IsDraft = table.Column<bool>(nullable: false),
+                    CommentStatus = table.Column<bool>(nullable: false),
+                    Slug = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    FullUrl = table.Column<string>(nullable: true),
+                    MenuOrder = table.Column<int>(nullable: true),
+                    CommentCount = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Articles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -344,97 +376,6 @@ namespace CMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Medias",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Url = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    AddDate = table.Column<DateTime>(nullable: false),
-                    TypeId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Medias", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Medias_MediaTypes_TypeId",
-                        column: x => x.TypeId,
-                        principalTable: "MediaTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Articles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    AddDate = table.Column<DateTime>(nullable: false),
-                    Content = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    Excerpt = table.Column<string>(nullable: true),
-                    IsDraft = table.Column<bool>(nullable: false),
-                    CommentStatus = table.Column<bool>(nullable: false),
-                    Slug = table.Column<string>(nullable: true),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
-                    FullUrl = table.Column<string>(nullable: true),
-                    MenuOrder = table.Column<int>(nullable: true),
-                    CommentCount = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    ImageId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Articles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Articles_Medias_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Medias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Articles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Options",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    SiteUrl = table.Column<string>(nullable: true),
-                    BlogName = table.Column<string>(nullable: true),
-                    BlogDescription = table.Column<string>(nullable: true),
-                    UserCanRegister = table.Column<bool>(nullable: false),
-                    AdminEmail = table.Column<string>(nullable: true),
-                    IsIndex = table.Column<bool>(nullable: false),
-                    LogoId = table.Column<string>(nullable: true),
-                    FaviconId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Options", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Options_Medias_FaviconId",
-                        column: x => x.FaviconId,
-                        principalTable: "Medias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Options_Medias_LogoId",
-                        column: x => x.LogoId,
-                        principalTable: "Medias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -452,6 +393,30 @@ namespace CMS.Migrations
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Comments_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Medias",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Url = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    AddDate = table.Column<DateTime>(nullable: false),
+                    TypeId = table.Column<int>(nullable: false),
+                    Type = table.Column<string>(nullable: true),
+                    ArticleId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Medias", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Medias_Articles_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Articles",
                         principalColumn: "Id",
@@ -491,11 +456,37 @@ namespace CMS.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Articles_ImageId",
-                table: "Articles",
-                column: "ImageId",
-                unique: true);
+            migrationBuilder.CreateTable(
+                name: "Options",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    SiteUrl = table.Column<string>(nullable: true),
+                    BlogName = table.Column<string>(nullable: true),
+                    BlogDescription = table.Column<string>(nullable: true),
+                    UserCanRegister = table.Column<bool>(nullable: false),
+                    AdminEmail = table.Column<string>(nullable: true),
+                    IsIndex = table.Column<bool>(nullable: false),
+                    LogoId = table.Column<string>(nullable: true),
+                    FaviconId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Options", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Options_Medias_FaviconId",
+                        column: x => x.FaviconId,
+                        principalTable: "Medias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Options_Medias_LogoId",
+                        column: x => x.LogoId,
+                        principalTable: "Medias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Articles_UserId",
@@ -545,9 +536,10 @@ namespace CMS.Migrations
                 column: "ArticleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Medias_TypeId",
+                name: "IX_Medias_ArticleId",
                 table: "Medias",
-                column: "TypeId");
+                column: "ArticleId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Options_FaviconId",
@@ -620,6 +612,9 @@ namespace CMS.Migrations
                 name: "RetrievalLinks");
 
             migrationBuilder.DropTable(
+                name: "SeoSettings");
+
+            migrationBuilder.DropTable(
                 name: "SocialMedias");
 
             migrationBuilder.DropTable(
@@ -629,7 +624,7 @@ namespace CMS.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Articles");
+                name: "Medias");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -638,13 +633,10 @@ namespace CMS.Migrations
                 name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "Medias");
+                name: "Articles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "MediaTypes");
         }
     }
 }

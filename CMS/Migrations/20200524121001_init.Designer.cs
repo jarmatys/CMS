@@ -3,14 +3,16 @@ using System;
 using CMS.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CMS.Migrations
 {
     [DbContext(typeof(CMSContext))]
-    partial class CMSContextModelSnapshot : ModelSnapshot
+    [Migration("20200524121001_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,6 +87,45 @@ namespace CMS.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Admin.OptionsModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("AdminEmail")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("BlogDescription")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("BlogName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("FaviconId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("IsIndex")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("LogoId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("SiteUrl")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("UserCanRegister")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FaviconId");
+
+                    b.HasIndex("LogoId");
+
+                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("CMS.Models.Db.Article.ArticleModel", b =>
@@ -247,14 +288,11 @@ namespace CMS.Migrations
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("ArticleId")
+                    b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<double>("Length")
-                        .HasColumnType("double");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -644,6 +682,17 @@ namespace CMS.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CMS.Models.Db.Admin.OptionsModel", b =>
+                {
+                    b.HasOne("CMS.Models.Db.Media.MediaModel", "Favicon")
+                        .WithMany()
+                        .HasForeignKey("FaviconId");
+
+                    b.HasOne("CMS.Models.Db.Media.MediaModel", "Logo")
+                        .WithMany()
+                        .HasForeignKey("LogoId");
+                });
+
             modelBuilder.Entity("CMS.Models.Db.Article.ArticleModel", b =>
                 {
                     b.HasOne("CMS.Models.Db.Account.User", "User")
@@ -681,7 +730,9 @@ namespace CMS.Migrations
                 {
                     b.HasOne("CMS.Models.Db.Article.ArticleModel", "Article")
                         .WithOne("Image")
-                        .HasForeignKey("CMS.Models.Db.Media.MediaModel", "ArticleId");
+                        .HasForeignKey("CMS.Models.Db.Media.MediaModel", "ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

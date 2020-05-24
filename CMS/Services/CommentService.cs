@@ -17,7 +17,7 @@ namespace CMS.Services
             _context = context;
         }
 
-        public async Task<int> CommentCount()
+        public async Task<int> Count()
         {
             var articles = await _context.Comments.ToListAsync();
             return articles.Count;

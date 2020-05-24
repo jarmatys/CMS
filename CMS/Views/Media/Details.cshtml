@@ -38,8 +38,16 @@
         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-5 d-flex flex-column position-static">
 
+                @if (Model.Article != null)
+                {
+                    <div onclick="location.href='@Url.Action("Details","Blog", new { slug = Model.Article.Slug})'" class="form-group form-group-default mb-3">
+                        <label class="cursor-pointer"><strong>Zdjęcie przypisane do artykułu</strong></label>
+                        <input type="text" class="form-control with-out-grey cursor-pointer" value="@Model.Article.Title" readonly>
+                    </div>
+                }
+
                 <div class="form-group form-group-default mb-3">
-                    <label>Identyfikator zasobu</label>
+                    <label>Identyfikator zasobu</label> 
                     <input type="text" class="form-control with-out-grey" value="@Model.Id" readonly>
                 </div>
 
@@ -58,20 +66,10 @@
                     <input type="text" class="form-control with-out-grey" value="@Model.AddDate" readonly>
                 </div>
 
-                @if (Model.Type == null)
-                {
-                    <div class="form-group form-group-default mb-3">
-                        <label>Kategoria pliku</label>
-                        <input type="text" class="form-control with-out-grey" value="Różne" readonly>
-                    </div>
-                }
-                else
-                {
-                    <div class="form-group form-group-default mb-3">
-                        <label>Kategoria pliku</label>
-                        <input type="text" class="form-control with-out-grey" value="@Model.Type.Name" readonly>
-                    </div>
-                }
+                <div class="form-group form-group-default mb-3">
+                    <label>Kategoria pliku</label>
+                    <input type="text" class="form-control with-out-grey" value="@Model.Type" readonly>
+                </div>
 
                 <div class="form-group form-group-default mb-3">
                     <label>Bezpośredni adres do zasobu</label>
@@ -86,12 +84,15 @@
                         Edytuj
                     </button>
 
-                    <button class="btn btn-danger ml-3 delete-alert" data-imgageid="@Model.Id">
-                        <span class="btn-label">
-                            <i class="fa fa-times"></i>
-                        </span>
-                        Usuń
-                    </button>
+                    @if (Model.Article == null)
+                    {
+                        <button class="btn btn-danger ml-3 delete-alert" data-imgageid="@Model.Id">
+                            <span class="btn-label">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            Usuń
+                        </button>
+                    }
 
                     <button onclick="location='@Url.Action("List","Media")'" class="btn btn-success ml-3" data-imgageid="@Model.Id">
                         <span class="btn-label">

@@ -1,6 +1,7 @@
 ﻿using CMS.Models.Db.Account;
 using CMS.Models.Db.Admin;
 using CMS.Models.Db.Media;
+using CMS.Models.Db.Seo;
 using CMS.Models.Db.Settings;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -40,35 +41,6 @@ namespace CMS.Context
                 {
                     await userManager.CreateAsync(user, "haslo");
                 }
-            }
-
-            // Seed dla typów mediów
-            if (!context.MediaTypes.Any())
-            {
-                var mediaTypes = new MediaTypeModel
-                {
-                   Name = "image"
-                };
-
-                await context.MediaTypes.AddAsync(mediaTypes);
-                await context.SaveChangesAsync();
-            }
-
-            // Seed dla ustawień systemu
-            if (!context.Options.Any())
-            {
-                var options = new OptionsModel
-                {
-                    SiteUrl = "https://test.pl",
-                    BlogName = "Tytył strony",
-                    BlogDescription = "Opis strony",
-                    UserCanRegister = false,
-                    AdminEmail = "admin@admin.pl",
-                    IsIndex = false
-                };
-
-                await context.Options.AddAsync(options);
-                await context.SaveChangesAsync();
             }
 
             // Seed dla ustawień systemu
@@ -128,6 +100,19 @@ namespace CMS.Context
                 var integrationSettings = new IntegrationModel { };
 
                 await context.IntegrationSettings.AddAsync(integrationSettings);
+                await context.SaveChangesAsync();
+            }
+
+            // Seed dla ogólnych ustawień seo
+            if (!context.SeoSettings.Any())
+            {
+                var generalSettings = new GeneralSeoSettingsModel
+                {
+                    MainUrl = "https://cmsopen.net",
+                    Title = "Twoja pierwsza strona w systemie CMSOPEN"
+                };
+
+                await context.SeoSettings.AddAsync(generalSettings);
                 await context.SaveChangesAsync();
             }
         }

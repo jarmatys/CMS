@@ -12,5 +12,7 @@ namespace CMS.Services.interfaces
         Task<List<MediaModel>> GetAll();
         Task<bool> Update(MediaModel media);
         Task<int> MediaCount();
+        Task<double> GetFilesSize();
+
     }
 }

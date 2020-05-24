@@ -2,6 +2,7 @@
 using CloudinaryDotNet.Actions;
 using CMS.Context;
 using CMS.Infrastructure;
+using CMS.Models.Db.Article;
 using CMS.Models.Db.Media;
 using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,12 @@ namespace CMS.Services
             _context = context;
         }
 
-        protected async Task<MediaModel> UploadToCloudinary(IFormFile file)
+        private double ConvertBytesToMegabytes(double bytes)
+        {
+            return (bytes / 1024f) / 1024f;
+        }
+
+        private ImageUploadResult UploadToCloudinary(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
 
@@ -39,39 +45,55 @@ namespace CMS.Services
                 {
                     var uploadParams = new ImageUploadParams
                     {
-                        File = new FileDescription(file.FileName, stream),
-                        Transformation = new Transformation().Width(1000)
+                        File = new FileDescription(file.FileName, stream)
+
                     };
+
+                    if (file.ContentType.Contains("image"))
+                    {
+                        uploadParams.Transformation = new Transformation().Width(1000);
+                    }
+
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
 
-                if (uploadResult.Error != null)
+                if (uploadResult.Error == null)
                 {
-                    return null;
+                    return uploadResult;
                 }
-
-                var medium = new MediaModel
-                {
-                    Id = uploadResult.PublicId,
-                    Url = uploadResult.SecureUri.AbsoluteUri,
-                    Name = Path.GetFileNameWithoutExtension(file.FileName),
-                    Description = Path.GetFileNameWithoutExtension(file.FileName),
-                    Type = _context.MediaTypes.SingleOrDefault(x => x.Name == uploadResult.ResourceType)
-                };
-
-                await _context.Medias.AddAsync(medium);
-                await _context.SaveChangesAsync();
-
-                return medium;
-
             }
 
             return null;
         }
 
-        public async Task<MediaModel> AddFile(IFormFile file)
+        private async Task<MediaModel> SaveToDatabase(ImageUploadResult uploadResult, string fileNameLong, ArticleModel article = null)
         {
-            return await UploadToCloudinary(file);
+            var fileName = Path.GetFileNameWithoutExtension(fileNameLong);
+            var medium = new MediaModel
+            {
+                Id = uploadResult.PublicId,
+                Url = uploadResult.SecureUri.AbsoluteUri,
+                Name = fileName,
+                Description = fileName,
+                Type = uploadResult.Format,
+                Article = article,
+                Length = ConvertBytesToMegabytes(uploadResult.Length)
+            };
+
+            await _context.Medias.AddAsync(medium);
+            await _context.SaveChangesAsync();
+
+            return medium;
+        }
+
+        public async Task<MediaModel> AddFile(IFormFile file, ArticleModel article = null)
+        {
+            var uploadResult = UploadToCloudinary(file);
+            if (uploadResult != null)
+            {
+                return await SaveToDatabase(uploadResult, file.FileName, article);
+            }
+            return null;
         }
 
         public async Task<bool> AddMultipleFiles(List<IFormFile> files)
@@ -79,31 +101,30 @@ namespace CMS.Services
             bool status = true;
             foreach (var file in files)
             {
-                // jeżeli zapis, któregoś zdjęcia się nie powiedzie to zwróć false
-                if (await UploadToCloudinary(file) == null)
+                var uploadResult = UploadToCloudinary(file);
+                if (uploadResult != null)
                 {
-                    status = false;
+                    await SaveToDatabase(uploadResult, file.FileName);
                 }
             }
             return status;
         }
 
-        public async Task<bool> DeleteFile(string publicId)
+        public bool DeleteFile(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
             var result = _cloudinary.Destroy(deleteParams);
 
             if (result.Result == "ok")
             {
-                var toRemove = await _context.Medias.FindAsync(publicId);
+                var toRemove = _context.Medias.Find(publicId);
                 _context.Medias.Remove(toRemove);
-                
-                return await _context.SaveChangesAsync() > 0;
+
+                return _context.SaveChanges() > 0;
             }
 
             return false;
         }
-
 
     }
 }

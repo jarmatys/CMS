@@ -23,6 +23,7 @@ namespace CMS.Models.ViewModels.Article
         [Required(ErrorMessage = "Wpis nie może być pusty")]
         public string Content { get; set; }
         public string Excerpt { get; set; }
+        public string FullUrl { get; set; }
 
         public IFormFile FeaturedImg { get; set; }
         public string ImageUrl { get; set; }

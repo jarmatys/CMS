@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CMS.Migrations
 {
     [DbContext(typeof(CMSContext))]
-    [Migration("20200509141916_init")]
-    partial class init
+    [Migration("20200524121531_addnullablearticle")]
+    partial class addnullablearticle
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,9 +152,6 @@ namespace CMS.Migrations
                     b.Property<string>("FullUrl")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ImageId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.Property<bool>("IsDraft")
                         .HasColumnType("tinyint(1)");
 
@@ -174,9 +171,6 @@ namespace CMS.Migrations
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ImageId")
-                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -294,10 +288,16 @@ namespace CMS.Migrations
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int?>("ArticleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Type")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("TypeId")
@@ -308,23 +308,10 @@ namespace CMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("ArticleId")
+                        .IsUnique();
 
                     b.ToTable("Medias");
-                });
-
-            modelBuilder.Entity("CMS.Models.Db.Media.MediaTypeModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MediaTypes");
                 });
 
             modelBuilder.Entity("CMS.Models.Db.Page.PageModel", b =>
@@ -369,6 +356,23 @@ namespace CMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pages");
+                });
+
+            modelBuilder.Entity("CMS.Models.Db.Seo.GeneralSeoSettingsModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("MainUrl")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SeoSettings");
                 });
 
             modelBuilder.Entity("CMS.Models.Db.Seo.MetaTagModel", b =>
@@ -486,7 +490,10 @@ namespace CMS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomScripts")
+                    b.Property<string>("CustomFooterScripts")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CustomHeaderScripts")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("FacebookPixel")
@@ -688,10 +695,6 @@ namespace CMS.Migrations
 
             modelBuilder.Entity("CMS.Models.Db.Article.ArticleModel", b =>
                 {
-                    b.HasOne("CMS.Models.Db.Media.MediaModel", "Image")
-                        .WithOne("Article")
-                        .HasForeignKey("CMS.Models.Db.Article.ArticleModel", "ImageId");
-
                     b.HasOne("CMS.Models.Db.Account.User", "User")
                         .WithMany("Articles")
                         .HasForeignKey("UserId");
@@ -725,11 +728,9 @@ namespace CMS.Migrations
 
             modelBuilder.Entity("CMS.Models.Db.Media.MediaModel", b =>
                 {
-                    b.HasOne("CMS.Models.Db.Media.MediaTypeModel", "Type")
-                        .WithMany("Medias")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("CMS.Models.Db.Article.ArticleModel", "Article")
+                        .WithOne("Image")
+                        .HasForeignKey("CMS.Models.Db.Media.MediaModel", "ArticleId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

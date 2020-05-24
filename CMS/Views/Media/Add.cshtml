@@ -38,7 +38,17 @@
         <div class="card-body">
 
             <div class="row justify-content-center">
-                progres bar ilości miejsca na dysku
+                <div class="demo">
+                    <div class="progress-card">
+                        <div class="progress-status">
+                            <span class="text-muted">Wykorzystana przestrzeń dyskowa</span>
+                            <span class="text-muted fw-bold"> @ViewData["FilesSize"]%</span>
+                        </div>
+                        <div class="progress" style="width:750px;">
+                            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: @ViewData["FilesSize"]%" aria-valuenow="@ViewData["FilesSize"]" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="" data-original-title="@ViewData["FilesSize"]%"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -84,10 +94,10 @@
             paramName: () => "files", // aby otrzymać w backendzie wynik wysyłki należy użyć funkcji lambda zamiast stringa
             uploadMultiple: true, // zaznaczenie że będziemy wysyłać kilka plików
             parallelUploads: 5, // ile maksymalnie plików moze pójść w kolejce
-            maxFilesize: 2, // maksymalny rozmiar pliku w MB
+            maxFilesize: 50, // maksymalny rozmiar pliku w MB
             maxFiles: 5, // maksymalna liczba plików
             addRemoveLinks: true, // mozliwość usunięcia z dropzone zdjęcia
-            acceptedFiles: ".png,.jpg,.gif,.jpeg",
+            acceptedFiles: ".png,.jpg,.gif,.jpeg,.pdf,.xlsx,.doc,.docx",
             autoProcessQueue: false, // blokowanie automatycznej wysyłki
 
             accept: function (file, done) {

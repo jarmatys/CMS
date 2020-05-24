@@ -75,7 +75,7 @@ namespace CMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var login = await _signInManager.PasswordSignInAsync(result.Login, result.Password, false, false);
+                var login = await _signInManager.PasswordSignInAsync(result.Login, result.Password, result.RemberMe, false);
 
                 if (login.Succeeded)
                     return RedirectToAction("Index", "Admin");
@@ -98,7 +98,6 @@ namespace CMS.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            // ZAPYTAĆ jak pobrać includem artykuły tego usera jak menadżer jest już gotowy (?)
             var users = await _userManager.Users.Include(u => u.Articles).ToListAsync();
             return View(users);
         }

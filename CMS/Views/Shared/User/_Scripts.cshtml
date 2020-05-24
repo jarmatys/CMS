@@ -1,5 +1,6 @@
 ﻿@{
-    var homeData = ViewData["HomeData"] as HomeView;
+    @inject IHomeService HomeService
+    var homeData = await HomeService.GetHomeProperties();
 }
 
 <!-- Google Map Api -->
@@ -73,9 +74,17 @@
         <script>
         grecaptcha.ready(function () {
             grecaptcha.execute('@homeData.Integrations.Recaptcha.Trim()', { action: 'homepage' }).then(function (token) {
-                console.log(token);
+                // console.log(token);
             });
         });
         </script>
+    }
+
+
+    @if (!string.IsNullOrEmpty(homeData.Integrations.CustomFooterScripts))
+    {
+        <text>
+            @Html.Raw(homeData.Integrations.CustomFooterScripts)
+        </text>
     }
 </environment>

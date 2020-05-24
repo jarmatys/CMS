@@ -71,5 +71,11 @@ namespace CMS.Services
 		{
 			return await _context.Categories.SingleOrDefaultAsync(b => b.Name == name);
 		}
+
+		public async Task<bool> CheckIfCategoryExist(string name)
+		{
+			return await _context.Categories.AnyAsync(c => c.Name == name);
+		}
+
 	}
 }

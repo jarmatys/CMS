@@ -12,6 +12,11 @@ namespace CMS.Infrastructure.Helpers
 {
     public static class ArticleHelpers
     {
+        public static string BuildArticleFullUrl(string url, string slug)
+        {
+            return $"{url}/blog/wpis/{slug}";
+        }
+
         private static List<string> GetCategoryFromTaxonomy(ICollection<TaxonomyModel> taxonomies)
         {
             var categoryList = new List<string>();
@@ -56,7 +61,7 @@ namespace CMS.Infrastructure.Helpers
             return new DateTime(year, mounth, day, hour, minutes, 0);
         }
 
-        public static ArticleModel ConvertToModel(ArticleView article, User user, MediaModel media)
+        public static ArticleModel ConvertToModel(ArticleView article, User user, string mainUrl)
         {
             var articleModel = new ArticleModel
             {
@@ -68,11 +73,10 @@ namespace CMS.Infrastructure.Helpers
                 CommentStatus = article.CommentStatus,
                 Slug = ValidateSlug(article.Slug),
                 ModifiedDate = null,
-                FullUrl = null,
+                FullUrl = BuildArticleFullUrl(mainUrl, ValidateSlug(article.Slug)),
                 MenuOrder = null,
                 CommentCount = 0,
-                User = user,
-                Image = media,
+                User = user
             };
 
             return articleModel;
@@ -89,7 +93,8 @@ namespace CMS.Infrastructure.Helpers
                 IsDraft = article.IsDraft,
                 CommentStatus = article.CommentStatus,
                 Slug = article.Slug,
-                User = article.User
+                User = article.User,
+                FullUrl = article.FullUrl
             };
 
             // Sprawdzamy czy zdjęcie wyrożniające jest ustawione
@@ -112,7 +117,7 @@ namespace CMS.Infrastructure.Helpers
             return articleView;
         }
 
-        public static ArticleModel MergeViewWithModel(ArticleModel model, ArticleView view)
+        public static ArticleModel MergeViewWithModel(ArticleModel model, ArticleView view, string mainUrl)
         {
             model.Title = view.Title;
             model.Slug = view.Slug;
@@ -120,6 +125,7 @@ namespace CMS.Infrastructure.Helpers
             model.CommentStatus = view.CommentStatus;
             model.IsDraft = view.IsDraft;
             model.Excerpt = view.Excerpt;
+            model.FullUrl = BuildArticleFullUrl(mainUrl, view.Slug);
 
             return model;
         }

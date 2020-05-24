@@ -14,10 +14,12 @@ namespace CMS.Controllers
     public class PageController : Controller
     {
         private readonly IPageService _pageService;
+        private readonly ISeoService _seoService;
 
-        public PageController(IPageService pageService)
+        public PageController(IPageService pageService, ISeoService seoService)
         {
             _pageService = pageService;
+            _seoService = seoService;
         }
 
         // [ GET ] - <domain>/Page/List
@@ -40,12 +42,20 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PageView result)
         {
+            if (await _pageService.CheckIfSlugExist(result.Slug))
+            {
+                ModelState.AddModelError("", "Strona o podanym linku istnieje");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(result);
             }
 
-            await _pageService.Create(PageHelpers.ConvertToModel(result));
+            var seoSettings = await _seoService.GetSeoSettings();
+            await _pageService.Create(PageHelpers.ConvertToModel(result, seoSettings.MainUrl));
+
+            // d. Zapis fullUrl do bazki edycja helpery itp TODO
 
             return RedirectToAction("List", "Page");
         }
@@ -62,14 +72,24 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(PageView result)
         {
+            var page = await _pageService.Get(result.Id);
+
+            if(page.Slug != result.Slug)
+            {
+                if (await _pageService.CheckIfSlugExist(result.Slug))
+                {
+                    ModelState.AddModelError("", "Strona o podanym linku istnieje");
+                }
+            }
+           
             if (!ModelState.IsValid)
             {
                 return View(result);
             }
 
-            var page = await _pageService.Get(result.Id);
+            var seoSettings = await _seoService.GetSeoSettings();
 
-            await _pageService.Update(PageHelpers.MergeViewWithModel(page, result));
+            await _pageService.Update(PageHelpers.MergeViewWithModel(page, result, seoSettings.MainUrl));
 
             return RedirectToAction("List", "Page");
         }

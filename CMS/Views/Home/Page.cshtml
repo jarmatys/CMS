@@ -1,9 +1,15 @@
 ﻿@model PageModel
 
 @{
-    ViewData["Title"] = "polityka prywatności";
+    ViewData["Title"] = Html.Raw(Model.Title);
+    ViewData["Description"] = Model.Description;
+
+    if (!Model.IsCannonical)
+    {
+       ViewData["canonical"] = Model.FullUrl;
+    }
+
     Layout = "~/Views/Shared/User/_Layout.cshtml";
-    var homeData = ViewData["HomeData"] as HomeView;
 }
 
 <section class="page_header pb-0 w-100">

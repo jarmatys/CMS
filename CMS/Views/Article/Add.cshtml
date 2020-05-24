@@ -323,12 +323,14 @@
         // 8. Inicjalizacja datetimepicera aktualną datą i godziną
         const dateNow = new Date();
 
+        console.log(dateNow);
+
         $('#datepicker').datetimepicker({
             format: 'DD-MM-YYYY',
             defaultDate: dateNow
         });
         $('#timepicker').datetimepicker({
-            format: 'hh:mm',
+            format: 'HH:mm',
             defaultDate: dateNow
         });
 

@@ -1,9 +1,13 @@
 ﻿@model IEnumerable<ArticleModel>
 
 @{
-    ViewData["Title"] = "aktualności";
+    ViewData["Title"] = "Aktualności";
+    ViewData["Description"] = "Lista wszystkich wpisów";
+
     Layout = "~/Views/Shared/User/_Layout.cshtml";
-    var homeData = ViewData["HomeData"] as HomeView;
+
+    @inject IHomeService HomeService;
+    var homeData = await HomeService.GetHomeProperties();
 }
 
 <section class="page_header pb-0 w-100">

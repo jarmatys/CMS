@@ -20,12 +20,12 @@ namespace CMS.Services
 
         public async Task<MediaModel> Get(string id)
         {
-            return await _context.Medias.SingleOrDefaultAsync(x => x.Id == id);
+            return await _context.Medias.Include(x => x.Article).SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<MediaModel>> GetAll()
         {
-            return await _context.Medias.ToListAsync();
+            return await _context.Medias.Include(x => x.Article).ToListAsync();
         }
 
         public async Task<int> MediaCount()
@@ -38,6 +38,12 @@ namespace CMS.Services
         {
             _context.Medias.Update(media);
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<double> GetFilesSize()
+        {
+            var size = await _context.Medias.SumAsync(x => x.Length);
+            return Math.Ceiling(size/2000);
         }
     }
 }

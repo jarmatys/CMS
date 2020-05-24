@@ -23,7 +23,7 @@ namespace CMS.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            ViewBag.CommentCount = await _commentService.CommentCount();
+            ViewBag.CommentCount = await _commentService.Count();
 
             var comments = await _commentService.GetAll();
 

@@ -43,6 +43,7 @@ namespace CMS.Services
                 .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
                 .Include(x => x.User)
                 .Include(x => x.Comments)
+                .OrderBy(x => x.AddDate)
                 .ToListAsync();
 
             articleList.Reverse();
@@ -60,7 +61,7 @@ namespace CMS.Services
 
         public async Task<bool> Delete(int id)
         {
-            var article = await _context.Articles.SingleOrDefaultAsync(b => b.Id == id);
+            var article = await _context.Articles.Include(x => x.Image).SingleOrDefaultAsync(b => b.Id == id);
 
             if (article == null)
             {
@@ -89,10 +90,11 @@ namespace CMS.Services
            .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
            .Include(x => x.User)
            .Include(x => x.Comments)
+           .OrderBy(x => x.AddDate)
            .Where(x => x.IsDraft != true)
            .ToListAsync();
 
-            articleList.Reverse();   
+            articleList.Reverse();
 
             return articleList.Skip(start).Take(count).ToList();
         }
@@ -103,12 +105,22 @@ namespace CMS.Services
            .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
            .Include(x => x.User)
            .Include(x => x.Comments)
+           .OrderBy(x => x.AddDate)
            .Where(x => x.IsDraft != true && x.Taxonomies != null)
            .ToListAsync();
 
-            articleList.Reverse();
+            //foreach (var article in articleList)
+            //{
+            //    foreach(var taxonomy in article.Taxonomies)
+            //    {
+            //        if (taxonomy.Tag == null)
+            //        {
+            //            articleList.Remove()
+            //        }
+            //    }
+            //}
 
-            // TODO: zaimplementować filtracje po danej kategorii
+            articleList.Reverse();
 
             return articleList.Skip(start).Take(count).ToList();
         }
@@ -118,6 +130,10 @@ namespace CMS.Services
             return articles.Count;
         }
 
-       
+        public async Task<bool> CheckIfSlugExist(string slug)
+        {
+            return await _context.Articles.AnyAsync(x => x.Slug == slug);
+        }
+
     }
 }
