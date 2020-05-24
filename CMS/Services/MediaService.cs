@@ -39,5 +39,11 @@ namespace CMS.Services
             _context.Medias.Update(media);
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<double> GetFilesSize()
+        {
+            var size = await _context.Medias.SumAsync(x => x.Length);
+            return Math.Ceiling(size/2000);
+        }
     }
 }

@@ -37,16 +37,19 @@ namespace CMS.Controllers
 
         // [ GET ] - <domain>/Media/Add
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
+            ViewData["FilesSize"] = await _mediaService.GetFilesSize();
             return View();
         }
 
         // [ POST ] - <domain>/Media/Add
         [HttpPost]
-        public IActionResult Add(List<IFormFile> files)
+        public async Task<IActionResult> Add(List<IFormFile> files)
         {
-            _cloudinaryService.AddMultipleFiles(files);
+            ViewData["FilesSize"] = await _mediaService.GetFilesSize();
+
+            await _cloudinaryService.AddMultipleFiles(files);
             return RedirectToAction("List","Media");
         }
 
