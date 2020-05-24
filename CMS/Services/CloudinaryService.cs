@@ -84,12 +84,13 @@ namespace CMS.Services
             return null;
         }
 
-        public bool AddMultipleFiles(List<IFormFile> files)
+        public async Task<bool> AddMultipleFiles(List<IFormFile> files)
         {
             bool status = true;
             foreach (var file in files)
             {
-                UploadToCloudinary(file);
+                var uploadResult = UploadToCloudinary(file);
+                await SaveToDatabase(uploadResult, file.FileName);
             }
             return status;
         }

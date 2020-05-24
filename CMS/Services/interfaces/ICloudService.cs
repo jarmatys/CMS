@@ -12,7 +12,7 @@ namespace CMS.Services.interfaces
     public interface ICloudService
     {
         Task<MediaModel> AddFile(IFormFile file, ArticleModel article = null);
-        bool AddMultipleFiles(List<IFormFile> files);
+        Task<bool> AddMultipleFiles(List<IFormFile> files);
         Task<bool> DeleteFile(string publicId);
     }
 }
