@@ -14,10 +14,12 @@ namespace CMS.Controllers
     public class PageController : Controller
     {
         private readonly IPageService _pageService;
+        private readonly ISeoService _seoService;
 
-        public PageController(IPageService pageService)
+        public PageController(IPageService pageService, ISeoService seoService)
         {
             _pageService = pageService;
+            _seoService = seoService;
         }
 
         // [ GET ] - <domain>/Page/List
@@ -50,7 +52,8 @@ namespace CMS.Controllers
                 return View(result);
             }
 
-            await _pageService.Create(PageHelpers.ConvertToModel(result));
+            var seoSettings = await _seoService.GetSeoSettings();
+            await _pageService.Create(PageHelpers.ConvertToModel(result, seoSettings.MainUrl));
 
             // d. Zapis fullUrl do bazki edycja helpery itp TODO
 
@@ -84,9 +87,9 @@ namespace CMS.Controllers
                 return View(result);
             }
 
-            
+            var seoSettings = await _seoService.GetSeoSettings();
 
-            await _pageService.Update(PageHelpers.MergeViewWithModel(page, result));
+            await _pageService.Update(PageHelpers.MergeViewWithModel(page, result, seoSettings.MainUrl));
 
             return RedirectToAction("List", "Page");
         }

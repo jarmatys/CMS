@@ -15,12 +15,13 @@ namespace CMS.Infrastructure.Helpers
             return text.Trim().Replace(" ", "-").ToLower();
         }
 
-        static string ConvertToFullAdres(string text)
+        public static string BuildPageFullUrl(string url, string slug)
         {
-            return text;
+            return $"{url}/strona/{slug}";
         }
 
-        public static PageModel ConvertToModel(PageView result)
+
+        public static PageModel ConvertToModel(PageView result, string mainUrl)
         {
             var pageModel = new PageModel
             {
@@ -32,7 +33,7 @@ namespace CMS.Infrastructure.Helpers
                 IsIndex = result.IsIndex,
                 IsDraft = result.IsDraft,
                 IsCannonical = result.IsCannonical,
-                FullUrl = ConvertToFullAdres(ConvertTextToSlug(result.Slug)),
+                FullUrl = BuildPageFullUrl(mainUrl, ConvertTextToSlug(result.Slug)),
                 Slug = ConvertTextToSlug(result.Slug)
             };
 
@@ -57,7 +58,7 @@ namespace CMS.Infrastructure.Helpers
             return pageView;
         }
 
-        public static PageModel MergeViewWithModel(PageModel model, PageView view)
+        public static PageModel MergeViewWithModel(PageModel model, PageView view, string mainUrl)
         {
             model.Content = view.Content;
             model.Description = view.Description;
@@ -66,7 +67,7 @@ namespace CMS.Infrastructure.Helpers
             model.IsCannonical = view.IsCannonical;
             model.IsDraft = view.IsDraft;
             model.IsIndex = view.IsIndex;
-            model.FullUrl = ConvertToFullAdres(ConvertTextToSlug(view.Slug));
+            model.FullUrl = BuildPageFullUrl(mainUrl, ConvertTextToSlug(view.Slug));
             model.Slug = ConvertTextToSlug(view.Slug);
 
             return model;
