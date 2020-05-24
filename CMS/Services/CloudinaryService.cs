@@ -30,7 +30,7 @@ namespace CMS.Services
             _context = context;
         }
 
-        protected async Task<MediaModel> UploadToCloudinary(IFormFile file, ArticleModel article = null)
+        private ImageUploadResult UploadToCloudinary(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
 
@@ -48,33 +48,36 @@ namespace CMS.Services
 
                 if (uploadResult.Error != null)
                 {
-                    return null;
+                    return uploadResult;
                 }
-
-                var fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                var medium = new MediaModel
-                {
-                    Id = uploadResult.PublicId,
-                    Url = uploadResult.SecureUri.AbsoluteUri,
-                    Name = fileName,
-                    Description = fileName,
-                    Type = uploadResult.ResourceType,
-                    Article = article
-                };
-
-                await _context.Medias.AddAsync(medium);
-                await _context.SaveChangesAsync();
-
-                return medium;
-
             }
 
             return null;
         }
 
+        private async Task<MediaModel> SaveToDatabase(ImageUploadResult uploadResult,string fileNameLong, ArticleModel article = null)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(fileNameLong);
+            var medium = new MediaModel
+            {
+                Id = uploadResult.PublicId,
+                Url = uploadResult.SecureUri.AbsoluteUri,
+                Name = fileName,
+                Description = fileName,
+                Type = uploadResult.ResourceType,
+                Article = article
+            };
+
+            await _context.Medias.AddAsync(medium);
+            await _context.SaveChangesAsync();
+
+            return medium;
+        }
+
         public async Task<MediaModel> AddFile(IFormFile file, ArticleModel article = null)
         {
-            return await UploadToCloudinary(file, article);
+            var uploadResult = UploadToCloudinary(file);
+            return await SaveToDatabase(uploadResult, file.FileName, article);
         }
 
         public async Task<bool> AddMultipleFiles(List<IFormFile> files)
