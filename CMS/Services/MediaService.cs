@@ -20,12 +20,12 @@ namespace CMS.Services
 
         public async Task<MediaModel> Get(string id)
         {
-            return await _context.Medias.SingleOrDefaultAsync(x => x.Id == id);
+            return await _context.Medias.Include(x => x.Article).SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<MediaModel>> GetAll()
         {
-            return await _context.Medias.ToListAsync();
+            return await _context.Medias.Include(x => x.Article).ToListAsync();
         }
 
         public async Task<int> MediaCount()

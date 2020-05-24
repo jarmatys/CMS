@@ -53,9 +53,19 @@
                                 <button onclick="location='@Url.Action("Edit","Media", new { id = medium.Id })'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-imgageid="@medium.Id">
-                                    <i class="fa fa-times"></i>
-                                </button>
+                                @if (medium.Article == null)
+                                {
+                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-imgageid="@medium.Id">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Zdjęcie przypisane do artykułu">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                }
+
                             </div>
                         </div>
                     </div>
