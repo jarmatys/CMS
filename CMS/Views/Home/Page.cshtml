@@ -3,7 +3,11 @@
 @{
     ViewData["Title"] = Html.Raw(Model.Title);
     ViewData["Description"] = Model.Description;
-    ViewData["canonical"] = Html.Raw(Model.FullUrl);
+
+    if (!Model.IsCannonical)
+    {
+       ViewData["canonical"] = Model.FullUrl;
+    }
 
     Layout = "~/Views/Shared/User/_Layout.cshtml";
 }
