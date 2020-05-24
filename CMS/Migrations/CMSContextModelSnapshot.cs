@@ -286,7 +286,7 @@ namespace CMS.Migrations
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("ArticleId")
+                    b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -728,9 +728,7 @@ namespace CMS.Migrations
                 {
                     b.HasOne("CMS.Models.Db.Article.ArticleModel", "Article")
                         .WithOne("Image")
-                        .HasForeignKey("CMS.Models.Db.Media.MediaModel", "ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CMS.Models.Db.Media.MediaModel", "ArticleId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

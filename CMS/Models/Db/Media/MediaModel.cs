@@ -27,7 +27,7 @@ namespace CMS.Models.Db.Media
 
         [ForeignKey("ArticleModel")]
         // poczytac o isunique żeby dane zdjęcie było w relacji jeden do jeden z articlem
-        public int ArticleId { get; set; }
+        public int? ArticleId { get; set; }
 
         public ArticleModel Article { get; set; }
     }
