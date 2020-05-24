@@ -102,7 +102,7 @@ namespace CMS.Controllers
             // Usuwamy zdjęcie przypisane do artykułu
             if (article.Image != null)
             {
-                await _cloudService.DeleteFile(article.Image.Id);
+                _cloudService.DeleteFile(article.Image.Id);
             }
 
             // Usuwamy taxonomies artykułu
@@ -172,7 +172,7 @@ namespace CMS.Controllers
                 if (article.Image != null)
                 {
                     // usuwanie starego zdjęcia
-                    await _cloudService.DeleteFile(article.Image.Id);
+                    _cloudService.DeleteFile(article.Image.Id);
                 }
 
                 // Jeżeli zostało wgrane nowe zdjęcie to je zapisz i przypisz

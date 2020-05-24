@@ -106,15 +106,21 @@ namespace CMS.Services
            .Include(x => x.User)
            .Include(x => x.Comments)
            .OrderBy(x => x.AddDate)
-           // Zapytać
            .Where(x => x.IsDraft != true && x.Taxonomies != null)
            .ToListAsync();
 
-
+            //foreach (var article in articleList)
+            //{
+            //    foreach(var taxonomy in article.Taxonomies)
+            //    {
+            //        if (taxonomy.Tag == null)
+            //        {
+            //            articleList.Remove()
+            //        }
+            //    }
+            //}
 
             articleList.Reverse();
-
-            // TODO: zaimplementować filtracje po danej kategorii
 
             return articleList.Skip(start).Take(count).ToList();
         }

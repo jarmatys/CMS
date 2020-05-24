@@ -20,6 +20,8 @@ namespace CMS.Models.Db.Media
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public double Length { get; set; }
+
         public DateTime AddDate { get; set; }
 
         public int TypeId { get; set; }

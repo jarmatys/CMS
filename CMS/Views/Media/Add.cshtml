@@ -84,10 +84,10 @@
             paramName: () => "files", // aby otrzymać w backendzie wynik wysyłki należy użyć funkcji lambda zamiast stringa
             uploadMultiple: true, // zaznaczenie że będziemy wysyłać kilka plików
             parallelUploads: 5, // ile maksymalnie plików moze pójść w kolejce
-            maxFilesize: 2, // maksymalny rozmiar pliku w MB
+            maxFilesize: 50, // maksymalny rozmiar pliku w MB
             maxFiles: 5, // maksymalna liczba plików
             addRemoveLinks: true, // mozliwość usunięcia z dropzone zdjęcia
-            acceptedFiles: ".png,.jpg,.gif,.jpeg",
+            acceptedFiles: ".png,.jpg,.gif,.jpeg,.pdf,.xlsx,.doc,.docx",
             autoProcessQueue: false, // blokowanie automatycznej wysyłki
 
             accept: function (file, done) {

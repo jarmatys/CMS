@@ -84,9 +84,9 @@ namespace CMS.Controllers
 
         // [ POST ] - <domain>/Media/Delete
         [HttpPost]
-        public async Task<IActionResult> Delete(string Id)
+        public IActionResult Delete(string Id)
         {
-            var status = await _cloudinaryService.DeleteFile(Id);
+            var status = _cloudinaryService.DeleteFile(Id);
             return RedirectToAction("List");
         }
     }

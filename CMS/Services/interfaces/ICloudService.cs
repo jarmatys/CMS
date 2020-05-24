@@ -13,6 +13,6 @@ namespace CMS.Services.interfaces
     {
         Task<MediaModel> AddFile(IFormFile file, ArticleModel article = null);
         Task<bool> AddMultipleFiles(List<IFormFile> files);
-        Task<bool> DeleteFile(string publicId);
+        bool DeleteFile(string publicId);
     }
 }

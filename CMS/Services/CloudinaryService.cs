@@ -30,6 +30,11 @@ namespace CMS.Services
             _context = context;
         }
 
+        private double ConvertBytesToMegabytes(double bytes)
+        {
+            return (bytes / 1024f) / 1024f;
+        }
+
         private ImageUploadResult UploadToCloudinary(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
@@ -40,9 +45,15 @@ namespace CMS.Services
                 {
                     var uploadParams = new ImageUploadParams
                     {
-                        File = new FileDescription(file.FileName, stream),
-                        Transformation = new Transformation().Width(1000)
+                        File = new FileDescription(file.FileName, stream)
+
                     };
+
+                    if (file.ContentType.Contains("image"))
+                    {
+                        uploadParams.Transformation = new Transformation().Width(1000);
+                    }
+
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
 
@@ -64,8 +75,9 @@ namespace CMS.Services
                 Url = uploadResult.SecureUri.AbsoluteUri,
                 Name = fileName,
                 Description = fileName,
-                Type = uploadResult.ResourceType,
-                Article = article
+                Type = uploadResult.Format,
+                Article = article,
+                Length = ConvertBytesToMegabytes(uploadResult.Length)
             };
 
             await _context.Medias.AddAsync(medium);
@@ -77,7 +89,7 @@ namespace CMS.Services
         public async Task<MediaModel> AddFile(IFormFile file, ArticleModel article = null)
         {
             var uploadResult = UploadToCloudinary(file);
-            if(uploadResult != null)
+            if (uploadResult != null)
             {
                 return await SaveToDatabase(uploadResult, file.FileName, article);
             }
@@ -90,22 +102,25 @@ namespace CMS.Services
             foreach (var file in files)
             {
                 var uploadResult = UploadToCloudinary(file);
-                await SaveToDatabase(uploadResult, file.FileName);
+                if (uploadResult != null)
+                {
+                    await SaveToDatabase(uploadResult, file.FileName);
+                }
             }
             return status;
         }
 
-        public async Task<bool> DeleteFile(string publicId)
+        public bool DeleteFile(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
             var result = _cloudinary.Destroy(deleteParams);
 
             if (result.Result == "ok")
             {
-                var toRemove = await _context.Medias.FindAsync(publicId);
+                var toRemove = _context.Medias.Find(publicId);
                 _context.Medias.Remove(toRemove);
 
-                return await _context.SaveChangesAsync() > 0;
+                return _context.SaveChanges() > 0;
             }
 
             return false;

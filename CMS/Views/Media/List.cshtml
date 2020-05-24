@@ -41,7 +41,14 @@
                 <div id="row-@medium.Id" class="col-sm-6 col-lg-3">
                     <div class="card">
                         <div class="p-2">
-                            <img class="card-img-top rounded" src="@medium.Url" alt="@medium.Description">
+                            @if (medium.Type == "pdf")
+                            {
+                                <img class="card-img-top rounded" src="~/admin/images/FilePlaceholders/pdf-placeholder.png" alt="@medium.Description">
+                            }
+                            else
+                            {
+                                <img class="card-img-top rounded" src="@medium.Url" alt="@medium.Description">
+                            }
                         </div>
                         <div class="card-body pt-2">
                             <h4 class="mb-1 fw-bold">@medium.Name</h4>
