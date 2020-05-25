@@ -135,5 +135,11 @@ namespace CMS.Services
             return await _context.Articles.AnyAsync(x => x.Slug == slug);
         }
 
+        public async Task<bool> IncrementArticleViews(int id)
+        {
+            var article = await _context.Articles.SingleOrDefaultAsync(b => b.Id == id);
+            article.Views++;
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

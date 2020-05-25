@@ -6,6 +6,7 @@ using CMS.Infrastructure.Helpers;
 using CMS.Models.Others;
 using CMS.Models.ViewModels.Article;
 using CMS.Services.interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
@@ -79,6 +80,13 @@ namespace CMS.Controllers
             if (status == "AddCommentSucces")
             {
                 ViewData["AddCommentSucces"] = "Komentarz został dodany, pojawi się on po mojej akceptacji :)";
+            }
+
+            // liczenie wyświetleń wpisu
+            if (Request.Cookies["isNewUser"] != "false")
+            {
+                Response.Cookies.Append("isNewUser", "false", new CookieOptions() { Expires = DateTime.Now.AddHours(1) });
+                await _articleService.IncrementArticleViews(article.Id);
             }
 
             return View();
