@@ -11,6 +11,7 @@ namespace CMS.Models.ViewModels.Home
         [Required(ErrorMessage = "Pole imię jest obowiązkowe")]
         public string Name { get; set; }
 
+        [EmailAddress(ErrorMessage = "Wpisany adres nie jest poprawnym e-mailem")]
         [Required(ErrorMessage = "Pole e-mail jest obowiązkowe")]
         public string Email { get; set; }
 

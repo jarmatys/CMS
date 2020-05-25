@@ -1,6 +1,4 @@
-﻿@model ContactView
-
-<section id="form">
+﻿<section id="form">
     <div class="row">
         <div class="col-md-12">
             <div class="main-title wow fadeIn" data-wow-delay="300ms">
@@ -13,46 +11,46 @@
         <div class="col-md-12 col-sm-12 contact-form-center wow fadeInUp" data-wow-delay="400ms">
             <div class="company-contact-form">
 
-                @Html.ValidationSummary(false, null, new { @class = "alert alert-warning alert-dismissible fade show with-icon" })
+                <div class="alert alert-warning alert-dismissible fade show with-icon d-none" id="alert-send-message"></div>
+                <div class="alert alert-success alert-dismissible fade show with-icon d-none" id="success-send-message">das</div>
 
-                @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "contact-form-outer" }))
-                {
+                <div class="contact-form-outer">
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <div class="contact-form-textfield pb-4">
-                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder = "Imię *" })
+                                <input type="text" placeholder="Imię *" class="form-control" id="name" name="Name">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="contact-form-textfield pb-4">
-                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "E-mail *" })
+                                <input type="text" placeholder="Adres e-mail *" class="form-control" id="email" name="Email">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="contact-form-textfield pb-4">
-                                @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @placeholder = "Telefon *" })
+                                <input type="text" placeholder="Telefon *" class="form-control" id="phone" name="Phone">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="contact-form-textfield pb-4">
-                                @Html.TextBoxFor(x => x.Subject, new { @class = "form-control", @placeholder = "Temat" })
+                                <input type="text" placeholder="Temat" class="form-control" id="subject" name="Subject">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="contact-form-textfield pb-4">
-                                @Html.TextAreaFor(x => x.Message, new { @class = "form-control message", @placeholder = "Treść wiadomości *" })
+                                <textarea placeholder="Treść wiadomości *" class="form-control message" id="message" name="Message"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="contact-form-textfield pb-4">
                                 <div class="custom-control custom-checkbox">
-                                    @Html.CheckBoxFor(x => x.IsAccepted, new { @class = "custom-control-input", @id = "accepted" })
+                                    <input type="checkbox" class="custom-control-input" id="accepted" name="Accepted">
                                     <label class="custom-control-label m-0" for="accepted">Akceptuję <a class="checkbox" href="@Url.Action("PrivacyPolicy","Home")">politykę prywatności</a></label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-12 pt-xs-25px text-center">
-                            <button type="submit" class="btn-setting btn-hvr-setting-main btn-yellow btn-hvr text-uppercase" id="submit_btn">
+                            <button type="submit" class="btn-setting btn-hvr-setting-main btn-yellow btn-hvr text-uppercase" id="submit-send-message">
                                 Wyślij wiadomość
                                 <span class="btn-hvr-setting btn-hvr-pink">
                                     <span class="btn-hvr-setting-inner">
@@ -65,7 +63,7 @@
                             </button>
                         </div>
                     </div>
-                }
+                </div>
             </div>
         </div>
     </div>
