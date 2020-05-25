@@ -6,6 +6,9 @@
     ViewData["Group"] = "Analytics";
 
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+
+    @inject IAnalyticsService _analiticsService;
+    var mostPopularAricles = await _analiticsService.GetMostPopularArticle();
 }
 
 
@@ -35,18 +38,22 @@
                         <div class="card-title">Sekcja blogowa</div>
                         <div class="card-category">Ogólne wiadomości z sekcji blogowej</div>
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+
                             <div class="px-2 pb-2 pb-md-0 text-center">
                                 <div id="circles-1"></div>
                                 <h6 class="fw-bold mt-3 mb-0">Posty</h6>
                             </div>
+
                             <div class="px-2 pb-2 pb-md-0 text-center">
                                 <div id="circles-2"></div>
                                 <h6 class="fw-bold mt-3 mb-0">Komentarze</h6>
                             </div>
+
                             <div class="px-2 pb-2 pb-md-0 text-center">
                                 <div id="circles-3"></div>
                                 <h6 class="fw-bold mt-3 mb-0">Wyświetlenia</h6>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -76,7 +83,7 @@
                 </div>
             </div>
         </div>
-     
+
         <div class="row row-card-no-pd">
             <div class="col-md-12">
                 <div class="card">
@@ -94,22 +101,19 @@
                                 <div class="table-responsive table-hover table-sales">
                                     <table class="table">
                                         <tbody>
+                                            @foreach (var article in mostPopularAricles as ICollection<ArticleModel>)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @article.Title
+                                                    </td>
+                                                    <td>@article.AddDate.ToString("dd-MM-yyyy")</td>
+                                                    <td class="text-right">
+                                                        Wyświetlenia: <strong>@article.Views</strong>
+                                                    </td>                                               
+                                                </tr>
+                                            }
 
-                                            <tr>
-                                                <td>
-                                                    <div class="flag">
-                                                        <img src="~/admin/imagesflags/id.png" alt="indonesia">
-                                                    </div>
-                                                </td>
-                                                <td>Indonesia</td>
-                                                <td class="text-right">
-                                                    2.320
-                                                </td>
-                                                <td class="text-right">
-                                                    42.18%
-                                                </td>
-                                            </tr>
-                                         
                                         </tbody>
                                     </table>
                                 </div>
@@ -130,7 +134,7 @@
             value: 60,
             maxValue: 100,
             width: 7,
-            text: 5,
+            text: @await _analiticsService.GetSumArticleCount(),
             colors: ['#f1f1f1', '#FF9E27'],
             duration: 400,
             wrpClass: 'circles-wrp',
@@ -145,7 +149,7 @@
             value: 70,
             maxValue: 100,
             width: 7,
-            text: 36,
+            text: @await _analiticsService.GetSumComments(),
             colors: ['#f1f1f1', '#2BB930'],
             duration: 400,
             wrpClass: 'circles-wrp',
@@ -160,7 +164,7 @@
             value: 40,
             maxValue: 100,
             width: 7,
-            text: 12,
+            text: @await _analiticsService.GetSumArticleViews(),
             colors: ['#f1f1f1', '#F25961'],
             duration: 400,
             wrpClass: 'circles-wrp',
@@ -206,15 +210,6 @@
                     }]
                 },
             }
-        });
-
-        $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
-            type: 'line',
-            height: '70',
-            width: '100%',
-            lineWidth: '2',
-            lineColor: '#ffa534',
-            fillColor: 'rgba(255, 165, 52, .14)'
         });
     </script>
 }
