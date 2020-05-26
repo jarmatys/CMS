@@ -37,18 +37,23 @@ namespace CMS.Controllers
 
         // [ POST ] - <domain>
         [HttpPost]
-        public async Task<IActionResult> Index(ContactView result)
+        public async Task<IActionResult> SendMessage([FromBody] ContactView result)
         {
             if (!ModelState.IsValid)
             {
-                return View(result);
+                return BadRequest(ModelState);
             }
 
             var notification = new NotificationData($"Masz jedną wiadomość z formularza od: {result.Name}");
-            _notificationService.Send(notification);
-            _emailService.SendContactForm(result);
+            var notificationIsSend = _notificationService.Send(notification);
+            var emailIsSend = _emailService.SendContactForm(result);
 
-            return RedirectToAction("ContactConfirmation");
+            if (notificationIsSend && emailIsSend)
+            {
+                return Ok(new { status = "Wiadomość została wysłana poprawnie, odpowiem najszybciej jak to tylko możliwe! :)" });
+            }
+
+            return BadRequest(new { status = "Bład przy wysyłaniu wiadomości, odśwież stronę i spróbuj ponownie." });
         }
 
         // [ GET ] - <domain>/{link}
@@ -93,15 +98,6 @@ namespace CMS.Controllers
             var privacyPolicy = await _settingsService.GetPrivacyPolicySettings();
             return View(privacyPolicy);
         }
-
-        // [ GET ] - <domain>/potwierdzenie-kontaktu
-        [HttpGet]
-        [Route("potwierdzenie-kontaktu")]
-        public async Task<IActionResult> ContactConfirmation()
-        {
-            return View();
-        }
-
 
     }
 }

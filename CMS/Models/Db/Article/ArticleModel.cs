@@ -27,6 +27,7 @@ namespace CMS.Models.Db.Article
         public string FullUrl { get; set; }
         public int? MenuOrder { get; set; }
         public int CommentCount { get; set; }
+        public int Views { get; set; }
 
         public string UserId { get; set; }
         public User User { get; set; }

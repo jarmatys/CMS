@@ -19,11 +19,71 @@
 @section homeScripts {
     <script>
         // Tutaj piszemy skrypty dla głównej strony
+    </script>
+    <script>
+        // Obsługa formularza kontaktowego
+        const buttonSubmit = document.querySelector("#submit-send-message");
+        const alertWarningField = document.querySelector("#alert-send-message");
+        const alertSuccessField = document.querySelector("#success-send-message");
 
-        // Jeżeli walidacja będzie błędna to przekieruj do sekcji kontaktu
-        if (@((Model != null).ToString().ToLower())) {
-            window.location.href = "#form";
-        }
+        const messageText = document.querySelector("#message");
+        const emailText = document.querySelector("#email");
+        const nameText = document.querySelector("#name");
+        const phoneText = document.querySelector("#phone");
+        const subjectText = document.querySelector("#subject");
+        const acceptedBool = document.querySelector("#accepted");
 
+        buttonSubmit.addEventListener("click", function () {
+
+            var data = {
+                'Name': nameText.value,
+                'Email': emailText.value,
+                'Phone': phoneText.value,
+                'Subject': subjectText.value,
+                'Message': messageText.value,
+                'IsAccepted': acceptedBool.checked
+            };
+
+            $.ajax(
+                    {
+                        url: '@Url.Action("SendMessage","Home")',
+                        type: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(data),
+                        success: function (result) {
+                            alertWarningField.classList.add("d-none");
+                            alertSuccessField.classList.remove("d-none");
+
+                            nameText.value = "";
+                            emailText.value = "";
+                            phoneText.value = "";
+                            subjectText.value = "";
+                            messageText.value = "";
+                            acceptedBool.checked = false;
+
+                            alertSuccessField.innerHTML = result.status;
+                        },
+                        error: function (error) {
+
+                            alertWarningField.innerHTML = "";
+                            alertWarningField.classList.remove("d-none");
+
+                            let errors = error.responseJSON;
+                            for (let name in errors) {
+                                // jeżeli jest więcej błędów jednego typu to przeiteruj po nich
+                                if (errors[name].length != 1) {
+                                    for (let subError of errors[name]) {
+                                        alertWarningField.innerHTML += `<p> ${subError} </p>`;
+                                    }
+                                }
+                                else {
+                                    alertWarningField.innerHTML += `<p> ${errors[name]} </p>`;
+                                }
+                            }
+                            console.log(error);
+                    }
+                });
+            });
     </script>
 }

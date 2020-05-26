@@ -7,31 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
 {
+    // controller do obsługi kodów błedu i wyświetlanie customowych widoków
     public class ErrorController : Controller
     {
-        private readonly IHomeService _homeService;
-        public ErrorController(IHomeService homeService)
-        {
-            _homeService = homeService;
-        }
-
-        // [ GET ] - <domain>/nie-odnaleziono
+        // [ GET ] - <domain>/error/404
         [HttpGet]
-        [Route("nie-odnaleziono")]
-        public async Task<IActionResult> PageNotFound()
+        [Route("error/404")]
+        public IActionResult Error404()
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
-
             return View();
         }
 
         // [ GET ] - <domain>/blad
         [HttpGet]
         [Route("blad")]
-        public async Task<IActionResult> PageBadRequest()
+        public IActionResult PageBadRequest()
         {
-            ViewData["HomeData"] = await _homeService.GetHomeProperties();
-
             return View();
         }
     }

@@ -27,6 +27,7 @@
     </div>
 </section>
 <!-- Page Header -->
+
 <!-- Blog starts -->
 <section class="bg-light text-left">
 
@@ -49,46 +50,50 @@
                                 <img src="@article.Image.Url" alt="@article.Image.Description">
                             </div>
                         }
-                        <div class="news_desc overflow-visible">
-                            <h3 class="font-weight-500">@article.Title</h3>
-                            <ul class="meta-tags mt-20px mb-20px">
-                                <li><i class="ti ti-calendar"></i> @article.AddDate.ToString("dd-MM-yyyy")</li>
-                                <li><i class="ti ti-user"></i> @article.User.Name</li>
-                                <li><i class="ti ti-comments"></i> @article.Comments.Where(x => x.IsAccepted != false).Count()</li>
+                    <div class="news_desc overflow-visible">
+                        <h3 class="font-weight-500">@article.Title </h3>
+                        <ul class="meta-tags mt-20px mb-20px">
+                            <li><i class="ti ti-calendar"></i> @article.AddDate.ToString("dd-MM-yyyy")</li>
+                            <li><i class="ti ti-user"></i> @article.User.Name</li>
+                            <li><i class="ti ti-comments"></i> @article.Comments.Where(x => x.IsAccepted != false).Count()</li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li onclick="location.href='@Url.Action("Edit","Article", new { Id = article.Id})'"><i class="ti ti-pencil-alt2"></i> <strong>Edytuj</strong></li>
+                            }
 
-                                @if (article.Taxonomies.Where(x => x.Tag != null).Count() != 0)
-                                {
-                                    <li>
-                                        <i class="ti ti-tag"></i>
-                                        @foreach (var taxonomy in article.Taxonomies)
+                            @if (article.Taxonomies.Where(x => x.Tag != null).Count() != 0)
+                            {
+                                <li>
+                                    <i class="ti ti-tag"></i>
+                                    @foreach (var taxonomy in article.Taxonomies)
+                                    {
+                                        if (taxonomy.Tag != null)
                                         {
-                                            if (taxonomy.Tag != null)
-                                            {
-                                                <span> @taxonomy.Tag.Name</span>
-                                            }
+                                            <span> @taxonomy.Tag.Name</span>
                                         }
-                                    </li>
-                                }
+                                    }
+                                </li>
+                            }
 
 
-                                @if (article.Taxonomies.Where(x => x.Category != null).Count() != 0)
-                                {
-                                    <li>
-                                        <i class="ti ti-folder"></i>
-                                        @foreach (var taxonomy in article.Taxonomies)
+                            @if (article.Taxonomies.Where(x => x.Category != null).Count() != 0)
+                            {
+                                <li>
+                                    <i class="ti ti-folder"></i>
+                                    @foreach (var taxonomy in article.Taxonomies)
+                                    {
+                                        if (taxonomy.Category != null)
                                         {
-                                            if (taxonomy.Category != null)
-                                            {
-                                                <span style="cursor:pointer;" onclick="location='@Url.Action("Category", "Blog", new { category = taxonomy.Category.Name.ToLower() })'"> @taxonomy.Category.Name</span>
-                                            }
+                                            <span style="cursor:pointer;" onclick="location='@Url.Action("Category", "Blog", new { category = taxonomy.Category.Name.ToLower() })'"> @taxonomy.Category.Name</span>
                                         }
-                                    </li>
-                                }
-                            </ul>
+                                    }
+                                </li>
+                            }
+                        </ul>
 
-                            @Html.Raw(article.Content)
+                        @Html.Raw(article.Content)
 
-                        </div>
+                    </div>
                     </div>
                 </div>
 
