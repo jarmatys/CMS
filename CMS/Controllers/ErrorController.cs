@@ -18,6 +18,14 @@ namespace CMS.Controllers
             return View();
         }
 
+        // [ GET ] - <domain>/error/500
+        [HttpGet]
+        [Route("error/500")]
+        public IActionResult Error500()
+        {
+            return View();
+        }
+
         // [ GET ] - <domain>/blad
         [HttpGet]
         [Route("blad")]
