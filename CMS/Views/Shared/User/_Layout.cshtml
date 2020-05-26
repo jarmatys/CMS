@@ -2,9 +2,12 @@
 <html lang="PL-pl">
 <head> 
 
-    <link rel="stylesheet" href="~/boundle/css/mainUserCss.min.css">
-    <link rel="stylesheet" href="~/boundle/css/slick.min.css">
-    <link rel="stylesheet" href="~/boundle/css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="~/user/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/user/css/materialdesignicons.min.css">
+    <link rel="stylesheet" type="text/css" href="~/user/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="~/user/css/owl.theme.default.min.css">
+    <link rel="stylesheet" type="text/css" href="~/user/css/style.css" id="theme-opt">
+    <link rel="stylesheet" type="text/css" href="~/user/css/colors/default.css" id="color-opt">
 
     @await Html.PartialAsync("User/_Head")
 </head>
@@ -12,7 +15,6 @@
 
     @await Html.PartialAsync("User/_Loader")
     @await Html.PartialAsync("User/_Header")
-    @await Html.PartialAsync("User/_FullMenu")
 
     @RenderBody()
 

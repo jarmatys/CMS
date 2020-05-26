@@ -1,56 +1,49 @@
-﻿
-<!-- Header start -->
-<header>
-    <nav class="navbar navbar-top-default navbar-expand-lg static-nav nav-style seven-links transparent-bg">
-        <div class="container">
+﻿<!-- Navbar STart -->
+<header id="topnav" class="defaultscroll sticky">
+    <div class="container">
+        <!-- Logo container-->
+        <div>
             <a class="logo" href="@Url.Action("Index","Home")">
-                <img src="https://res.cloudinary.com/jarmatys/image/upload/v1588866761/Portfolio/logo-white_mxjhum.png" alt="logo" title="Logo" class="logo-default">
-                <img src="https://res.cloudinary.com/jarmatys/image/upload/v1588866761/Portfolio/logo-black_ceho0k.png" alt="logo" title="Logo" class="logo-scrolled">
-            </a>
-            <div class="collapse navbar-collapse d-none d-lg-block">
-                <ul class="nav navbar-nav ml-auto menu__list">
-                    <li class="nav-item menu__item">
-                        <a href="@Url.Action("List","Blog")" class="nav-link menu__link">Blog</a>
-                    </li>
-
-                    @if (ViewData["isHome"] != null)
-                    {
-                        <li class="nav-item menu__item">
-                            <a href="#services" class="scroll nav-link menu__link">Usługi</a>
-                        </li>
-                        <li class="nav-item menu__item">
-                            <a href="#opinion" class="scroll nav-link menu__link">Opinie</a>
-                        </li>
-                        <li class="nav-item menu__item">
-                            <a href="#portfolio" class="scroll nav-link menu__link">Portfolio</a>
-                        </li>
-                        <li class="nav-item menu__item">
-                            <a href="#contact" class="scroll nav-link menu__link">Kontakt</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item menu__item">
-                            <a href="@Url.Action("Index","Home")#services" class="nav-link menu__link">Usługi</a>
-                        </li>
-                        <li class="nav-item menu__item">
-                            <a href="@Url.Action("Index","Home")#opinion" class=" nav-link menu__link">Opinie</a>
-                        </li>
-                        <li class="nav-item menu__item">
-                            <a href="@Url.Action("Index","Home")#portfolio" class=" nav-link menu__link">Portfolio</a>
-                        </li>
-                        <li class="nav-item menu__item">
-                            <a href="@Url.Action("Index","Home")#contact" class=" nav-link menu__link">Kontakt</a>
-                        </li>
-                    }
-
-                </ul>
-            </div>
-            <!-- side menu open button -->
-            <a class="menu_bars d-inline-block menu-bars-setting">
-                <span></span> <span></span> <span></span>
+                <img src="~/admin/images/logo-big.png" height="24" alt="">
             </a>
         </div>
-    </nav>
-</header>
-<!-- Header end -->
+        <div class="buy-button">
+            <a href="#" target="_blank" class="btn btn-primary">Prezentacja</a>
+        </div><!--end login button-->
+        <!-- End Logo container-->
+        <div class="menu-extras">
+            <div class="menu-item">
+                <!-- Mobile menu toggle-->
+                <a class="navbar-toggle">
+                    <div class="lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </a>
+                <!-- End mobile menu toggle-->
+            </div>
+        </div>
+
+        <div id="navigation">
+            <!-- Navigation Menu-->
+            <ul class="navigation-menu">
+                <li><a href="@Url.Action("List","Blog")">Aktualności</a></li>
+
+                @if (ViewData["isHome"] != null)
+                {
+                    <li><a href="#home">Home</a></li>
+                }
+                else
+                {
+                    <li><a href="@Url.Action("Index","Home")#home">Home</a></li> 
+                }
+
+            </ul><!--end navigation menu-->
+            <div class="buy-menu-btn d-none">
+                <a href="#" target="_blank" class="btn btn-primary">Umów prezentacje</a>
+            </div><!--end login button-->
+        </div><!--end navigation-->
+    </div><!--end container-->
+</header><!--end header-->
+<!-- Navbar End -->

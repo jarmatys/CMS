@@ -3,25 +3,43 @@
     var homeData = await HomeService.GetHomeProperties();
 }
 
-
-<!-- Footer starts -->
-<footer class="p-half bg-black2">
+<!-- Footer Start -->
+<footer class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-md-12 col-sm-12 text-center">
-                <ul class="footer-icons mb-4">
+
+            <div class="col-lg-4 col-12 mb-0 mb-md-4 pb-0 pb-md-2">
+                <a href="#" class="logo-footer">
+                    <img src="~/admin/images/logo-big.png" height="24" alt="">
+                </a>
+                <p class="mt-4">Start working with Landrick that can provide everything you need to generate awareness, drive traffic, connect.</p>
+                <ul class="list-unstyled social-icon social mb-0 mt-4">
                     @foreach (var socialMedium in homeData.SocialMedias)
                     {
-                        <li>
-                            <a target="_blank" href="@socialMedium.Link" class="wow fadeInUp">
-                                <i class="@socialMedium.FontAwesome"></i>
+                        <li class="list-inline-item">
+                            <a href="@socialMedium.Link" class="rounded">
+                                <i data-feather="@socialMedium.Name" class="@socialMedium.FontAwesome"></i>
                             </a>
                         </li>
                     }
-                </ul>
-                <p class="copyrights mt-2 mb-2">Copyright &copy; Jarosław Armatys @DateTime.Now.ToString("yyyy")</p>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- Footer ends -->
+                </ul><!--end icon-->
+            </div><!--end col-->
+
+        </div><!--end row-->
+    </div><!--end container-->
+</footer><!--end footer-->
+<footer class="footer footer-bar">
+    <div class="container text-center">
+        <div class="row align-items-center">
+            <div class="col-sm-6">
+                <div class="text-sm-left">
+                    <p class="mb-0">@DateTime.Now.ToString("yyyy") Copyright &copy;. Wykonanie <a href="https://armatys.me" target="_blank" class="text-reset">armatys.me</a>.</p>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+    </div><!--end container-->
+</footer><!--end footer-->
+<!-- Footer End -->
+<!-- Back to top -->
+<a href="#" class="btn btn-icon btn-soft-primary back-to-top"><i data-feather="arrow-up" class="icons"></i></a>
+<!-- Back to top -->

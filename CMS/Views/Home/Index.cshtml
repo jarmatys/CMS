@@ -1,18 +1,11 @@
-﻿@model ContactView
-
-@{
+﻿@{
     ViewData["isHome"] = true;
-    ViewData["canonical"] = "https://armatys.me";
+    ViewData["canonical"] = "https://cmsopen.net";
 }
 
 @await Html.PartialAsync("User/_Slider")
-@await Html.PartialAsync("User/_Services")
 @await Html.PartialAsync("User/_About")
-@await Html.PartialAsync("User/_Opinion")
-@await Html.PartialAsync("User/_Portfolio")
-@await Html.PartialAsync("User/_CTA")
 @await Html.PartialAsync("User/_Blog")
-@await Html.PartialAsync("User/_Map")
 @await Html.PartialAsync("User/_Contact")
 
 
