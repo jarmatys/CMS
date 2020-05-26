@@ -101,6 +101,9 @@ namespace CMS
                 app.UseExceptionHandler("/blad");
             }
 
+            // uruchamianie customowych stron błędów w controllerze ErrorController
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
+
             // dodajemy obsługę plików statycznych z ~/wwwroot
             app.UseStaticFiles();
 
