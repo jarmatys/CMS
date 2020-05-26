@@ -12227,11 +12227,12 @@ div.table-responsive > div.dataTables_wrapper > div.row {
 
 /*      Summernote     */
 @font-face {
-  font-family: "summernote";
-  font-style: normal;
-  font-weight: normal;
-  src: url("../fonts/summernote/summernote.eot?e557617934c52ea068954af79ed7c221");
-  src: url("../fonts/summernote/summernote.eot?#iefix") format("embedded-opentype"), url("../admin/fonts/summernote/summernote.woff?e557617934c52ea068954af79ed7c221") format("woff"), url("../fonts/summernote/summernote.ttf?e557617934c52ea068954af79ed7c221") format("truetype"); }
+    font-family: "summernote";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../../fonts/summernote/summernote.eot");
+    src: url("../../fonts/summernote/summernote.eot") format("embedded-opentype"), url("../../admin/fonts/summernote/summernote.woff") format("woff"), url("../../admin/fonts/summernote/summernote.ttf") format("truetype");
+}
 [class^="note-icon-"]:before, [class*=" note-icon-"]:before {
   display: inline-block;
   font: normal normal normal 14px summernote;
