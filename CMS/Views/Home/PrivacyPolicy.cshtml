@@ -5,19 +5,40 @@
     Layout = "~/Views/Shared/User/_Layout.cshtml";
 }
 
-<section class="page_header pb-0 w-100">
+
+
+<!-- Hero Start -->
+<section class="bg-half bg-light d-table w-100">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 page-content position-relative">
-                <h2 class="text-white mt-5 mb-2">Polityka prywatności</h2>
-                <p class="text-white">Opis zasad przedtwarzania danych.</p>
-                <div class="page_nav bg-white d-inline-block">
-                    <span>Jesteś tutaj:</span> <a href="@Url.Action("Index","Home")" class="d-inline-block color-black">Strona główna</a> <span class="color-yellow"><i class="ti ti-angle-double-right"></i>Polityka prywatności</span>
+        <div class="row justify-content-center">
+            <div class="col-lg-12 text-center">
+                <div class="page-next-level">
+                    <h4 class="title"> Blog Listing & Sidebar </h4>
+                    <div class="page-next">
+                        <nav aria-label="breadcrumb" class="d-inline-block">
+                            <ul class="breadcrumb bg-white rounded shadow mb-0">
+                                <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Strona główna</a></li>
+                                <li class="breadcrumb-item"><a href="#">Page</a></li>
+                                <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Blog List with Sidebar</li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div>  <!--end col-->
+        </div><!--end row-->
+    </div> <!--end container-->
+</section><!--end section-->
+<div class="position-relative">
+    <div class="shape overflow-hidden text-white">
+        <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+        </svg>
     </div>
-</section>
+</div>
+<!-- Hero End -->
+
+
 <section class="bg-light text-left">
     <div class="container">
         <div class="row">
@@ -322,7 +343,7 @@
                             </li>
                         </ul>
                     </li>
-                </ul>       
+                </ul>
             </div>
         </div>
     </div>
