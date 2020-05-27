@@ -4,11 +4,11 @@
         <!-- Logo container-->
         <div>
             <a class="logo" href="@Url.Action("Index","Home")">
-                <img src="~/admin/images/logo-big.png" height="24" alt="">
+                <img src="~/admin/images/logo-green-big.png" height="44" alt="">
             </a>
         </div>
         <div class="buy-button">
-            <a href="#" target="_blank" class="btn btn-primary">Prezentacja</a>
+            <a href="https://calendly.com/armatys/prezentacja-cms-open" target="_blank" class="btn btn-primary">Umów prezentację <i class="far fa-calendar-alt"></i></a>
         </div><!--end login button-->
         <!-- End Logo container-->
         <div class="menu-extras">
@@ -25,25 +25,14 @@
             </div>
         </div>
 
-        <div id="navigation">
+        <nav id="navigation">
             <!-- Navigation Menu-->
-            <ul class="navigation-menu">
-                <li><a href="@Url.Action("List","Blog")">Aktualności</a></li>
+            @await Html.PartialAsync("User/_Menu")
 
-                @if (ViewData["isHome"] != null)
-                {
-                    <li><a href="#home">Home</a></li>
-                }
-                else
-                {
-                    <li><a href="@Url.Action("Index","Home")#home">Home</a></li> 
-                }
-
-            </ul><!--end navigation menu-->
             <div class="buy-menu-btn d-none">
-                <a href="#" target="_blank" class="btn btn-primary">Umów prezentacje</a>
+                <a href="https://calendly.com/armatys/prezentacja-cms-open" target="_blank" class="btn btn-primary">Umów prezentację <i class="far fa-calendar-alt"></i></a>
             </div><!--end login button-->
-        </div><!--end navigation-->
+        </nav><!--end navigation-->
     </div><!--end container-->
 </header><!--end header-->
 <!-- Navbar End -->

@@ -4,36 +4,12 @@
 }
 
 <!-- Footer Start -->
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-
-            <div class="col-lg-4 col-12 mb-0 mb-md-4 pb-0 pb-md-2">
-                <a href="#" class="logo-footer">
-                    <img src="~/admin/images/logo-big.png" height="24" alt="">
-                </a>
-                <p class="mt-4">Start working with Landrick that can provide everything you need to generate awareness, drive traffic, connect.</p>
-                <ul class="list-unstyled social-icon social mb-0 mt-4">
-                    @foreach (var socialMedium in homeData.SocialMedias)
-                    {
-                        <li class="list-inline-item">
-                            <a href="@socialMedium.Link" class="rounded">
-                                <i data-feather="@socialMedium.Name" class="@socialMedium.FontAwesome"></i>
-                            </a>
-                        </li>
-                    }
-                </ul><!--end icon-->
-            </div><!--end col-->
-
-        </div><!--end row-->
-    </div><!--end container-->
-</footer><!--end footer-->
 <footer class="footer footer-bar">
     <div class="container text-center">
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="text-sm-left">
-                    <p class="mb-0">@DateTime.Now.ToString("yyyy") Copyright &copy;. Wykonanie <a href="https://armatys.me" target="_blank" class="text-reset">armatys.me</a>.</p>
+                    <p class="mb-0">&copy; @DateTime.Now.ToString("yyyy") Copyright - CMSOpen <a style="margin-left:5px;" href="https://github.com/jarmatys/CMS"><i style="color:floralwhite;" class="fab fa-github-alt"></i></a></p>
                 </div>
             </div><!--end col-->
         </div><!--end row-->

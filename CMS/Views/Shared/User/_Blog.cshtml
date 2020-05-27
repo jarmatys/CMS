@@ -5,13 +5,13 @@
 
 @if (homeData.Articles.Count() == 3)
 {
-    <section class="section bg-light">
+    <section id="blog" class="section bg-light">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
                     <div class="section-title mb-4 pb-2">
-                        <h4 class="title mb-4">Latest News</h4>
-                        <p class="text-muted para-desc mx-auto mb-0">Start working with <span class="text-primary font-weight-bold">Landrick</span> that can provide everything you need to generate awareness, drive traffic, connect.</p>
+                        <h4 class="title mb-4">Najnowsze wpisy</h4>
+                        <p class="text-muted para-desc mx-auto mb-0">Zobacz co nowego wprowadziliśmy do systemu <span class="text-primary font-weight-bold">CMSOpen</span>.</p>
                     </div>
                 </div><!--end col-->
             </div><!--end row-->
@@ -30,35 +30,42 @@
 
                             </div>
                             <div class="card-body content">
-                                <h5><a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="card-title title text-dark">Design your apps in your own way</a></h5>
+                                <h5><a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="card-title title text-dark">@article.Title</a></h5>
                                 <div class="post-meta d-flex justify-content-between mt-3">
                                     <ul class="list-unstyled mb-0">
-                                        <li class="list-inline-item mr-2 mb-0"><a href="javascript:void(0)" class="text-muted like"><i class="mdi mdi-heart-outline mr-1"></i>33</a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="mdi mdi-comment-outline mr-1"></i>@article.Comments.Where(x => x.IsAccepted != false).Count()</a></li>
+                                        <li class="list-inline-item"><i class="far fa-comments"></i> @article.Comments.Where(x => x.IsAccepted != false).Count()</li>
                                     </ul>
-                                    <a href="page-blog-detail.html" class="text-muted readmore">Read More <i class="mdi mdi-chevron-right"></i></a>
+                                    <a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="text-muted readmore">Czytaj więcej <i class="fas fa-arrow-right"></i></a>
                                 </div>
                             </div>
                             <div class="author">
-                                <small class="text-light user d-block"><i class="mdi mdi-account"></i> @article.User.Name</small>
-                                <small class="text-light date"><i class="mdi mdi-calendar-check"></i> @article.AddDate.ToString("dd-MM-yyyy") </small>
+                                <small class="text-light user d-block"><i class="far fa-user"></i> @article.User.Name</small>
+                                <small class="text-light date"><i class="far fa-calendar-alt"></i> @article.AddDate.ToString("dd-MM-yyyy") </small>
                             </div>
                         </div>
                     </div><!--end col-->
                 }
             </div><!--end row-->
+
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-3 text-center">
+                    <a href="@Url.Action("List","Blog")" class="btn btn-outline-primary mt-2">Zobacz wszystkie wpisy</a>
+                </div>
+            </div>
         </div><!--end container-->
 
         <div class="container mt-100 mt-60">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
                     <div class="section-title">
-                        <h4 class="title mb-4">See everything about your employee at one place.</h4>
-                        <p class="text-muted para-desc mx-auto mb-0">Start working with <span class="text-primary font-weight-bold">Landrick</span> that can provide everything you need to generate awareness, drive traffic, connect.</p>
+                        <h4 class="title mb-4">
+                            Pierwszy system CMS oparty o .NET Core
+                        </h4>
+                        <p class="text-muted para-desc mx-auto mb-0">Jesteś zainteresowana/y? <span class="text-primary font-weight-bold">Umów się</span> z nami a, przedstawimy Ci system i odpowiemy na wszelkie pytania.</p>
 
                         <div class="mt-4">
-                            <a href="javascript:void(0)" class="btn btn-primary mt-2 mr-2">Get Started Now</a>
-                            <a href="javascript:void(0)" class="btn btn-outline-primary mt-2">Free Trial</a>
+                            <a target="_blank" href="https://calendly.com/armatys/prezentacja-cms-open" class="btn btn-primary mt-2 mr-2">Umów prezentacje</a>
+                            <a target="_blank" href="https://demo.cmsopen.net" class="btn btn-outline-primary mt-2">Zobacz demo</a>
                         </div>
                     </div>
                 </div><!--end col-->

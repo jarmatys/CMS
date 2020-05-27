@@ -9,7 +9,7 @@
 
         <!-- CATAGORIES -->
         <div class="widget mb-4 pb-2">
-            <h4 class="widget-title">Catagories</h4>
+            <h4 class="widget-title">Kategorie</h4>
             @if (homeData.Categories.Count() == 0)
             {
                 <h6>Brak kategorii</h6>
@@ -19,7 +19,7 @@
                 <ul class="list-unstyled mt-4 mb-0 blog-catagories">
                     @foreach (var category in homeData.Categories)
                     {
-                        <li><a href="@Url.Action("Category","Blog", new { category = category.Name.ToLower()})">@category.Name</a> <span class="float-right">13</span></li>
+                        <li><a href="@Url.Action("Category","Blog", new { category = category.Name.ToLower()})">@category.Name</a></li>
                     }
                 </ul>
             }
@@ -28,7 +28,7 @@
         <!-- CATAGORIES -->
         <!-- RECENT POST -->
         <div class="widget mb-4 pb-2">
-            <h4 class="widget-title">Recent Post</h4>
+            <h4 class="widget-title">Ostatnio dodane</h4>
             <div class="mt-4">
                 @if (homeData.Articles.Count() == 0)
                 {
@@ -37,20 +37,20 @@
 
                 @foreach (var article in homeData.Articles)
                 {
-            <div class="clearfix post-recent">
-                @if (article.Image != null)
-                {
-                    <div class="post-recent-thumb float-left"> <a href="@Url.Action("Details", "Blog", new { slug = article.Slug })"> <img alt="@article.Image.Description" src="@article.Image.Url" class="img-fluid rounded"></a></div>
-                }
-                    <div class="post-recent-content float-left"><a href="@Url.Action("Details","Blog", new { slug = article.Slug})">@article.Title</a><span class="text-muted mt-2">@article.AddDate.ToString("dd-MM-yyyy")</span></div>
-                </div>
+                    <div class="clearfix post-recent">
+                        @if (article.Image != null)
+                        {
+                            <div class="post-recent-thumb float-left"> <a href="@Url.Action("Details", "Blog", new { slug = article.Slug })"> <img alt="@article.Image.Description" src="@article.Image.Url" class="img-fluid rounded"></a></div>
+                        }
+                        <div class="post-recent-content float-left"><a href="@Url.Action("Details","Blog", new { slug = article.Slug})">@article.Title</a><span class="text-muted mt-2">@article.AddDate.ToString("dd-MM-yyyy")</span></div>
+                    </div>
                 }
             </div>
         </div>
         <!-- RECENT POST -->
         <!-- TAG CLOUDS -->
         <div class="widget mb-4 pb-2">
-            <h4 class="widget-title">Tags Cloud</h4>
+            <h4 class="widget-title">Tagi</h4>
             <div class="tagcloud mt-4">
                 @if (homeData.Tags.Count() == 0)
                 {
@@ -65,20 +65,21 @@
             </div>
         </div>
         <!-- TAG CLOUDS -->
-        <!-- SOCIAL -->
-        <div class="widget">
-            <h4 class="widget-title">Follow us</h4>
-            <ul class="list-unstyled social-icon mb-0 mt-4">
-                <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="facebook" class="fea icon-sm fea-social"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="instagram" class="fea icon-sm fea-social"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="twitter" class="fea icon-sm fea-social"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="linkedin" class="fea icon-sm fea-social"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="github" class="fea icon-sm fea-social"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="youtube" class="fea icon-sm fea-social"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="gitlab" class="fea icon-sm fea-social"></i></a></li>
-            </ul><!--end icon-->
-        </div>
-        <!-- SOCIAL -->
+
+        @if (homeData.SocialMedias.Count() != 0)
+        {
+            <!-- SOCIAL -->
+            <div class="widget">
+                <h4 class="widget-title">Obserwuj nas</h4>
+                <ul class="list-unstyled social-icon mb-0 mt-4">
+                    @foreach (var social in homeData.SocialMedias)
+                    {
+                        <li class="list-inline-item"><a href="@social.Link" class="rounded"><i data-feather="@social.Name" class="@social.FontAwesome"></i></a></li>
+                    }
+                </ul><!--end icon-->
+            </div>
+            <!-- SOCIAL -->
+        }
 
     </div>
 </div>

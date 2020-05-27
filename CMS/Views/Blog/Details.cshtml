@@ -11,49 +11,7 @@
     ViewData["canonical"] = article.FullUrl;
 }
 
-<!--
-        <div class="text-left w-100">
-            <h4 class="color-black mt-2 mb-2"> Dodaj swój komenatrz</h4>
-            <p class="color-grey line-height-25px mb-2rem">
-                Nie będę publikował twojego adresu e-mail
-            </p>
-        </div>
 
-        <div class="alert alert-warning alert-dismissible fade show with-icon d-none" id="alert-add-comment"></div>
-
-        <div class="company-contact-form">
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <div class="contact-form-textfield pb-4">
-                        <input type="text" placeholder="Imię *" class="form-control" id="name" name="Name">
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <div class="contact-form-textfield pb-4">
-                        <input type="text" placeholder="Adres e-mail *" class="form-control" id="email" name="Email">
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="contact-form-textfield pb-4">
-                        <textarea placeholder="Treść komentarza *" class="form-control message" id="content" name="Content"></textarea>
-                    </div>
-                </div>
-                <div class="col-lg-12 pt-xs-25px">
-                    <button type="submit" class="btn-setting btn-hvr-setting-main btn-yellow btn-hvr text-uppercase w-100" id="submit-add-comment">
-                        SKOMENTUJ
-                        <span class="btn-hvr-setting btn-hvr-pink">
-                            <span class="btn-hvr-setting-inner">
-                                <span class="btn-hvr-effect"></span>
-                                <span class="btn-hvr-effect"></span>
-                                <span class="btn-hvr-effect"></span>
-                                <span class="btn-hvr-effect"></span>
-                            </span>
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    -->
 <!-- Hero Start -->
 <section class="bg-half bg-light d-table w-100">
     <div class="container">
@@ -62,15 +20,16 @@
                 <div class="page-next-level">
                     <h2>@article.Title </h2>
                     <ul class="list-unstyled mt-4">
-                        <li class="list-inline-item h6 user text-muted mr-2"><i class="mdi mdi-account"></i> @article.User.Name</li>
-                        <li class="list-inline-item h6 date text-muted"><i class="mdi mdi-calendar-check"></i> @article.AddDate.ToString("dd-MM-yyyy")</li>
+                        <li class="list-inline-item h6 user text-muted mr-2"><i class="far fa-user"></i> @article.User.Name</li>
+                        <li class="list-inline-item h6 date text-muted"><i class="far fa-calendar-alt"></i> @article.AddDate.ToString("dd-MM-yyyy")</li>
                     </ul>
                     <div class="page-next">
                         <nav aria-label="breadcrumb" class="d-inline-block">
                             <ul class="breadcrumb bg-white rounded shadow mb-0">
                                 <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Strona główna</a></li>
+                                <li class="breadcrumb-item"><i class="fas fa-arrow-right"></i></li>
                                 <li class="breadcrumb-item"><a href="@Url.Action("List","Blog")">Lista</a></li>
-                                <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                                <li class="breadcrumb-item"><i class="fas fa-arrow-right"></i></li>
                                 <li class="breadcrumb-item active" aria-current="page">@article.Title</li>
                             </ul>
                         </nav>
@@ -81,15 +40,6 @@
     </div> <!--end container-->
 </section><!--end section-->
 <!-- Hero End -->
-<!-- Shape Start -->
-<div class="position-relative">
-    <div class="shape overflow-hidden text-white">
-        <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
-        </svg>
-    </div>
-</div>
-<!--Shape End-->
 <!-- Blog STart -->
 <section class="section">
     <div class="container">
@@ -120,18 +70,16 @@
                     {
                         <div class="card shadow rounded border-0 mt-4">
                             <div class="card-body">
-                                <h5 class="card-title mb-0">Comments:</h5>
+                                <h5 class="card-title mb-0">Komentarze:</h5>
 
                                 <ul class="media-list list-unstyled mb-0">
 
                                     @foreach (var comment in article.Comments.Where(c => c.IsAccepted != false))
                                     {
+                                        <hr />
                                         <li class="mt-4">
                                             <div class="d-flex justify-content-between">
                                                 <div class="media align-items-center">
-                                                    <a class="pr-3" href="#">
-                                                        <img src="images/client/01.jpg" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
-                                                    </a>
                                                     <div class="commentor-detail">
                                                         <h6 class="mb-0">@comment.Name</h6>
                                                         <small class="text-muted">@comment.AddDate.ToString("dd-MM-yyyy")</small>
@@ -142,6 +90,7 @@
                                                 <p class="text-muted font-italic p-3 bg-light rounded">@comment.Content</p>
                                             </div>
                                         </li>
+
                                     }
 
                                 </ul>
@@ -150,41 +99,43 @@
                     }
                     <div class="card shadow rounded border-0 mt-4">
                         <div class="card-body">
-                            <h5 class="card-title mb-0">Leave A Comment :</h5>
+                            <h5 class="card-title mb-0">Zostaw komentarz</h5>
 
-                            <form class="mt-3">
+                            <div class="alert alert-warning alert-dismissible fade show with-icon d-none" id="alert-add-comment"></div>
+
+                            <div class="mt-3">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group position-relative">
-                                            <label>Your Comment</label>
-                                            <i data-feather="message-circle" class="fea icon-sm icons"></i>
-                                            <textarea id="message" placeholder="Your Comment" rows="5" name="message" class="form-control pl-5" required=""></textarea>
+                                            <label>Treść komentarza</label>
+                                            <i class="far fa-comment icons"></i>
+                                            <textarea id="content" placeholder="Twój komenatrz" rows="5" name="message" class="form-control pl-5"></textarea>
                                         </div>
                                     </div><!--end col-->
 
                                     <div class="col-lg-6">
                                         <div class="form-group position-relative">
-                                            <label>Name <span class="text-danger">*</span></label>
-                                            <i data-feather="user" class="fea icon-sm icons"></i>
-                                            <input id="name" name="name" type="text" placeholder="Name" class="form-control pl-5" required="">
+                                            <label>Imię</label>
+                                            <i class="fas fa-user icons"></i>
+                                            <input id="name" name="name" type="text" placeholder="Imię" class="form-control pl-5">
                                         </div>
                                     </div><!--end col-->
 
                                     <div class="col-lg-6">
                                         <div class="form-group position-relative">
-                                            <label>Your Email <span class="text-danger">*</span></label>
-                                            <i data-feather="mail" class="fea icon-sm icons"></i>
-                                            <input id="email" type="email" placeholder="Email" name="email" class="form-control pl-5" required="">
+                                            <label>E-mail</label>
+                                            <i class="fas fa-at icons"></i>
+                                            <input id="email" type="email" placeholder="Email" name="email" class="form-control pl-5">
                                         </div>
                                     </div><!--end col-->
 
                                     <div class="col-md-12">
                                         <div class="send">
-                                            <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                                            <button id="submit-add-comment" class="btn btn-primary btn-block">Wyślij wiadomość</button>
                                         </div>
                                     </div><!--end col-->
                                 </div><!--end row-->
-                            </form><!--end form-->
+                            </div>
                         </div>
                     </div>
                 }

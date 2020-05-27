@@ -33,7 +33,7 @@
 .classic-saas-image .bg-saas-shape:after,
 .work-container.work-modern .icons .work-icon:hover,
 .features.fea-primary:hover {
-    background-color: #2f55d4 !important;
+    background-color: #214a36 !important;
 }
 
 .text-primary,
@@ -83,7 +83,7 @@
 .work-container.work-modern .content .title:hover,
 .shop-list .content .product-name:hover,
 .features.fea-primary .content .title:hover {
-    color: #2f55d4 !important;
+    color: #214a36 !important;
 }
 
 .btn-primary,
@@ -123,7 +123,7 @@
 .container-filter li a:hover,
 .flatpickr-day.selected, 
 .flatpickr-day.selected:hover {
-    border-color: #2f55d4 !important;
+    border-color: #214a36 !important;
 }
 
 .btn-primary,
@@ -171,7 +171,7 @@ a.text-primary:focus {
 }
 
 .social-icon li a:hover .fea-social {
-    fill: #2f55d4;
+    fill: #214a36;
 }
 
 .bg-overlay-gradient {
@@ -179,11 +179,11 @@ a.text-primary:focus {
 }
 
 .bg-overlay-gradient2 {
-    background-image: linear-gradient(90deg, #2eca8b, #2f55d4, #2eca8b);
+    background-image: linear-gradient(90deg, #2eca8b, #214a36, #2eca8b);
 }
 
 .gradient {
-    background: linear-gradient(45deg, #2f55d4, #2f55d4) !important;
+    background: linear-gradient(45deg, #214a36, #214a36) !important;
 }
 
 .features .image:before {
@@ -215,11 +215,11 @@ a.text-primary:focus {
 
 .play-icon i,
 .play-icon i:hover {
-    -webkit-text-stroke: 2px #2f55d4;
+    -webkit-text-stroke: 2px #214a36;
 }
   
 .play-icon i:hover {
-    -webkit-text-fill-color: #2f55d4;
+    -webkit-text-fill-color: #214a36;
 }
 
 .event-schedule .date .day {
