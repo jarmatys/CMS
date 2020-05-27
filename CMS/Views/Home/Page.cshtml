@@ -6,29 +6,38 @@
 
     if (!Model.IsCannonical)
     {
-       ViewData["canonical"] = Model.FullUrl;
+        ViewData["canonical"] = Model.FullUrl;
     }
 
     Layout = "~/Views/Shared/User/_Layout.cshtml";
 }
 
-<section class="page_header pb-0 w-100">
+<!-- Hero Start -->
+<section class="bg-half bg-light d-table w-100">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 page-content position-relative">
-                <h2 class="text-white mt-5 mb-2">@Model.Title</h2>
-                <p class="text-white">@Model.Description</p>
-                <div class="page_nav bg-white d-inline-block">
-                    <span>Jesteś tutaj:</span> <a href="@Url.Action("Index","Home")" class="d-inline-block color-black">Strona główna</a> <span class="color-yellow"><i class="ti ti-angle-double-right"></i>@Model.Title</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        <div class="row justify-content-center">
+            <div class="col-lg-12 text-center">
+                <div class="page-next-level">
+                    <h4 class="title"> @Model.Title </h4>
+                    <div class="page-next">
+                        <nav aria-label="breadcrumb" class="d-inline-block">
+                            <ul class="breadcrumb bg-white rounded shadow mb-0">
+                                <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Strona główna</a></li>
+                                <li class="breadcrumb-item"><i class="fas fa-arrow-right"></i></li>
+                                <li class="breadcrumb-item">@Model.Title</li>
 
-<section class="bg-light text-left">
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>  <!--end col-->
+        </div><!--end row-->
+    </div> <!--end container-->
+</section><!--end section-->
+
+<section class="bg-light text-left p-4">
     <div class="container">
-        <div class="row">
+        <div class="row mt-5 mb-5">
             <div class="col-lg-12 col-md-12">
                 @Html.Raw(Model.Content)
             </div>

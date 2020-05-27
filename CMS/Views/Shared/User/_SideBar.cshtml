@@ -3,68 +3,83 @@
     var homeData = await HomeService.GetHomeProperties();
 }
 
-<div class="text-left">
-    <!-- Recent Post -->
-    <div class="widget heading-space wow fadeIn" data-wow-delay="350ms">
-        <h5 class="color-black font-weight-600 mb-4">Najnowsze wpisy</h5>
-        @if (homeData.Articles.Count() == 0)
-        {
-            <h6>Brak najnowszych wpisów</h6>
-        }
 
-        @foreach (var article in homeData.Articles)
-        {
-            <div class="single-post mb-3">
-                <a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="post">
-                    @if (article.Image != null)
-                    {
-                        <img src="@article.Image.Url" alt="@article.Image.Description">
-                    }
-                </a>
-                <div class="text">
-                    <a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="color-grey">@article.Title</a>
-                    <span>@article.AddDate.ToString("dd-MM-yyyy")</span>
-                </div>
-            </div>
-        }
-    </div>
+<div class="card border-0 sidebar sticky-bar rounded shadow">
+    <div class="card-body">
 
-    <!-- Categories -->
-    <div class="widget heading-space wow fadeIn" data-wow-delay="400ms">
-        <h5 class="color-black font-weight-600 mb-4">Kategorie</h5>
-        <div>
+        <!-- CATAGORIES -->
+        <div class="widget mb-4 pb-2">
+            <h4 class="widget-title">Kategorie</h4>
             @if (homeData.Categories.Count() == 0)
             {
                 <h6>Brak kategorii</h6>
             }
-
-            @foreach (var category in homeData.Categories)
+            else
             {
-                <div class="categories-name">
-                    <a href="@Url.Action("Category","Blog", new { category = category.Name.ToLower()})">
-                        <p class="font-16 color-grey text-capitalize">@category.Name</p>
-                    </a>
-                </div>
+                <ul class="list-unstyled mt-4 mb-0 blog-catagories">
+                    @foreach (var category in homeData.Categories)
+                    {
+                        <li><a href="@Url.Action("Category","Blog", new { category = category.Name.ToLower()})">@category.Name</a></li>
+                    }
+                </ul>
             }
+
         </div>
-    </div>
-    <!-- Tags -->
-    <div class="widget heading-space mb-0 wow fadeIn" data-wow-delay="450ms">
-        <h5 class="color-black font-weight-600 mb-4">Tagi</h5>
-        <div>
-            @if (homeData.Tags.Count() == 0)
-            {
-                <h6>Brak tagów</h6>
-            }
+        <!-- CATAGORIES -->
+        <!-- RECENT POST -->
+        <div class="widget mb-4 pb-2">
+            <h4 class="widget-title">Ostatnio dodane</h4>
+            <div class="mt-4">
+                @if (homeData.Articles.Count() == 0)
+                {
+                    <h6>Brak najnowszych wpisów</h6>
+                }
 
-            <ul class="tags">
+                @foreach (var article in homeData.Articles)
+                {
+                    <div class="clearfix post-recent">
+                        @if (article.Image != null)
+                        {
+                            <div class="post-recent-thumb float-left"> <a href="@Url.Action("Details", "Blog", new { slug = article.Slug })"> <img alt="@article.Image.Description" src="@article.Image.Url" class="img-fluid rounded"></a></div>
+                        }
+                        <div class="post-recent-content float-left"><a href="@Url.Action("Details","Blog", new { slug = article.Slug})">@article.Title</a><span class="text-muted mt-2">@article.AddDate.ToString("dd-MM-yyyy")</span></div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- RECENT POST -->
+        <!-- TAG CLOUDS -->
+        <div class="widget mb-4 pb-2">
+            <h4 class="widget-title">Tagi</h4>
+            <div class="tagcloud mt-4">
+                @if (homeData.Tags.Count() == 0)
+                {
+                    <h6>Brak tagów</h6>
+                }
+
                 @foreach (var tag in homeData.Tags)
                 {
-                    <li>
-                        <p class="font-13 text-capitalize">@tag.Name</p>
-                    </li>
+                    <a href="jvascript:void(0)" class="rounded">@tag.Name</a>
                 }
-            </ul>
+
+            </div>
         </div>
+        <!-- TAG CLOUDS -->
+
+        @if (homeData.SocialMedias.Count() != 0)
+        {
+            <!-- SOCIAL -->
+            <div class="widget">
+                <h4 class="widget-title">Obserwuj nas</h4>
+                <ul class="list-unstyled social-icon mb-0 mt-4">
+                    @foreach (var social in homeData.SocialMedias)
+                    {
+                        <li class="list-inline-item"><a href="@social.Link" class="rounded"><i data-feather="@social.Name" class="@social.FontAwesome"></i></a></li>
+                    }
+                </ul><!--end icon-->
+            </div>
+            <!-- SOCIAL -->
+        }
+
     </div>
 </div>

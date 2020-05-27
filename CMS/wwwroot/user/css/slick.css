@@ -1,3 +1,4 @@
+/* Slider */
 .slick-slider
 {
     position: relative;
@@ -36,10 +37,8 @@
     cursor: pointer;
     cursor: hand;
 }
-.item, .item:focus {
-    outline: none;
-}
-.slick-slider .slick-track, .slick-slider .slick-tracks,
+
+.slick-slider .slick-track,
 .slick-slider .slick-list
 {
     -webkit-transform: translate3d(0, 0, 0);
@@ -48,75 +47,66 @@
          -o-transform: translate3d(0, 0, 0);
             transform: translate3d(0, 0, 0);
 }
-/*
-.slick-tracks
+
+.slick-track
 {
     position: relative;
     top: 0;
-    bottom: 0;
     left: 0;
+
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
-
-.slick-tracks {
-    position: absolute;
-    top: auto;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    bottom: 0;
-}
-.slick-track:before, .slick-tracks:before,
-.slick-track:after, .slick-tracks:after
+.slick-track:before,
+.slick-track:after
 {
     display: table;
 
     content: '';
 }
-.slick-track:after, .slick-tracks:after
+.slick-track:after
 {
     clear: both;
 }
-.slick-loading .slick-track, .slick-loading .slick-tracks
+.slick-loading .slick-track
 {
     visibility: hidden;
 }
 
-.slick-slide, .slick-slide
+.slick-slide
 {
     display: none;
     float: left;
 
     height: 100%;
     min-height: 1px;
-}*/
-[dir='rtl'] .slick-slide, .slick-slide
-{
-    float: left;
 }
-.slick-slide img, .slick-slide img
+[dir='rtl'] .slick-slide
+{
+    float: right;
+}
+.slick-slide img
 {
     display: block;
 }
-.slick-slide.slick-loading img, .slick-slide.slick-loading img
+.slick-slide.slick-loading img
 {
     display: none;
 }
-.slick-slide.dragging img, .slick-slide.dragging img
+.slick-slide.dragging img
 {
     pointer-events: none;
 }
-.slick-initialized .slick-slide, .slick-initialized .slick-slide
+.slick-initialized .slick-slide
 {
     display: block;
 }
-.slick-loading .slick-slide, .slick-loading .slick-slide
+.slick-loading .slick-slide
 {
     visibility: hidden;
 }
-.slick-vertical .slick-slide, .slick-verticalReverse .slick-slide
+.slick-vertical .slick-slide
 {
     display: block;
 

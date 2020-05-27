@@ -3,64 +3,73 @@
     var homeData = await HomeService.GetHomeProperties();
 }
 
-
 @if (homeData.Articles.Count() == 3)
 {
-    <section id="blog" class="bg-light-gray">
-        <h2 class="d-none">heading</h2>
+    <section id="blog" class="section bg-light">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="main-title wow fadeIn" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeIn;">
-                        <h5>  Aktualności </h5>
-                        <h2> Najnowsze wpisy </h2>
-                        <p> Zobacz moje najnowsze wpisy. Programowanie i tworzenie stron to moja pasja. Z chęcią dziele się swoją wiedza jak i doświadczeniem.</p>
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <div class="section-title mb-4 pb-2">
+                        <h4 class="title mb-4">Najnowsze wpisy</h4>
+                        <p class="text-muted para-desc mx-auto mb-0">Zobacz co nowego wprowadziliśmy do systemu <span class="text-primary font-weight-bold">CMSOpen</span>.</p>
                     </div>
-                </div>
-            </div>
+                </div><!--end col-->
+            </div><!--end row-->
+
             <div class="row">
                 @foreach (var article in homeData.Articles)
                 {
-                    <div class="col-md-4 col-sm-12">
-                        <div class="news_item shadow blog-one">
+                    <div class="col-lg-4 col-md-6 mt-4 pt-2">
+                        <div class="card blog rounded border-0 shadow">
+                            <div class="position-relative">
+                                @if (article.Image != null)
+                                {
+                                    <img src="@article.Image.Url" class="card-img-top rounded-top" alt="@article.Image.Description">
+                                    <div class="overlay rounded-top bg-dark"></div>
+                                }
 
-                            @if (article.Image != null)
-                            {
-                                <img style="height:200px;width:100%" src="@article.Image.Url" alt="@article.Image.Description" class="img-fluid">
-                            }
-                            else
-                            {
-                                <div style="height:200px"></div>
-                            }
-
-                            <div class="news_desc">
-
-                                <h3 style="min-height:100px;" class="text-center line-height-normal"><a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="color-black">@article.Title</a></h3>
-
-                                <ul style="min-height:25px;" class="meta-tags mt-20px mb-20px">
-                                    <li><a href="javascript:void(0)"><i class="ti ti-calendar"></i>@article.AddDate.ToString("dd-MM-yyyy")</a></li>
-                                    <li><a href="javascript:void(0)"> <i class="ti ti-user"></i> @article.User.Name </a></li>
-                                    <li><a href="javascript:void(0)"><i class="ti ti-comment"></i>@article.Comments.Where(x => x.IsAccepted != false).Count() </a></li>
-                                </ul>
-
-                                <p style="min-height:100px;" class="mb-35px">@article.Excerpt</p>
-
-                                <a style="min-height:25px;" href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="btn-setting btn-hvr-setting-main btn-pink text-white btn-hvr">
-                                    Czytaj więcej
-                                    <span class="btn-hvr-setting btn-hvr-yellow">
-                                        <span class="btn-hvr-setting-inner">
-                                            <span class="btn-hvr-effect"></span>
-                                            <span class="btn-hvr-effect"></span>
-                                            <span class="btn-hvr-effect"></span>
-                                            <span class="btn-hvr-effect"></span>
-                                        </span>
-                                    </span>
-                                </a>
+                            </div>
+                            <div class="card-body content">
+                                <h5><a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="card-title title text-dark">@article.Title</a></h5>
+                                <div class="post-meta d-flex justify-content-between mt-3">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="list-inline-item"><i class="far fa-comments"></i> @article.Comments.Where(x => x.IsAccepted != false).Count()</li>
+                                    </ul>
+                                    <a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="text-muted readmore">Czytaj więcej <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="author">
+                                <small class="text-light user d-block"><i class="far fa-user"></i> @article.User.Name</small>
+                                <small class="text-light date"><i class="far fa-calendar-alt"></i> @article.AddDate.ToString("dd-MM-yyyy") </small>
                             </div>
                         </div>
-                    </div>
+                    </div><!--end col-->
                 }
+            </div><!--end row-->
+
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-3 text-center">
+                    <a href="@Url.Action("List","Blog")" class="btn btn-outline-primary mt-2">Zobacz wszystkie wpisy</a>
+                </div>
             </div>
-        </div>
+        </div><!--end container-->
+
+        <div class="container mt-100 mt-60">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <div class="section-title">
+                        <h4 class="title mb-4">
+                            Pierwszy system CMS oparty o .NET Core
+                        </h4>
+                        <p class="text-muted para-desc mx-auto mb-0">Jesteś zainteresowana/y? <span class="text-primary font-weight-bold">Umów się</span> z nami a, przedstawimy Ci system i odpowiemy na wszelkie pytania.</p>
+
+                        <div class="mt-4">
+                            <a target="_blank" href="https://calendly.com/armatys/prezentacja-cms-open" class="btn btn-primary mt-2 mr-2">Umów prezentacje</a>
+                            <a target="_blank" href="https://demo.cmsopen.net" class="btn btn-outline-primary mt-2">Zobacz demo</a>
+                        </div>
+                    </div>
+                </div><!--end col-->
+            </div><!--end row-->
+        </div><!--end container-->
     </section>
 }
