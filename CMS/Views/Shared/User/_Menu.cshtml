@@ -14,6 +14,11 @@
                 <li><a href="#blog">Aktualności</a></li>
             }
             <li><a href="#contact">Kontakt</a></li>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li><a href="@Url.Action("index","admin")">Panel admina</a></li>
+            }
         }
         else
         {
@@ -21,5 +26,10 @@
             <li><a href="@Url.Action("Index","Home")#cms">CMS</a></li>
             <li><a href="@Url.Action("List","Blog")">Aktualności</a></li>
             <li><a href="@Url.Action("Index","Home")#contact">Kontakt</a></li>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li><a href="@Url.Action("index","admin")">Panel admina</a></li>
+            }
         }
     </ul>
