@@ -37,16 +37,13 @@ namespace CMS.Services
 
         public async Task<List<ArticleModel>> GetAll()
         {
-            // PYTANIE - Jak wyciągnąć dane powiązane z taxonomies w categorii i tagach
             var articleList = await _context.Articles
                 .Include(x => x.Taxonomies).ThenInclude(x => x.Category)
                 .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
                 .Include(x => x.User)
                 .Include(x => x.Comments)
-                .OrderBy(x => x.AddDate)
+                .OrderByDescending(x => x.AddDate)
                 .ToListAsync();
-
-            articleList.Reverse();
 
             return articleList;
         }
