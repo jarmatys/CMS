@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.Models.Db.Account;
 using CMS.Models.Others;
 using CMS.Models.ViewModels.Admin;
 using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
@@ -14,9 +16,12 @@ namespace CMS.Controllers
     public class AdminController : Controller
     {
         private readonly INotificationService _notificationService;
-        public AdminController(INotificationService notificationService)
+        private readonly UserManager<User> _userManager;
+
+        public AdminController(INotificationService notificationService, UserManager<User> userManager)
         {
             _notificationService = notificationService;
+            _userManager = userManager;
         }
 
         // [ GET ] - <domain>/Admin/Index
@@ -49,9 +54,21 @@ namespace CMS.Controllers
 
         // [ POST ] - <domain>/Admin/SendNotification
         [HttpPost]
-        public IActionResult SendNotification([FromBody] NotificationView message)
+        public async Task<IActionResult> SendNotification([FromBody] NotificationView message)
         {
-            var notofication = new NotificationData($"---------------\nKlient: {message.Client}\nMetoda: {message.ActionName}\n\nTreść zgłoszenia: {message.Message}");
+            // wysyłamy na slacka pełne imię i nazwisko użytkownika
+            var userName = "";
+            var userInfo = await _userManager.FindByNameAsync(message.Client);
+            if(!string.IsNullOrEmpty(userInfo.Name) && !string.IsNullOrEmpty(userInfo.Surname))
+            {
+                userName = $"{userInfo.Name} {userInfo.Surname}";
+            }
+            else
+            {
+                userName = message.Client;
+            }
+
+            var notofication = new NotificationData($"---------------\nKlient: {userName}\nMetoda: {message.ActionName}\n\nTreść zgłoszenia: {message.Message}");
             _notificationService.Send(notofication);
 
             return Ok();

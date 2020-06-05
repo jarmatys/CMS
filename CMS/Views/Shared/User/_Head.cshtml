@@ -6,6 +6,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+@if(ViewData["noindex"] as string == "noindex")
+{
+    <meta name="robots" content="noindex">
+}
+
 @if (!string.IsNullOrEmpty(ViewData["canonical"] as string))
 {
     <link rel="canonical" href="@Html.Raw(ViewData["canonical"])" />

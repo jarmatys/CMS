@@ -94,7 +94,13 @@
                     <div class="card-body mx-auto justify-content-center align-items-center flex-column">
                         <div class="form-group">
                             <div class="input-file input-file-image">
+                                <!-- ZAPYTAĆ -->
+                                @if (Model != null && Model.FeaturedImg != null)
+                                {
+                                    <h3 style="color:red;" class="text-center">Dołącz swoje zdjęcie ponownie!</h3>
+                                }
                                 <img class="img-upload-preview" height="350" src="~/admin/images/img-placeholder.png" alt="preview" id="img-placeholder">
+                             
                                 @Html.TextBoxFor(x => x.FeaturedImg, null, new { type = "file", @class = "form-control form-control-file", @id = "input-img-placeholder" })
                             </div>
                         </div>
@@ -327,17 +333,25 @@
 
         $('#datepicker').datetimepicker({
             format: 'DD-MM-YYYY',
-            defaultDate: dateNow
+            defaultDate: dateNow,
+            icons: {
+                    next: "fa fa-arrow-right",
+                    previous: "fa fa-arrow-left"
+                }
         });
         $('#timepicker').datetimepicker({
             format: 'HH:mm',
-            defaultDate: dateNow
+            defaultDate: dateNow,
+             icons: {
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                }
         });
 
 
         $('#summernote').summernote({
             placeholder: 'Pełna treść twojego wpisu',
-            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+            fontNames: [],
             tabsize: 2,
             height: 600
         });
