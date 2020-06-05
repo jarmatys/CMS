@@ -69,17 +69,21 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(TagView result)
         {
-            if (await _tagService.CheckIfTagExist(result.Name))
+            var tag = await _tagService.Get(result.Id);
+            
+            if(tag.Name != result.Name)
             {
-                ModelState.AddModelError("", "Tag o tej nazwie już istnieje");
+                if (await _tagService.CheckIfTagExist(result.Name))
+                {
+                    ModelState.AddModelError("", "Tag o tej nazwie już istnieje");
+                }
             }
-
+           
             if (!ModelState.IsValid)
             {
                 return View(result);
             }
 
-            var tag = await _tagService.Get(result.Id);
 
             await _tagService.Update(TagHelpers.MergeViewWithModel(tag, result));
 

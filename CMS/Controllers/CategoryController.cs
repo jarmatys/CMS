@@ -68,17 +68,21 @@ namespace CMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(CategoryView result)
         {
-            if (await _categoryService.CheckIfCategoryExist(result.Name))
-            {
-                ModelState.AddModelError("", "Kategoria o tej nazwie już istnieje");
-            }
+            var category = await _categoryService.Get(result.Id);
 
+            // sprawdzamy dopiero jeżeli tytuł się 
+            if (category.Name != result.Name)
+            {
+                if (await _categoryService.CheckIfCategoryExist(result.Name))
+                {
+                    ModelState.AddModelError("", "Kategoria o tej nazwie już istnieje");
+                }
+            }
+            
             if (!ModelState.IsValid)
             {
                 return View(result);
             }
-
-            var category = await _categoryService.Get(result.Id);
 
             await _categoryService.Update(CategoryHelpers.MergeViewWithModel(category, result));
 
