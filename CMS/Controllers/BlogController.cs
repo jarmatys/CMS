@@ -77,15 +77,16 @@ namespace CMS.Controllers
 
             ViewData["Article"] = article;
 
+            // wyświetlanie statusu o poprawnym dodaniu komentarza
             if (status == "AddCommentSucces")
             {
                 ViewData["AddCommentSucces"] = "Komentarz został dodany, pojawi się on po mojej akceptacji :)";
             }
 
             // liczenie wyświetleń wpisu
-            if (Request.Cookies["isNewUser"] != "false")
+            if (Request.Cookies[$"article_view_{article.Id}"] != "false")
             {
-                Response.Cookies.Append("isNewUser", "false", new CookieOptions() { Expires = DateTime.Now.AddHours(1) });
+                Response.Cookies.Append($"article_view_{article.Id}", "false", new CookieOptions() { Expires = DateTime.Now.AddHours(1) });
                 await _articleService.IncrementArticleViews(article.Id);
             }
 
