@@ -50,6 +50,7 @@
                             <tr>
                                 <th>Tytuł</th>
                                 <th>Autor</th>
+                                <th>Status</th>
                                 <th>Kategorie</th>
                                 <th>Tagi</th>
                                 <th><i class="far fa-comment-alt"></i></th>
@@ -62,6 +63,7 @@
                             <tr>
                                 <th>Tytuł</th>
                                 <th>Autor</th>
+                                <th>Status</th>
                                 <th>Kategorie</th>
                                 <th>Tagi</th>
                                 <th><i class="far fa-comment-alt"></i></th>
@@ -78,6 +80,16 @@
                                     <tr id="row-@article.Id">
                                         <td>@article.Title</td>
                                         <td>@article.User.UserName</td>
+                                        <td>
+                                            @if (article.IsDraft)
+                                            {
+                                                <span class="badge badge-warning">Szkic</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-success">Opublikowany</span>
+                                            }
+                                        </td>
 
                                         <td>
                                             @foreach (var taxonomy in article.Taxonomies)
