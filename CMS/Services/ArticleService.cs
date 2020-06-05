@@ -97,27 +97,18 @@ namespace CMS.Services
         }
         public async Task<List<ArticleModel>> GetRangeOfArticleCategory(int start, int count, string category)
         {
-            var articleList = await _context.Articles
-           .Include(x => x.Taxonomies).ThenInclude(x => x.Category)
-           .Include(x => x.Taxonomies).ThenInclude(x => x.Tag)
-           .Include(x => x.User)
-           .Include(x => x.Comments)
-           .OrderBy(x => x.AddDate)
-           .Where(x => x.IsDraft != true && x.Taxonomies != null)
-           .ToListAsync();
 
-            //foreach (var article in articleList)
-            //{
-            //    foreach(var taxonomy in article.Taxonomies)
-            //    {
-            //        if (taxonomy.Tag == null)
-            //        {
-            //            articleList.Remove()
-            //        }
-            //    }
-            //}
-
-            articleList.Reverse();
+            var articleList = await _context.Taxonomies
+                .Where(x => x.Category.Name == category)
+                .Include(a => a.Article)
+                .ThenInclude(u => u.User)
+                .Include(a => a.Article)
+                .ThenInclude(c => c.Comments)
+                .Include(t => t.Tag)
+                .OrderByDescending(x => x.Article.AddDate)
+                .Where(x => x.Article.IsDraft != true)
+                .Select(a => a.Article)
+                .ToListAsync();
 
             return articleList.Skip(start).Take(count).ToList();
         }
