@@ -333,11 +333,19 @@
 
         $('#datepicker').datetimepicker({
             format: 'DD-MM-YYYY',
-            defaultDate: dateNow
+            defaultDate: dateNow,
+            icons: {
+                    next: "fa fa-arrow-right",
+                    previous: "fa fa-arrow-left"
+                }
         });
         $('#timepicker').datetimepicker({
             format: 'HH:mm',
-            defaultDate: dateNow
+            defaultDate: dateNow,
+             icons: {
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                }
         });
 
 
