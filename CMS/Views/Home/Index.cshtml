@@ -26,7 +26,13 @@
         const subjectText = document.querySelector("#subject");
         const acceptedBool = document.querySelector("#accepted");
 
+        const loader = document.querySelector("#button-loader");
+        const text = document.querySelector("#button-text");
+
         buttonSubmit.addEventListener("click", function () {
+
+            loader.classList.remove("d-none");
+            text.classList.add("d-none");
 
             var data = {
                 'Name': nameText.value,
@@ -37,8 +43,7 @@
                 'IsAccepted': acceptedBool.checked
             };
 
-            $.ajax(
-                    {
+            $.ajax({
                         url: '@Url.Action("SendMessage","Home")',
                         type: "POST",
                         contentType: "application/json",
@@ -67,16 +72,19 @@
                                 // jeżeli jest więcej błędów jednego typu to przeiteruj po nich
                                 if (errors[name].length != 1) {
                                     for (let subError of errors[name]) {
-                                        alertWarningField.innerHTML += `<p> ${subError} </p>`;
+                                        alertWarningField.innerHTML += `<li> ${subError} </li>`;
                                     }
                                 }
                                 else {
-                                    alertWarningField.innerHTML += `<p> ${errors[name]} </p>`;
+                                    alertWarningField.innerHTML += `<li> ${errors[name]} </li>`;
                                 }
                             }
-                            console.log(error);
-                    }
-                });
-            });
+                        },
+                        complete: function () {
+                            loader.classList.add("d-none");
+                            text.classList.remove("d-none");
+                        }
+                    });
+        });
     </script>
 }

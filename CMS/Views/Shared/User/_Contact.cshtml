@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-warning alert-dismissible fade show with-icon d-none" id="alert-send-message"></div>
+            <ul class="alert alert-warning alert-dismissible fade show with-icon d-none p-4" id="alert-send-message"></ul>
             <div class="alert alert-success alert-dismissible fade show with-icon d-none" id="success-send-message"></div>
         </div>
     </div>
@@ -15,7 +15,7 @@
                     <h4 class="card-title">Napisz do nas!</h4>
                     <div class="custom-form mt-4">
 
-                        <div name="contact-form">
+                        <div class="contact-form">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group position-relative">
@@ -63,9 +63,11 @@
                                 </div><!--end col-->
                             </div><!--end row-->
                             <div class="row">
-                                <div class="col-sm-12 text-center">
-                                    <input name="send" class="submitBnt btn btn-primary btn-block" id="submit-send-message" value="Wyślij wiadomość">
-                                    <div id="simple-msg"></div>
+                                <div class="col-sm-4 text-center">
+                                    <button class="submitBnt btn btn-primary btn-block" id="submit-send-message">
+                                        <span id="button-loader" class="d-none"><img height="25" src="~/user/images/loader.gif" /></span>
+                                        <span id="button-text">Wyślij wiadomość</span>
+                                    </button>
                                 </div><!--end col-->
                             </div><!--end row-->
                         </div><!--end form-->
