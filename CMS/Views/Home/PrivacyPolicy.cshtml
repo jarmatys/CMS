@@ -1,8 +1,10 @@
 ﻿@model PrivacyPolicyModel
 
 @{
-    ViewData["Title"] = "polityka prywatności";
+    ViewData["Title"] = "Polityka prywatności";
     Layout = "~/Views/Shared/User/_Layout.cshtml";
+
+    ViewData["noindex"] = "noindex";
 }
 
 
@@ -30,7 +32,7 @@
 </section><!--end section-->
 
 <section class="bg-light text-left p-4">
-    <div class="container">
+    <div id="privacy-policy" class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 mt-5" style="line-height: 36px;">
 
@@ -338,3 +340,11 @@
         </div>
     </div>
 </section>
+
+@section homeScripts {
+    <script>
+        $('#privacy-policy').bind('copy paste', function (e) {
+            e.preventDefault(); return false;
+        });
+    </script>
+}
