@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Rotativa.AspNetCore;
 
 namespace CMS
 {
@@ -78,6 +79,7 @@ namespace CMS
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAnalyticsService, AnalyticsService>();
+            services.AddScoped<IPdfService, PdfService>();
 
             // Konfiguracja platformy cloudinary do przechowywania zdjęć w chmurze
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
@@ -111,6 +113,8 @@ namespace CMS
             app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization();
+
+            RotativaConfiguration.Setup(env.WebRootPath);
 
             app.UseEndpoints(endpoints =>
             {
