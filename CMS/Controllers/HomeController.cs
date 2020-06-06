@@ -30,14 +30,14 @@ namespace CMS.Controllers
 
         // [ GET ] - <domain>
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }
 
         // [ POST ] - <domain>
         [HttpPost]
-        public async Task<IActionResult> SendMessage([FromBody] ContactView result)
+        public IActionResult SendMessage([FromBody] ContactView result)
         {
             if (!ModelState.IsValid)
             {
