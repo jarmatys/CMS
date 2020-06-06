@@ -28,35 +28,35 @@ namespace CMS.Controllers
 
         // [ GET ] - <domain>/Appearance/SetImages
         [HttpGet]
-        public async Task<IActionResult> SetImages()
+        public IActionResult SetImages()
         {
             return View();
         }
 
         // [ GET ] - <domain>/Appearance/SetTypography
         [HttpGet]
-        public async Task<IActionResult> SetTypography()
+        public IActionResult SetTypography()
         {
             return View();
         }
 
         // [ GET ] - <domain>/Appearance/SetColors
         [HttpGet]
-        public async Task<IActionResult> SetColors()
+        public IActionResult SetColors()
         {
             return View();
         }
 
         // [ POST ] - <domain>/Appearance/SetLogo
         [HttpPost]
-        public async Task<IActionResult> SetLogo(IFormFile logo)
+        public IActionResult SetLogo(IFormFile logo)
         {
             return RedirectToAction("SetImages", "Appearance");
         }
 
         // [ POST ] - <domain>/Appearance/SetLogo
         [HttpPost]
-        public async Task<IActionResult> SetFavicon(IFormFile favicon)
+        public IActionResult SetFavicon(IFormFile favicon)
         {
             return RedirectToAction("SetImages", "Appearance");
         }
