@@ -1,5 +1,5 @@
-﻿using CMS.Context;
-using CMS.Models.Db.Media;
+﻿using CMS.Areas.Admin.Models.Db.Media;
+using CMS.Context;
 using CMS.Services.interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;

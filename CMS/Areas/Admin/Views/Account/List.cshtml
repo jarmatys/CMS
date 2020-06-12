@@ -1,0 +1,153 @@
+﻿@model IEnumerable<User>
+
+@{
+    ViewData["Title"] = "lista użytkowników";
+
+    ViewData["Page"] = "AccountList";
+    ViewData["Group"] = "Account";
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-inner">
+
+    <div class="page-header">
+        <h4 class="page-title">Lista użytkowników</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="@Url.Action("Index","Admin")">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Użytkownicy
+            </li>
+
+        </ul>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Lista użytkowników</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row row-projects">
+                        <div class="table-responsive">
+                            <table id="add-row" class="display table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Login</th>
+                                        <th>E-mail</th>
+                                        <th>Imię</th>
+                                        <th>Nazwisko</th>
+                                        <th>Posty</th>
+                                        <th style="width: 10%">Operacje</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Login</th>
+                                        <th>E-mail</th>
+                                        <th>Imię</th>
+                                        <th>Nazwisko</th>
+                                        <th>Posty</th>
+                                        <th style="width: 10%">Operacje</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr id="row-@user.Id">
+                                            <td>@user.UserName</td>
+                                            <td>@user.Email</td>
+                                            <td>@user.Name</td>
+                                            <td>@user.Surname</td>
+                                            <td>@user.Articles.Count()</td>
+                                            <td>
+                                                <div class="form-button-action">
+                                                    <button type="button" data-toggle="tooltip" class="btn btn-link btn-success btn-lg" data-original-title="Nadaj prawa">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                    <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("Edit","Account", new { Id = user.Id })'" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj informacje">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("ChangePassword","Account", new { Id = user.Id })'" class="btn btn-link btn-primary btn-lg" data-original-title="Zmiana hasła">
+                                                        <i class="fas fa-key"></i>
+                                                    </button>
+                                                    <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-userid="@user.Id">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+              
+            $('.delete-alert').click(function (e) {
+
+                swal({
+                title: 'Czy na pewno chcesz usunąć tego użytkownika?',
+                text: "Tych zmian nie da się odtworzyć!",
+                type: 'warning',
+                buttons: {
+                    confirm: {
+                        text: 'Usuń!',
+                        className: 'btn btn-danger'
+                    },
+                    cancel: {
+                        visible: true,
+                        text: 'Cofnij',
+                        className: 'btn btn-success'
+                    }
+                }
+            }).then((Delete) => {
+                if (Delete) {
+
+                    $.post("@Url.Action("Delete","Account", new { area = "admin" })", { Id: this.dataset.userid });
+
+                    var row = document.getElementById(`row-${this.dataset.userid}`);
+                    row.parentNode.removeChild(row);
+
+                    swal({
+                        title: 'Usunieto',
+                        text: 'Użytkownik został usunięty',
+                        type: 'success',
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        }
+                    });
+
+                } else {
+                    swal.close();
+                }
+            });
+                  });
+        });
+    </script>
+}
+
+
+

@@ -1,5 +1,5 @@
-﻿using CMS.Context;
-using CMS.Models.Db.Seo;
+﻿using CMS.Areas.Admin.Models.Db.Seo;
+using CMS.Context;
 using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;

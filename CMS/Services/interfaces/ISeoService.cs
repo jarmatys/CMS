@@ -1,4 +1,4 @@
-﻿using CMS.Models.Db.Seo;
+﻿using CMS.Areas.Admin.Models.Db.Seo;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;

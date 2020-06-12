@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CMS.Context;
 using CMS.Infrastructure;
 using CMS.Infrastructure.Settings;
-using CMS.Models.Db.Account;
+using CMS.Areas.Admin.Models.Db.Account;
 using CMS.Services;
 using CMS.Services.interfaces;
 using Google.Apis.Logging;
@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Rotativa.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CMS
 {
@@ -33,7 +34,7 @@ namespace CMS
             var config = new ConfigurationBuilder();
 
             config.AddJsonFile("secrets.json");
-        
+
             Configuration = config.Build();
         }
 
@@ -57,6 +58,12 @@ namespace CMS
                 options.Password.RequireLowercase = false;
 
             }).AddEntityFrameworkStores<CMSContext>();
+
+            services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme, options =>
+            {
+                // scieżka do logowania
+                options.LoginPath = "/admin/account/login";
+            });
 
             // Dodajemy obsługę silnika razor oraz controllerów
             services.AddRazorPages();
@@ -119,7 +126,36 @@ namespace CMS
             app.UseEndpoints(endpoints =>
             {
                 // ustawiamy routing na domyślny Model - View - Controller
-                endpoints.MapDefaultControllerRoute();
+                //endpoints.MapDefaultControllerRoute();      
+
+                //endpoints.MapAreaControllerRoute(
+                //    name: "adminArea",
+                //    areaName: "admin",
+                //    pattern: "{area=admin}/{controller}/{action}/{id?}"
+                //);
+
+                //endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller=Home}/{action=Index}/{id?}"
+                //);
+
+                //// routing pod usera
+                //endpoints.MapControllerRoute(
+                //           name: "default",
+                //           pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                // routing pod panel admina
+                endpoints.MapAreaControllerRoute(
+                           name: "default",
+                           areaName: "home",
+                           pattern: "{controller=Home}/{action=index}/{id?}");
+
+                // routing pod panel admina
+                endpoints.MapAreaControllerRoute(
+                           name: "adminArea",
+                           areaName: "admin",
+                           pattern: "{area=admin}/{controller=Home}/{action=index}/{id?}");
+     
             });
         }
     }

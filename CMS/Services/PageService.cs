@@ -1,5 +1,5 @@
-﻿using CMS.Context;
-using CMS.Models.Db.Page;
+﻿using CMS.Areas.Admin.Models.Db.Page;
+using CMS.Context;
 using CMS.Services.interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;

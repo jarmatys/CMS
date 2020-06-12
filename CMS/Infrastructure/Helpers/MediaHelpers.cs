@@ -1,5 +1,5 @@
-﻿using CMS.Models.Db.Media;
-using CMS.Models.ViewModels.Media;
+﻿using CMS.Areas.Admin.Models.Db.Media;
+using CMS.Areas.Admin.Models.View.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;

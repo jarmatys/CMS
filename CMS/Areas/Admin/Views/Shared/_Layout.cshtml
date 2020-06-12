@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="PL-pl">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Panel admina - @ViewData["Title"]</title>
+    <meta charset="utf-8" />
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+
+    <link rel="icon" href="~/admin/images/icon.png" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="~/boundle/js/header.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Lato:300,400,700,900"] },
+            custom: {
+                "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+                urls: ['/../../../admin/css/fonts.min.css']
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="~/boundle/css/header.min.css">
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="main-header">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="blue">
+
+                <a href="@Url.Action("index","home", new { Area = "admin" })" class="logo">
+                    <img src="~/admin/images/logo.png" alt="navbar brand" class="navbar-brand">
+                </a>
+                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="icon-menu"></i>
+                    </span>
+                </button>
+                <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="icon-menu"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- End Logo Header -->
+            <!-- Navbar Header -->
+            <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+                @await Html.PartialAsync("_Menu")
+            </nav>
+            <!-- End Navbar -->
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar sidebar-style-2">
+            @await Html.PartialAsync("_SideMenu")
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="main-panel">
+            <div class="content">
+                @RenderBody()
+            </div>
+            <footer class="footer">
+                @await Html.PartialAsync("_Footer")
+            </footer>
+        </div>
+
+    </div>
+
+    @await Html.PartialAsync("_Scripts")
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

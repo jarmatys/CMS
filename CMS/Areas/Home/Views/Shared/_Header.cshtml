@@ -1,0 +1,38 @@
+﻿<!-- Navbar STart -->
+<header id="topnav" class="defaultscroll sticky">
+    <div class="container">
+        <!-- Logo container-->
+        <div>
+            <a class="logo" href="@Url.Action("Index","Home")">
+                <img src="~/admin/images/logo-green-big.png" height="44" alt="">
+            </a>
+        </div>
+        <div class="buy-button">
+            <a href="https://calendly.com/armatys/prezentacja-cms-open" target="_blank" class="btn btn-primary">Umów prezentację <i class="far fa-calendar-alt"></i></a>
+        </div><!--end login button-->
+        <!-- End Logo container-->
+        <div class="menu-extras">
+            <div class="menu-item">
+                <!-- Mobile menu toggle-->
+                <a class="navbar-toggle">
+                    <div class="lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </a>
+                <!-- End mobile menu toggle-->
+            </div>
+        </div>
+
+        <nav id="navigation">
+            <!-- Navigation Menu-->
+            @await Html.PartialAsync("_Menu")
+
+            <div class="buy-menu-btn d-none">
+                <a href="https://calendly.com/armatys/prezentacja-cms-open" target="_blank" class="btn btn-primary">Umów prezentację <i class="far fa-calendar-alt"></i></a>
+            </div><!--end login button-->
+        </nav><!--end navigation-->
+    </div><!--end container-->
+</header><!--end header-->
+<!-- Navbar End -->

@@ -1,0 +1,148 @@
+﻿@model PageView
+
+@{
+    ViewData["Title"] = "dodaj stronę";
+
+    ViewData["Page"] = "PageAdd";
+    ViewData["Group"] = "Page";
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">Dodawanie strony</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="@Url.Action("Index","Admin", new {area = "admin"})">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("List","Page", new {area = "admin"})">Strony</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Dodawanie strony
+            </li>
+        </ul>
+    </div>
+    @using (Html.BeginForm("Add", "Page", FormMethod.Post, new {area = "admin"}))
+    {
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+        <!-- Treść wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Zawartość strony</div>
+            </div>
+            <div class="card-body">
+                @Html.TextAreaFor(x => x.Content, new { @id = "summernote" })
+            </div>
+        </div>
+
+        <!-- Tytuł i slug wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Podstawowe informacje</div>
+            </div>
+            <div class="card-body">
+
+                <div class="input-icon mb-3">
+                    <span class="input-icon-addon">
+                        <i class="fas fa-pen-alt"></i>
+                    </span>
+                    @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @placeholder = "Tytuł strony", @id = "post-title" })
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="domain-name">https://twojadomena.pl/</span>
+                    </div>
+                    @Html.TextBoxFor(x => x.Slug, new { @class = "form-control", @id = "post-url" })
+                </div>
+
+                <div class="input-group mb-3">
+                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @rows = "6", @placeholder = "Opis strony" })
+                </div>
+
+                <div class="input-icon mb-3">
+                    <span class="input-icon-addon">
+                        <i class="fas fa-key"></i>
+                    </span>
+                    @Html.TextBoxFor(x => x.KeyWords, new { @class = "form-control", @placeholder = "Lista słów kluczowych" })
+                </div>
+            </div>
+        </div>
+
+        <!-- Ustawienia wpisu -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Ustawienia wpisu</div>
+            </div>
+            <div class="card-body">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.CheckBoxFor(x => x.IsIndex, new { @class = "form-check-input" })
+                        <span class="form-check-sign">Blokuj indexowanie strony</span>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.CheckBoxFor(x => x.IsDraft, new { @class = "form-check-input" })
+                        <span class="form-check-sign">Zapisz jako szkic</span>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.CheckBoxFor(x => x.IsCannonical, new { @class = "form-check-input" })
+                        <span class="form-check-sign">Wyłącz tag kanoniczny</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-plus"></i>
+                Dodaj stronę
+            </button>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+
+        // 1. Ustawianie nazwy domeny w inpucie
+        const domainName = document.querySelector("#domain-name");
+        domainName.innerText = `${window.location.hostname}/`;
+
+        // 2. Uzpełnianie sluga na podstawie tytyłu
+        const titleInput = document.querySelector("#post-title");
+        const slugInput = document.querySelector("#post-url");
+
+        titleInput.addEventListener("keyup", function () {
+            // 1. Trim -> usuwamy białe znaki z początku i końca
+            // 2. Regex -> usuwamy znaki specjalne z linku
+            // 3. Split + Join -> zamieniamy spacje na "-"
+            // 4. toLowerCase -> zmieniamy wszystkie literki na małe
+            slugInput.value = titleInput.value.trim().replace(/[&\/\\#,+()$~%.'":*?<>{}!]/g, "").split(" ").join("-").toLowerCase().trim("-");
+        });
+
+        $('#summernote').summernote({
+            placeholder: 'Zawartość strony ...',
+            fontNames: [],
+            tabsize: 2,
+            height: 600
+        });
+    </script>
+}
+
+
+

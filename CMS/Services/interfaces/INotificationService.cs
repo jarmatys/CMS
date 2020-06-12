@@ -1,4 +1,4 @@
-﻿using CMS.Models.Others;
+﻿using CMS.Areas.Admin.Models.Others;
 using System;
 using System.Collections.Generic;
 using System.Linq;

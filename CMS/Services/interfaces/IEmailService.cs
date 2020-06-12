@@ -1,5 +1,5 @@
-﻿using CMS.Models.ViewModels.Article;
-using CMS.Models.ViewModels.Home;
+﻿using CMS.Areas.Admin.Models.View.Article;
+using CMS.Areas.Home.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

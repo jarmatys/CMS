@@ -1,4 +1,4 @@
-﻿using CMS.Models.Email;
+﻿using CMS.Areas.Admin.Models.Email;
 using CMS.Services.interfaces;
 using Rotativa.AspNetCore;
 using System;

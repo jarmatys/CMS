@@ -1,5 +1,4 @@
-﻿using CMS.Models.Db.Settings;
-using CMS.Models.ViewModels.Settings;
+﻿using CMS.Areas.Admin.Models.Db.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;

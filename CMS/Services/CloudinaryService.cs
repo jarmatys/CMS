@@ -1,9 +1,9 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using CMS.Areas.Admin.Models.Db.Article;
+using CMS.Areas.Admin.Models.Db.Media;
 using CMS.Context;
 using CMS.Infrastructure;
-using CMS.Models.Db.Article;
-using CMS.Models.Db.Media;
 using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;

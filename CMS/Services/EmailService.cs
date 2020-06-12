@@ -1,7 +1,7 @@
-﻿using CMS.Context;
-using CMS.Models.Db.Settings;
-using CMS.Models.ViewModels.Article;
-using CMS.Models.ViewModels.Home;
+﻿using CMS.Areas.Admin.Models.Db.Settings;
+using CMS.Areas.Admin.Models.View.Article;
+using CMS.Areas.Home.Models;
+using CMS.Context;
 using CMS.Services.interfaces;
 using MailKit.Net.Smtp;
 using MimeKit;

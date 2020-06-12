@@ -1,0 +1,99 @@
+﻿@model EmailView
+
+@{
+    ViewData["Title"] = "konfiguracja e-maila";
+
+    ViewData["Page"] = "SettingsEmail";
+    ViewData["Group"] = "Settings";
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-inner">
+
+    <div class="page-header">
+        <h4 class="page-title">E-mail</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="@Url.Action("Index","Admin", new {area = "admin"})">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("Index","Settings", new {area = "admin"})">Ustawienia</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                E-mail
+            </li>
+        </ul>
+    </div>
+
+    @using (Html.BeginForm("Email", "Settings",new { area = "admin" }, FormMethod.Post, true, new { @class = "login-form row" }))
+    {
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Konfiguracja E-maila</h4>
+                        <button class="btn btn-success ml-auto" type="submit">
+                            <i class="fa fa-plus"></i>
+                            Zapisz zmiany
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="login" style="background-color: white;">
+
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                                @Html.HiddenFor(x => x.Id)
+
+                                <div class="form-group">
+                                    <label class="placeholder"><b>Serwer SMTP</b></label>
+                                    @Html.TextBoxFor(x => x.Host, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label class="placeholder"><b>Port</b></label>
+                                    @Html.TextBoxFor(x => x.Port, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label class="placeholder"><b>Adres odbiorcy</b></label>
+                                    @Html.TextBoxFor(x => x.EmailTo, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label class="placeholder"><b>Adres nadawcy</b></label>
+                                    @Html.TextBoxFor(x => x.EmailFrom, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="placeholder"><b>Hasło</b></label>
+                                    <div class="position-relative">
+                                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @type = "password" })
+                                        <div class="show-password">
+                                            <i class="icon-eye"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        @Html.CheckBoxFor(x => x.EnableSSL, new { @class = "form-check-input" })
+                                        <span class="form-check-sign">Szyfrowanie przesyłu poczty za pomocą SSL</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

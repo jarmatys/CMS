@@ -1,0 +1,92 @@
+﻿@model BlogView
+
+@{
+    ViewData["Title"] = "konfiguracja bloga";
+
+    ViewData["Page"] = "SettingsBlog";
+    ViewData["Group"] = "Settings";
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-inner">
+
+    <div class="page-header">
+        <h4 class="page-title">Blog</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="@Url.Action("Index","Admin", new {area = "admin"})">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("Index","Settings", new {area = "admin"})">Ustawienia</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Blog
+            </li>
+        </ul>
+    </div>
+
+    @using (Html.BeginForm("Blog", "Settings",new { area = "admin" }, FormMethod.Post, true, new { @class = "login-form row" }))
+    {
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Konfiguracja bloga</h4>
+                        <button class="btn btn-success ml-auto" type="submit">
+                            <i class="fa fa-plus"></i>
+                            Zapisz zmiany
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="login" style="background-color: white;">
+
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                                @Html.HiddenFor(x => x.Id)
+
+                                <div class="form-group">
+                                    <label class="placeholder"><b>Format czasu</b></label>
+                                    @Html.TextBoxFor(x => x.TimeFormat, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label class="placeholder"><b>Format daty</b></label>
+                                    @Html.TextBoxFor(x => x.DateFormat, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label class="placeholder"><b>Postów na strone</b></label>
+                                    @Html.TextBoxFor(x => x.PostPerPage, new { @class = "form-control" })
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        @Html.CheckBoxFor(x => x.AllowComments, new { @class = "form-check-input" })
+                                        <span class="form-check-sign">Zezwalaj na komentarze</span>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        @Html.CheckBoxFor(x => x.CommentsNotify, new { @class = "form-check-input" })
+                                        <span class="form-check-sign">Włącz powiadomienia E-mail o nowych komentarzach</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

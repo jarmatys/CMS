@@ -1,6 +1,6 @@
 ﻿using CloudinaryDotNet.Actions;
-using CMS.Models.Db.Article;
-using CMS.Models.Db.Media;
+using CMS.Areas.Admin.Models.Db.Article;
+using CMS.Areas.Admin.Models.Db.Media;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
