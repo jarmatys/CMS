@@ -85,17 +85,17 @@ a.text-success:hover, a.text-success:focus {
 }
 
 .bg-warning {
-    background-color: #f17425 !important;
+    background-color: #f8d7da !important;
 }
 
 .bg-soft-warning {
     background-color: rgba(241, 116, 37, 0.2) !important;
     border: 1px solid rgba(241, 116, 37, 0.2) !important;
-    color: #f17425 !important;
+    color: #f8d7da !important;
 }
 
 .text-warning {
-    color: #f17425 !important;
+    color: #f8d7da !important;
 }
 
 a.text-warning:hover, a.text-warning:focus {
@@ -433,8 +433,8 @@ a.text-footer:hover, a.text-footer:focus {
     }
 
 .btn-warning {
-    background-color: #f17425 !important;
-    border: 1px solid #f17425 !important;
+    background-color: #f8d7da !important;
+    border: 1px solid #f8d7da !important;
     color: #ffffff !important;
     -webkit-box-shadow: 0 3px 5px 0 rgba(241, 116, 37, 0.3);
     box-shadow: 0 3px 5px 0 rgba(241, 116, 37, 0.3);
@@ -449,26 +449,26 @@ a.text-footer:hover, a.text-footer:focus {
 .btn-soft-warning {
     background-color: rgba(241, 116, 37, 0.2) !important;
     border: 1px solid rgba(241, 116, 37, 0.2) !important;
-    color: #f17425 !important;
+    color: #f8d7da !important;
     -webkit-box-shadow: 0 3px 5px 0 rgba(241, 116, 37, 0.3);
     box-shadow: 0 3px 5px 0 rgba(241, 116, 37, 0.3);
 }
 
     .btn-soft-warning:hover, .btn-soft-warning:focus, .btn-soft-warning:active, .btn-soft-warning.active, .btn-soft-warning.focus {
-        background-color: #f17425 !important;
-        border-color: #f17425 !important;
+        background-color: #f8d7da !important;
+        border-color: #f8d7da !important;
         color: #ffffff !important;
     }
 
 .btn-outline-warning {
-    border: 1px solid #f17425;
-    color: #f17425;
+    border: 1px solid #f8d7da;
+    color: #f8d7da;
     background-color: transparent;
 }
 
     .btn-outline-warning:hover, .btn-outline-warning:focus, .btn-outline-warning:active, .btn-outline-warning.active, .btn-outline-warning.focus, .btn-outline-warning:not(:disabled):not(.disabled):active {
-        background-color: #f17425;
-        border-color: #f17425;
+        background-color: #f8d7da;
+        border-color: #f8d7da;
         color: #ffffff !important;
         -webkit-box-shadow: 0 3px 5px 0 rgba(241, 116, 37, 0.3);
         box-shadow: 0 3px 5px 0 rgba(241, 116, 37, 0.3);
@@ -911,14 +911,14 @@ button:not(:disabled) {
 }
 
 .badge-warning {
-    background-color: #f17425 !important;
+    background-color: #f8d7da !important;
     color: #ffffff !important;
 }
 
 .badge-outline-warning {
     background-color: transparent !important;
-    color: #f17425 !important;
-    border: 1px solid #f17425 !important;
+    color: #f8d7da !important;
+    border: 1px solid #f8d7da !important;
 }
 
 .badge-info {
@@ -1041,7 +1041,7 @@ button:not(:disabled) {
 
 .dropdown-warning .dropdown-menu .dropdown-item:hover, .dropdown-warning .dropdown-menu .dropdown-item.active, .dropdown-warning .dropdown-menu .dropdown-item:active, .dropdown-warning .dropdown-menu .dropdown-item.focus, .dropdown-warning .dropdown-menu .dropdown-item:focus {
     background-color: transparent;
-    color: #f17425 !important;
+    color: #f8d7da !important;
 }
 
 .dropdown-info .dropdown-menu .dropdown-item:hover, .dropdown-info .dropdown-menu .dropdown-item.active, .dropdown-info .dropdown-menu .dropdown-item:active, .dropdown-info .dropdown-menu .dropdown-item.focus, .dropdown-info .dropdown-menu .dropdown-item:focus {
@@ -1171,7 +1171,7 @@ button:not(:disabled) {
 .alert-warning {
     background-color: rgba(241, 116, 37, 0.9);
     color: #ffffff;
-    border-color: #f17425;
+    border-color: #f8d7da;
 }
 
     .alert-warning .alert-link {
@@ -1180,8 +1180,8 @@ button:not(:disabled) {
 
 .alert-outline-warning {
     background-color: #ffffff;
-    color: #f17425;
-    border-color: #f17425;
+    color: #f8d7da;
+    border-color: #f8d7da;
 }
 
 .alert-info {
@@ -1639,7 +1639,7 @@ button:not(:disabled) {
     outline: none !important;
 }
 
-.subcribe-form form {
+.subcribe-form div {
     position: relative;
     max-width: 600px;
     margin: 0px auto;
@@ -4664,4 +4664,8 @@ p {
     #style-switcher {
         display: none;
     }
+}
+
+.grecaptcha-badge {
+    visibility: hidden !important;
 }

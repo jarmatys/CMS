@@ -51,6 +51,15 @@
                 </div>
             </div>
 
+            <div class="row justify-content-center mt-4 mb-4 d-none" id="message-holder">
+                <div class="alert alert-danger " id="message-value"></div>
+            </div>
+
+            <div class="d-none dropzone" id="dropzone-loader">
+                <div class="dz-message">
+                    <img height="150" src="~/user/images/loader.gif" />
+                </div>
+            </div>
 
             @using (Html.BeginForm("Add", "Media", new { area = "admin" }, FormMethod.Post, true, new { @enctype = "multipart/form-data", @class = "dropzone", @id = "uploaddropzone" }))
             {
@@ -87,6 +96,12 @@
 
     <script>
 
+        const messageHolder = document.querySelector("#message-holder");
+        const messageValue = document.querySelector("#message-value");
+
+        const dropzone = document.querySelector("#uploaddropzone");
+        const dropzoneLoader = document.querySelector("#dropzone-loader");
+
         // Zapobieganie aby dropzone nie próbował dwa utworzyć się dwa razy
         Dropzone.autoDiscover = false;
 
@@ -111,10 +126,11 @@
             },
 
             error: function (file, response) { // akcja wykonywana w przypadku wystąpienia błędu
-                var html = '<div class="alert alert-danger alert-dismissible" role="alert">'
-                    + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-                    + '<strong>Error! </strong>' + response + '</div>';
-                $("#uploaddropzone").after(html);
+
+                messageHolder.classList.remove("d-none");
+                messageValue.innerText = response;
+
+                // usuń pliki z dropzone
                 this.removeFile(file);
             }
 
@@ -125,12 +141,11 @@
         const submitButton = document.querySelector("#photo-submit");
         submitButton.addEventListener("click", function () {
 
-            // komunikat o pozytwnym wysłaniu
-            	swal("Sukces", "Twoje zdjęcia się zapisują, poczekaj na przekierowanie!", {
-						icon : "success",
-						buttons: false
-					});
+            messageHolder.classList.add("d-none");
 
+            dropzone.classList.add("d-none");
+            dropzoneLoader.classList.remove("d-none");
+            console.log("jest");
             myDropzone.processQueue()
 
         });
