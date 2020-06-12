@@ -6,13 +6,16 @@
 @await Html.PartialAsync("_Slider")
 @await Html.PartialAsync("_About")
 @await Html.PartialAsync("_Blog")
+@await Html.PartialAsync("_Newsletter")
 @await Html.PartialAsync("_Contact")
+
 
 
 @section homeScripts {
     <script>
         // Tutaj piszemy skrypty dla głównej strony
     </script>
+
     <script>
         // Obsługa formularza kontaktowego
         const buttonSubmit = document.querySelector("#submit-send-message");
@@ -29,7 +32,8 @@
         const loader = document.querySelector("#button-loader");
         const text = document.querySelector("#button-text");
 
-        buttonSubmit.addEventListener("click", function () {
+        buttonSubmit.addEventListener("click", function (event) {
+            event.preventDefault();
 
             loader.classList.remove("d-none");
             text.classList.add("d-none");
@@ -83,6 +87,68 @@
                         complete: function () {
                             loader.classList.add("d-none");
                             text.classList.remove("d-none");
+                        }
+                    });
+        });
+    </script>
+
+    <script>
+         // Obsługa zapisu do newslettera
+        const buttonNewsletterSubmit = document.querySelector("#submit-send-newsletter");
+        const alertNewsletterWarningField = document.querySelector("#alert-send-newsletter");
+        const alertNewsletterSuccessField = document.querySelector("#success-send-newsletter");
+
+        const emailNewsletterField = document.querySelector("#email-newsletter");
+
+        const loaderNewsletter = document.querySelector("#button-newsletter-loader");
+        const textNewsletter = document.querySelector("#button-newsletter-text");
+
+        buttonNewsletterSubmit.addEventListener("click", function () {
+
+            loaderNewsletter.classList.remove("d-none");
+            textNewsletter.classList.add("d-none");
+
+            var data = {
+                'email': emailNewsletterField.value,
+            };
+
+            $.ajax({
+                        url: '@Url.Action("SendNewsletter","Home", new {area = "home"})',
+                        type: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(data),
+                        success: function (result) {
+                            alertNewsletterWarningField.classList.add("d-none");
+                            alertNewsletterSuccessField.classList.remove("d-none");
+
+                            emailNewsletterField.value = "";
+
+                            alertNewsletterSuccessField.innerHTML = result.status;
+                        },
+                        error: function (error) {
+
+                            alertNewsletterWarningField.innerHTML = "";
+                            alertNewsletterWarningField.classList.remove("d-none");
+
+                            let errors = error.responseJSON;
+                            for (let name in errors) {
+                                // jeżeli jest więcej błędów jednego typu to przeiteruj po nich
+                                if (errors[name].length != 1) {
+                                    for (let subError of errors[name]) {
+                                        alertNewsletterWarningField.innerHTML += `<li> ${subError} </li>`;
+                                    }
+                                }
+                                else {
+                                    alertNewsletterWarningField.innerHTML += `<li> ${errors[name]} </li>`;
+                                }
+                            }
+                            console.log(error);
+                        },
+                        complete: function () {
+                         
+                            loaderNewsletter.classList.add("d-none");
+                            textNewsletter.classList.remove("d-none");
                         }
                     });
         });

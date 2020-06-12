@@ -8,6 +8,6 @@ namespace CMS.Services.interfaces
 {
     public interface INewsletterService
     {
-        bool SaveUser(NewsletterData result);
+        Task<bool> SaveUser(NewsletterData result);
     }
 }

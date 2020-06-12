@@ -1,0 +1,34 @@
+﻿<section class="section bg-primary">
+    <div class="bg-overlay bg-overlay-white"></div>
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-7 col-md-6 mt-4 pt-2 mt-sm-0 pt-sm-0 m-auto">
+
+                <div class="section-title text-center text-md-left">
+                    <h1 class="title text-white title-dark mb-2">Newsletter</h1>
+                    <p class="text-light para-dark">Dołącz do newslettera aby być na bieżąco z najnowszymi zmianami w systemie</p>
+                </div>
+
+                <div class="subcribe-form mt-4 pt-2">
+                    <div class="m-0">
+                        <div class="form-group mb-0">
+                            <input type="email" id="email-newsletter" class="rounded-pill" placeholder="E-mail:">
+                            <button class="btn btn-pills btn-primary" id="submit-send-newsletter">
+                                <span id="button-newsletter-loader" class="d-none"><img height="25" src="~/user/images/loader.gif" /></span>
+                                <span id="button-newsletter-text">Subskrybuj</span>
+                            </button>
+
+                        </div>
+                    </div><!--end form-->
+                </div><!--end subscribe form-->
+                <div class="section-title text-center mt-2">
+                    <p class="text-light para-dark">Klikając subskrybuj akceptujesz <a href="@Url.Action("PrivacyPolicy","Home", new { Area = "home" })">politykę prywatności</a></p>
+                </div>
+                <div class="pl-3 pr-5">
+                    <ul class="alert alert-warning alert-dismissible fade show with-icon p-4 mt-3 d-none" id="alert-send-newsletter"></ul>
+                    <div class="alert alert-success alert-dismissible fade show with-icon mt-3 d-none" id="success-send-newsletter"></div>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+    </div><!--end container-->
+</section>
