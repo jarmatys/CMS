@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CMS.Controllers
 {
     [Area("admin")]
-    [Route("admin/{controller}/{action=login}")]
+    [Route("admin/{controller}/{action=login}/{Id?}")]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -112,7 +112,7 @@ namespace CMS.Controllers
             User user = null;
             if (string.IsNullOrEmpty(Id))
             {
-                user = await _userManager.GetUserAsync(HttpContext.User);
+                user = await _userManager.GetUserAsync(User);
             }
             else
             {
@@ -129,7 +129,7 @@ namespace CMS.Controllers
 
             if (string.IsNullOrEmpty(Id))
             {
-                var user = await _userManager.GetUserAsync(HttpContext.User);
+                var user = await _userManager.GetUserAsync(User);
                 changePassword.Id = user.Id;
             }
             else
