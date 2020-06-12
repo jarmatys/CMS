@@ -94,7 +94,6 @@
                     <div class="card-body mx-auto justify-content-center align-items-center flex-column">
                         <div class="form-group">
                             <div class="input-file input-file-image">
-                                <!-- ZAPYTAĆ -->
                                 @if (Model != null && Model.FeaturedImg != null)
                                 {
                                     <h3 style="color:red;" class="text-center">Dołącz swoje zdjęcie ponownie!</h3>
@@ -310,6 +309,7 @@
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
+                    // if na model zeby wykrył zdjęcie 
                     imgPlaceholder.src = e.target.result;
                 };
                 reader.readAsDataURL(input.files[0]);
