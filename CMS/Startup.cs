@@ -87,11 +87,14 @@ namespace CMS
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAnalyticsService, AnalyticsService>();
             services.AddScoped<IPdfService, PdfService>();
+            services.AddScoped<INewsletterService, SendinblueService>();
 
             // Konfiguracja platformy cloudinary do przechowywania zdjęć w chmurze
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             // Konfiguracja slacka
             services.Configure<SlackSettings>(Configuration.GetSection("SlackSettings"));
+            // Konfiguracja sendinblue
+            services.Configure<SendinblueSettings>(Configuration.GetSection("SendinblueSettings"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
