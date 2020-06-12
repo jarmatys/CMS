@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="PL-pl">
+<head>
+
+    <script defer src="~/user/js/fontawesome.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="~/user/css/fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="~/user/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/user/css/materialdesignicons.min.css">
+    <link rel="stylesheet" type="text/css" href="~/user/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="~/user/css/owl.theme.default.min.css">
+    <link rel="stylesheet" type="text/css" href="~/user/css/style.css" id="theme-opt">
+    <link rel="stylesheet" type="text/css" href="~/user/css/colors/default.css" id="color-opt">
+
+    @await Html.PartialAsync("_Head")
+</head>
+<body>
+
+    @await Html.PartialAsync("_Loader")
+    @await Html.PartialAsync("_Header")
+
+    @RenderBody()
+
+    @await Html.PartialAsync("_Footer")
+    @await Html.PartialAsync("_Scripts")
+    @RenderSection("homeScripts", required: false)
+
+</body>
+</html>

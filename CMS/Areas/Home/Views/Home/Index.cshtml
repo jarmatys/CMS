@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["isHome"] = true;
+    ViewData["canonical"] = "https://cmsopen.net";
+}
+
+@await Html.PartialAsync("_Slider")
+@await Html.PartialAsync("_About")
+@await Html.PartialAsync("_Blog")
+@await Html.PartialAsync("_Contact")
+
+
+@section homeScripts {
+    <script>
+        // Tutaj piszemy skrypty dla głównej strony
+    </script>
+    <script>
+        // Obsługa formularza kontaktowego
+        const buttonSubmit = document.querySelector("#submit-send-message");
+        const alertWarningField = document.querySelector("#alert-send-message");
+        const alertSuccessField = document.querySelector("#success-send-message");
+
+        const messageText = document.querySelector("#message");
+        const emailText = document.querySelector("#email");
+        const nameText = document.querySelector("#name");
+        const phoneText = document.querySelector("#phone");
+        const subjectText = document.querySelector("#subject");
+        const acceptedBool = document.querySelector("#accepted");
+
+        const loader = document.querySelector("#button-loader");
+        const text = document.querySelector("#button-text");
+
+        buttonSubmit.addEventListener("click", function () {
+
+            loader.classList.remove("d-none");
+            text.classList.add("d-none");
+
+            var data = {
+                'Name': nameText.value,
+                'Email': emailText.value,
+                'Phone': phoneText.value,
+                'Subject': subjectText.value,
+                'Message': messageText.value,
+                'IsAccepted': acceptedBool.checked
+            };
+
+            $.ajax({
+                        url: '@Url.Action("SendMessage","Home", new {area = "home"})',
+                        type: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(data),
+                        success: function (result) {
+                            alertWarningField.classList.add("d-none");
+                            alertSuccessField.classList.remove("d-none");
+
+                            nameText.value = "";
+                            emailText.value = "";
+                            phoneText.value = "";
+                            subjectText.value = "";
+                            messageText.value = "";
+                            acceptedBool.checked = false;
+
+                            alertSuccessField.innerHTML = result.status;
+                        },
+                        error: function (error) {
+
+                            alertWarningField.innerHTML = "";
+                            alertWarningField.classList.remove("d-none");
+
+                            let errors = error.responseJSON;
+                            for (let name in errors) {
+                                // jeżeli jest więcej błędów jednego typu to przeiteruj po nich
+                                if (errors[name].length != 1) {
+                                    for (let subError of errors[name]) {
+                                        alertWarningField.innerHTML += `<li> ${subError} </li>`;
+                                    }
+                                }
+                                else {
+                                    alertWarningField.innerHTML += `<li> ${errors[name]} </li>`;
+                                }
+                            }
+                        },
+                        complete: function () {
+                            loader.classList.add("d-none");
+                            text.classList.remove("d-none");
+                        }
+                    });
+        });
+    </script>
+}

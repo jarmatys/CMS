@@ -1,5 +1,5 @@
-﻿using CMS.Models.Db.Seo;
-using CMS.Models.ViewModels.Seo;
+﻿using CMS.Areas.Admin.Models.Db.Seo;
+using CMS.Areas.Admin.Models.View.Seo;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,5 @@
-﻿using CMS.Context;
-using CMS.Models.Db.Settings;
-using CMS.Models.ViewModels.Settings;
+﻿using CMS.Areas.Admin.Models.Db.Settings;
+using CMS.Context;
 using CMS.Services.interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;

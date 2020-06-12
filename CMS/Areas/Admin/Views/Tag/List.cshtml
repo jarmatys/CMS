@@ -1,0 +1,156 @@
+﻿@model List<TagModel>
+
+@{
+    ViewData["Title"] = "lista tagów";
+
+    ViewData["Page"] = "ArticleTag";
+    ViewData["Group"] = "Article";
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-inner">
+
+    <div class="page-header">
+        <h4 class="page-title">Lista tagów</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="@Url.Action("Index","Admin")">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("List","Tag")">Wpisy</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Tagi
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Lista kategorii</h4>
+                        <button class="btn btn-primary ml-auto" onclick="location='@Url.Action("Add","Tag")'">
+                            <i class="fa fa-plus"></i>
+                            Dodaj tag
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>Opis</th>
+                                    <th>Uproszczona nazwa</th>
+                                    <th>Liczba wpisów</th>
+                                    <th style="width: 10%">Operacje</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Count != 0)
+                                {
+                                    foreach (var tag in Model)
+                                    {
+                                        <tr id="row-@tag.Id">
+                                            <td>@tag.Name</td>
+                                            <td>@tag.Description</td>
+                                            <td>@tag.Slug</td>
+                                            <td>@tag.Count</td>
+                                            <td>
+                                                <div class="form-button-action">
+                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edytuj" onclick="location='@Url.Action("Edit","Tag", new { Id = tag.Id})'">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-tagid="@tag.Id">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5">Brak dodanych tagów</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('#basic-datatables').DataTable({
+            });
+
+        });
+
+        $('.delete-alert').click(function (e) {
+            swal({
+                title: 'Czy na pewno chcesz usunąć ten tag?',
+                text: "Tych zmian nie da się odtworzyć!",
+                type: 'warning',
+                buttons: {
+                    confirm: {
+                        text: 'Usuń!',
+                        className: 'btn btn-danger'
+                    },
+                    cancel: {
+                        visible: true,
+                        text: 'Cofnij',
+                        className: 'btn btn-success'
+                    }
+                }
+            }).then((Delete) => {
+                if (Delete) {
+
+                    $.post("@Url.Action("Delete","Tag")", { Id: this.dataset.tagid });
+
+                    var row = document.getElementById(`row-${this.dataset.tagid}`);
+                    row.parentNode.removeChild(row);
+
+                    swal({
+                        title: 'Usunieto',
+                        text: 'Twój tag została usunięty.',
+                        type: 'success',
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        }
+                    });
+
+
+                } else {
+                    swal.close();
+                }
+
+            });
+
+        });
+    </script>
+}
+
+

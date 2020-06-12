@@ -1,10 +1,9 @@
-﻿using CMS.Models.Db.Account;
-using CMS.Models.Db.Admin;
-using CMS.Models.Db.Article;
-using CMS.Models.Db.Media;
-using CMS.Models.Db.Page;
-using CMS.Models.Db.Seo;
-using CMS.Models.Db.Settings;
+﻿using CMS.Areas.Admin.Models.Db.Account;
+using CMS.Areas.Admin.Models.Db.Article;
+using CMS.Areas.Admin.Models.Db.Media;
+using CMS.Areas.Admin.Models.Db.Page;
+using CMS.Areas.Admin.Models.Db.Seo;
+using CMS.Areas.Admin.Models.Db.Settings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;

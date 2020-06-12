@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Areas/Home/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Header -->
+<section class="page_header pb-0 w-100">
+    <div class="container">
+        <div class="row pb-5">
+            <div class="col-md-12 page-content position-relative">
+                <h2 class="text-white mt-5 mb-2 font-secondary">404 Błąd</h2>
+                <p class="text-white mb-5">Nie odnalezłem strony, której szukasz.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Page Header -->
+<!-- Error 404 Section starts -->
+<section id="error" class="text-left">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center no-transition">
+                <div class="error wow bounceIn" data-wow-delay="300ms">
+                    <h1 class="color-vlight-grey2 font-secondary">404</h1>
+                    <h2 class="color-grey font-secondary font-weight-600">404</h2>
+                </div>
+                <p class="heading-space font-16">Nie odnalezłem strony, której szukasz.</p>
+                <a href="@Url.Action("Index","Home")" class="btn-setting btn-hvr-setting-main btn-pink text-white btn-hvr">
+                    Strona główna
+                    <span class="btn-hvr-setting btn-hvr-black">
+                        <span class="btn-hvr-setting-inner">
+                            <span class="btn-hvr-effect"></span>
+                            <span class="btn-hvr-effect"></span>
+                            <span class="btn-hvr-effect"></span>
+                            <span class="btn-hvr-effect"></span>
+                        </span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Error 404 Section ends -->

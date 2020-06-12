@@ -1,5 +1,5 @@
-﻿using CMS.Infrastructure.Settings;
-using CMS.Models.Others;
+﻿using CMS.Areas.Admin.Models.Others;
+using CMS.Infrastructure.Settings;
 using CMS.Services.interfaces;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;

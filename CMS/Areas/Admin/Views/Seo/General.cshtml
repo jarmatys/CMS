@@ -1,0 +1,76 @@
+﻿@model GeneralSeoSettingsView
+
+@{
+    ViewData["Title"] = "główne ustawienia SEO";
+
+    ViewData["Page"] = "SeoGeneralSettings";
+    ViewData["Group"] = "Seo";
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-inner">
+
+    <div class="page-header">
+        <h4 class="page-title">Główne ustawienia</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="@Url.Action("Index","Admin", new {area = "admin"})">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Seo
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Główne ustawienia
+            </li>
+        </ul>
+    </div>
+
+    @using (Html.BeginForm("General", "Seo", new { area = "admin" }, FormMethod.Post, true, new { @class = "login-form row" }))
+    {
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Główne ustawienia SEO</h4>
+                        <button class="btn btn-success ml-auto" type="submit">
+                            <i class="fa fa-plus"></i>
+                            Zapisz zmiany
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="login" style="background-color: white;">
+
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                                @Html.HiddenFor(x => x.Id)
+
+                                <div class="form-group">
+                                    <label class="placeholder"><b>Title strony</b></label>
+                                    @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label class="placeholder"><b>Główny adres URL</b></label>
+                                    @Html.TextBoxFor(x => x.MainUrl, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

@@ -1,5 +1,5 @@
-﻿using CMS.Models.Db.Account;
-using CMS.Models.ViewModels.Account;
+﻿using CMS.Areas.Admin.Models.Db.Account;
+using CMS.Areas.Admin.Models.View.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;

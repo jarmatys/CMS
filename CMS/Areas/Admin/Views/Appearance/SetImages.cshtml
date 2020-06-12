@@ -1,0 +1,98 @@
+﻿@model OptionsModel
+
+@{
+    ViewData["Title"] = "ustawanie logotypu";
+
+    ViewData["Page"] = "AppearanceLogo";
+    ViewData["Group"] = "Appearance";
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-inner">
+
+    <div class="page-header">
+        <h4 class="page-title">Logotyp</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="@Url.Action("Index","Admin", new {area = "admin"})">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("Index","Appearance", new {area = "admin"})">Wygląd</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                Logotyp
+            </li>
+        </ul>
+    </div>
+
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Dodawanie logotypu</h4>
+                        <button class="btn btn-success ml-auto" type="submit">
+                            <i class="fa fa-plus"></i>
+                            Zapisz logotyp
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+
+                        <!-- Pogląd logotypu -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center">
+                                        <h4 class="card-title">Załącz logotyp</h4>
+                                        <button id="open-load-img-placeholder-logo" class="btn btn-primary ml-auto">
+                                            <i class="fa fa-plus"></i>
+                                            Dołącz logo
+                                        </button>
+                                        <button id="delete-img-placeholder-logo" class="btn btn-danger ml-3 d-none">
+                                            <i class="fa fa-times"></i>
+                                            Usuń zdjęcie
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body mx-auto justify-content-center align-items-center flex-column">
+                                    <div class="form-group">
+                                        <div class="input-file input-file-image">
+                                            <img class="img-upload-preview" height="150" src="~/admin/images/img-placeholder.png" alt="preview" id="img-placeholder-logo">
+                                            <input type="file" class="form-control form-control-file" name="logo" id="input-img-placeholder-logo" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Aktualny logotyp -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Aktualny logotyp</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
