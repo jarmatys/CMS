@@ -199,8 +199,16 @@ namespace CMS.Controllers
         public async Task<IActionResult> Delete(string Id)
         {
             var user = await _userManager.FindByIdAsync(Id);
-            await _userManager.DeleteAsync(user);
-            return RedirectToAction("List", "Account", new { Area = "Admin" });
+
+            // Nie można usunąć konta na którym jest się aktualnie zalogowanym
+            if (user.UserName != User.Identity.Name)
+            {
+                await _userManager.DeleteAsync(user);
+                return Ok();
+            }
+
+            return BadRequest();
+
         }
 
     }

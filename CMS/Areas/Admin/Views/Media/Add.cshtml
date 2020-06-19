@@ -127,6 +127,9 @@
 
             error: function (file, response) { // akcja wykonywana w przypadku wystąpienia błędu
 
+                dropzone.classList.remove("d-none");
+                dropzoneLoader.classList.add("d-none");
+
                 messageHolder.classList.remove("d-none");
                 messageValue.innerText = response;
 
@@ -145,7 +148,7 @@
 
             dropzone.classList.add("d-none");
             dropzoneLoader.classList.remove("d-none");
-            console.log("jest");
+
             myDropzone.processQueue()
 
         });
