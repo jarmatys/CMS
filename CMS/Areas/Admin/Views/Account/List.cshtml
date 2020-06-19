@@ -83,9 +83,20 @@
                                                     <button type="button" data-toggle="tooltip" onclick="location='@Url.Action("ChangePassword","Account", new { Id = user.Id })'" class="btn btn-link btn-primary btn-lg" data-original-title="Zmiana hasła">
                                                         <i class="fas fa-key"></i>
                                                     </button>
-                                                    <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-userid="@user.Id">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
+
+                                                    @if (user.Articles.Count() == 0 && user.UserName != User.Identity.Name)
+                                                    {
+                                                        <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger delete-alert" data-original-title="Usuń" data-userid="@user.Id">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Nie możesz usunąć tego użytkownika">
+                                                            <i class="fas fa-info"></i>
+                                                        </button>
+                                                    }
+
                                                 </div>
                                             </td>
                                         </tr>
