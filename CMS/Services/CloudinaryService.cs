@@ -23,9 +23,12 @@ namespace CMS.Services
 
         public CloudinaryService(IOptions<CloudinarySettings> config, CMSContext context)
         {
-            // 1. Ustawianie konfiguracji dostępu do cloudinary
-            var acc = new Account(config.Value.CloudName, config.Value.ApiKey, config.Value.ApiSecret);
-            _cloudinary = new Cloudinary(acc);
+            if (config.Value != null)
+            {
+                // 1. Ustawianie konfiguracji dostępu do cloudinary
+                var acc = new Account(config.Value.CloudName, config.Value.ApiKey, config.Value.ApiSecret);
+                _cloudinary = new Cloudinary(acc);
+            }
 
             _context = context;
         }
@@ -37,32 +40,35 @@ namespace CMS.Services
 
         private ImageUploadResult UploadToCloudinary(IFormFile file)
         {
-            var uploadResult = new ImageUploadResult();
-
-            if (file != null && file.Length > 0)
+            if(_cloudinary != null)
             {
-                using (var stream = file.OpenReadStream())
+                var uploadResult = new ImageUploadResult();
+
+                if (file != null && file.Length > 0)
                 {
-                    var uploadParams = new ImageUploadParams
+                    using (var stream = file.OpenReadStream())
                     {
-                        File = new FileDescription(file.FileName, stream)
+                        var uploadParams = new ImageUploadParams
+                        {
+                            File = new FileDescription(file.FileName, stream)
 
-                    };
+                        };
 
-                    if (file.ContentType.Contains("image"))
-                    {
-                        uploadParams.Transformation = new Transformation().Width(1000);
+                        if (file.ContentType.Contains("image"))
+                        {
+                            uploadParams.Transformation = new Transformation().Width(1000);
+                        }
+
+                        uploadResult = _cloudinary.Upload(uploadParams);
                     }
 
-                    uploadResult = _cloudinary.Upload(uploadParams);
-                }
-
-                if (uploadResult.Error == null)
-                {
-                    return uploadResult;
+                    if (uploadResult.Error == null)
+                    {
+                        return uploadResult;
+                    }
                 }
             }
-
+       
             return null;
         }
 
@@ -112,16 +118,19 @@ namespace CMS.Services
 
         public bool DeleteFile(string publicId)
         {
-            var deleteParams = new DeletionParams(publicId);
-            var result = _cloudinary.Destroy(deleteParams);
-
-            if (result.Result == "ok")
+            if(_cloudinary != null)
             {
-                var toRemove = _context.Medias.Find(publicId);
-                _context.Medias.Remove(toRemove);
+                var deleteParams = new DeletionParams(publicId);
+                var result = _cloudinary.Destroy(deleteParams);
 
-                return _context.SaveChanges() > 0;
-            }
+                if (result.Result == "ok")
+                {
+                    var toRemove = _context.Medias.Find(publicId);
+                    _context.Medias.Remove(toRemove);
+
+                    return _context.SaveChanges() > 0;
+                }
+            }    
 
             return false;
         }
