@@ -20,21 +20,31 @@ namespace CMS.Services
 
         public SendinblueService(IOptions<SendinblueSettings> config, CMSContext context)
         {
-            Configuration.Default.ApiKey["api-key"] = config.Value.ApiKey;
-            _sendinblue = new ContactsApi();
+            if(config.Value.ApiKey != null)
+            {
+                Configuration.Default.ApiKey["api-key"] = config.Value.ApiKey;
+                _sendinblue = new ContactsApi();
+            }           
         }
 
         public async Task<bool> SaveUser(NewsletterData result)
         {
-
-            var newContact = new CreateContact
+            if(_sendinblue != null)
             {
-                Email = result.Email
-            };
+                var newContact = new CreateContact
+                {
+                    Email = result.Email
+                };
 
-            var response = await _sendinblue.CreateContactAsync(newContact);
+                var response = await _sendinblue.CreateContactAsync(newContact);
+
+                return response.Id > 0;
+            }
+            else
+            {
+                return false;
+            }
             
-            return response.Id > 0;
         }
     }
 }
