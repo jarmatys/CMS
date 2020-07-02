@@ -21,23 +21,34 @@ namespace CMS.Services
 
         public SlackService(IOptions<SlackSettings> config)
         {
-            _url = new Uri(config.Value.Url);
+            if(config.Value != null)
+            {
+                _url = new Uri(config.Value.Url);
+            }
         }
 
         public bool Send(NotificationData result)
         {
-            string resultJson = JsonConvert.SerializeObject(result);
-
-            using (WebClient client = new WebClient())
+            if (_url != null)
             {
-                NameValueCollection data = new NameValueCollection();
-                data["payload"] = resultJson;
+                string resultJson = JsonConvert.SerializeObject(result);
 
-                var response = client.UploadValues(_url, "POST", data);
-                string responseText = _encoding.GetString(response);
+                using (WebClient client = new WebClient())
+                {
+                    NameValueCollection data = new NameValueCollection();
+                    data["payload"] = resultJson;
+
+                    var response = client.UploadValues(_url, "POST", data);
+                    string responseText = _encoding.GetString(response);
+                }
+
+                return true;
             }
-
-            return true;
+            else
+            {
+                return false;
+            }
+       
         }
     }
 }
