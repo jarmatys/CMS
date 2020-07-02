@@ -39,7 +39,7 @@
 
 **INFO**: CloudinarySettings, SlackSettings, SendinblueSettings are optionals but recommended to fully functionality. If you do not want to use the functionality, remove the sections from secrets.json
 
-**Video instruction**: [Youtube instructions](https://youtube.com) (PL)
+**Video instruction**: [Youtube instructions](https://www.youtube.com/watch?v=RK5WvsT_4Pk) (PL)
 
 ***
 
