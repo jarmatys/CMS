@@ -21,7 +21,7 @@ namespace CMS.Services
 
         public SlackService(IOptions<SlackSettings> config)
         {
-            if(config.Value != null)
+            if(config.Value.Url != null)
             {
                 _url = new Uri(config.Value.Url);
             }

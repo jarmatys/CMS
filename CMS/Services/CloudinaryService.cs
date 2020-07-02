@@ -23,7 +23,7 @@ namespace CMS.Services
 
         public CloudinaryService(IOptions<CloudinarySettings> config, CMSContext context)
         {
-            if (config.Value != null)
+            if (config.Value.CloudName != null && config.Value.ApiKey != null && config.Value.ApiKey != null)
             {
                 // 1. Ustawianie konfiguracji dostępu do cloudinary
                 var acc = new Account(config.Value.CloudName, config.Value.ApiKey, config.Value.ApiSecret);

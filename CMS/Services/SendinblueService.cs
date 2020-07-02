@@ -20,7 +20,7 @@ namespace CMS.Services
 
         public SendinblueService(IOptions<SendinblueSettings> config, CMSContext context)
         {
-            if(config.Value != null)
+            if(config.Value.ApiKey != null)
             {
                 Configuration.Default.ApiKey["api-key"] = config.Value.ApiKey;
                 _sendinblue = new ContactsApi();
