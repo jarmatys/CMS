@@ -2,7 +2,7 @@
 
 ***
 
-### [System Review](https://www.youtube.com/watch?v=ihhuuw4gdfM&t)
+### [System Review](https://www.youtube.com/watch?v=ihhuuw4gdfM&t) (PL)
 
 ***
 ### Run locally - check list
@@ -37,7 +37,7 @@
 }
 ```
 
-**INFO**: CloudinarySettings, SlackSettings, SendinblueSettings are optionals but recommended to fully functionality.
+**INFO**: CloudinarySettings, SlackSettings, SendinblueSettings are optionals but recommended to fully functionality. If you do not want to use the functionality, remove the sections from secrets.json
 
 **Video instruction**: [Youtube instructions](https://youtube.com) (PL)
 
