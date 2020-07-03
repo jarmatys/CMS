@@ -52,9 +52,9 @@ namespace CMS.Services
         public async Task<bool> SendCommentConfirmation(CommentView result)
         {
             var subject = $"[ Nowy komentarz ] Od {result.Name}";
-            var text = $"Nowa komentarz \n\nOD: {result.Name} \nEMAIL: {result.Email} \n\nTREŚĆ: {result.Content}";
+            var html = await _renderService.ToHtmlStringAsync("CommentInfo", result);
 
-            return await SendEmail(result.Email, subject, text);
+            return await SendEmail(result.Email, subject, html);
 
         }
 

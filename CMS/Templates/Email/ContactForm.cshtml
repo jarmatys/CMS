@@ -1,4 +1,25 @@
 ﻿@model CMS.Areas.Home.Models.ContactView
 
-<h1>Mejl od</h1>
-<h2>@Model.Email</h2>
+<h1>Nowa wiadomość z formularza kontaktowego</h1>
+
+@if (!string.IsNullOrEmpty(Model.Subject))
+{
+    <h2>Temat: @Model.Subject</h2>
+}
+
+<p>
+    <strong>Nadawca:</strong>
+    @Model.Email
+</p>
+<p>
+    <strong>Telefon:</strong>
+    @Model.Phone
+</p>
+<p>
+    <strong>Imię:</strong>
+    @Model.Name
+</p>
+<p>
+    <strong>Wiadomość:</strong>
+    @Model.Message
+</p>
