@@ -1992,6 +1992,10 @@ p {
     margin-top: 100px;
 }
 
+.mb-100{
+    margin-bottom: 100px;
+}
+
 .shape {
     position: absolute;
     pointer-events: none;
