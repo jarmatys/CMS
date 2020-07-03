@@ -64,13 +64,19 @@
                             {
                                 <div class="col-lg-6 mt-4 pt-2">
                                     <div class="card blog rounded border-0 shadow">
-                                        @if (recommended.Image != null)
-                                        {
-                                            <div class="position-relative">
-                                                <img src="@recommended.Image.Url" class="card-img-top rounded-top" alt="...">
-                                                <div class="overlay rounded-top bg-dark"></div>
-                                            </div>
-                                        }
+
+                                        <div class="position-relative">
+                                            @if (recommended.Image != null)
+                                            {
+                                                <img src="@recommended.Image.Url" class="card-img-top rounded-top" alt="@recommended.Image.Description">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/user/images/img-placeholder.jpg" class="card-img-top rounded-top" alt="Image placeholder">
+                                            }
+                                            <div onclick="location.href='@Url.Action("Details","Blog", new { slug = article.Slug})'" class="overlay rounded-top bg-dark"></div>
+                                        </div>
+
                                         <div class="card-body content">
                                             <h5><a href="@Url.Action("Details","Blog", new { slug = recommended.Slug})" class="card-title title text-dark">@recommended.Title</a></h5>
                                             <div class="post-meta d-flex justify-content-between mt-3">
@@ -81,8 +87,8 @@
                                             </div>
                                         </div>
                                         <div class="author">
-                                            <small class="text-light user d-block"><i class="mdi mdi-account"></i> @recommended.User.Name @recommended.User.Surname</small>
-                                            <small class="text-light date"><i class="mdi mdi-calendar-check"></i> @recommended.AddDate.ToString("dd-MM-yyyy")</small>
+                                            <small class="text-light user d-block"><i class="far fa-user"></i> @recommended.User.Name @recommended.User.Surname</small>
+                                            <small class="text-light date"><i class="far fa-calendar-alt"></i> @recommended.AddDate.ToString("dd-MM-yyyy")</small>
                                         </div>
                                     </div>
                                 </div>

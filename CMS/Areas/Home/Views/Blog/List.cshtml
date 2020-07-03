@@ -53,9 +53,14 @@
                                     <div class="col-md-6">
                                         @if (article.Image != null)
                                         {
-                                            <img onclick="location.href='@Url.Action("Details","Blog", new { slug = article.Slug})'"  src="@article.Image.Url" class="img-fluid" alt="@article.Image.Description">
-                                            <div onclick="location.href='@Url.Action("Details","Blog", new { slug = article.Slug})'" class="overlay bg-dark"></div>
+                                            <img onclick="location.href='@Url.Action("Details","Blog", new { slug = article.Slug})'" src="@article.Image.Url" class="img-fluid" alt="@article.Image.Description">
                                         }
+                                        else
+                                        {
+                                            <img onclick="location.href='@Url.Action("Details","Blog", new { slug = article.Slug})'" src="~/user/images/img-placeholder.jpg" class="img-fluid" alt="Image placeholder">
+                                        }
+                                        <div onclick="location.href='@Url.Action("Details","Blog", new { slug = article.Slug})'" class="overlay bg-dark"></div>
+
                                         <div class="author">
                                             <small class="text-light user d-block"><i class="far fa-user"></i> @article.User.Name</small>
                                             <small class="text-light date"><i class="far fa-calendar-alt"></i> @article.AddDate.ToString("dd-MM-yyyy")</small>

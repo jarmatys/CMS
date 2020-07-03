@@ -25,9 +25,12 @@
                                 @if (article.Image != null)
                                 {
                                     <img src="@article.Image.Url" class="card-img-top rounded-top" alt="@article.Image.Description">
-                                    <div class="overlay rounded-top bg-dark"></div>
                                 }
-
+                                else
+                                {
+                                    <img src="~/user/images/img-placeholder.jpg" class="img-fluid" alt="Image placeholder">
+                                }
+                                <div class="overlay rounded-top bg-dark"></div>
                             </div>
                             <div class="card-body content">
                                 <h5><a href="@Url.Action("Details","Blog", new { slug = article.Slug})" class="card-title title text-dark">@article.Title</a></h5>
