@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CMS.Areas.Admin.Models.Email;
+using CMS.Areas.Admin.Models.Pdf;
 using CMS.Services.interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +38,7 @@ namespace CMS.Controllers
             var data = new AnalyticsView();
             data.Views = $"{await _analyticsService.GetSumArticleViews()}";
 
-            var result = _pdfService.CreateAnalyticsRaport("AnalyticsTemplate", "Raport wyświetleń", data);
+            var result = await _pdfService.CreateAnalyticsRaport("AnalyticsTemplate", "Raport wyświetleń", data);
 
             return result;
         }

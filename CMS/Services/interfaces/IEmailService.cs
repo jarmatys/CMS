@@ -9,7 +9,7 @@ namespace CMS.Services.interfaces
 {
     public interface IEmailService
     {
-        bool SendContactForm(ContactView result);
-        bool SendCommentConfirmation(CommentView result);
+        Task<bool> SendContactForm(ContactView result);
+        Task<bool> SendCommentConfirmation(CommentView result);
     }
 }

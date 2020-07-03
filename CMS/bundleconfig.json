@@ -1,53 +1,32 @@
 [
-  // ---------------------------- user boundle ----------------------------
-
-
   {
-    "outputFileName": "wwwroot/boundle/css/mainUserCss.min.css",
+    "outputFileName": "wwwroot/boundle/css/user-css.min.css",
     "inputFiles": [
-      "wwwroot/user/css/custom.css",
       "wwwroot/user/css/bootstrap.min.css",
-      "wwwroot/user/css/themify-icons.css",
-      "wwwroot/user/css/animate.min.css",
-      "wwwroot/user/css/cubeportfolio.min.css",
-      "wwwroot/user/css/jquery.fancybox.min.css",
-      "wwwroot/user/css/settings.css",
-      "wwwroot/user/css/swiper.min.css",
+      "wwwroot/user/css/fontawesome.css",
+      "wwwroot/user/css/materialdesignicons.min.css",
       "wwwroot/user/css/owl.carousel.min.css",
       "wwwroot/user/css/owl.theme.default.min.css"
     ]
   },
   {
-    "outputFileName": "wwwroot/boundle/css/slick.min.css",
+    "outputFileName": "wwwroot/boundle/js/user-js.min.js",
     "inputFiles": [
-      "wwwroot/user/css/slick.css",
-      "wwwroot/user/css/slick-theme.css"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/boundle/css/style.min.css",
-    "inputFiles": [
-      "wwwroot/user/css/style.css"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/boundle/js/userJs.min.js",
-    "inputFiles": [
-      //"wwwroot/user/js/morphext.min.js",
-      //"wwwroot/user/js/jquery.appear.js",
-      //"wwwroot/user/js/isotope.pkgd.min.js",
-      //"wwwroot/user/js/jquery.cubeportfolio.min.js",
-      //"wwwroot/user/js/jquery.matchHeight-min.js",
-      //"wwwroot/user/js/parallaxie.min.js",
-      //"wwwroot/user/js/particles.min.js",
-      //"wwwroot/user/js/jquery.fancybox.min.js",
-      //"wwwroot/user/js/slick.min.js",
-      //"wwwroot/user/js/swiper.min.js",
-      //"wwwroot/user/js/owl.carousel.js",
-      //"wwwroot/user/js/wow.js",
-      "wwwroot/user/js/maps.min.js"
-      //"wwwroot/user/js/functions.js"
-    ]
+      "wwwroot/user/js/jquery-3.5.1.min.js",
+      "wwwroot/user/js/bootstrap.bundle.min.js",
+      "wwwroot/user/js/jquery.easing.min.js",
+      "wwwroot/user/js/scrollspy.min.j",
+      "wwwroot/user/js/owl.carousel.min.js",
+      "wwwroot/user/js/owl.init.js",
+      "wwwroot/user/js/feather.min.js",
+      "wwwroot/user/js/app.js",
+      "wwwroot/user/js/custom.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
   },
 
   // ---------------------------- admin boundle ----------------------------

@@ -95,6 +95,7 @@ namespace CMS.Services
 
             return articleList.Skip(start).Take(count).ToList();
         }
+
         public async Task<List<ArticleModel>> GetRangeOfArticleCategory(int start, int count, string category)
         {
 
@@ -112,9 +113,22 @@ namespace CMS.Services
 
             return articleList.Skip(start).Take(count).ToList();
         }
+
         public async Task<int> ArticleCount()
         {
-            var articles = await _context.Articles.ToListAsync();
+            var articles = await _context.Articles.Where(x => x.IsDraft != true).ToListAsync();
+            return articles.Count;
+        }
+
+        public async Task<int> ArticleCountFromCategory(string category)
+        {
+            var articles = await _context.Taxonomies
+               .Where(x => x.Category.Name == category)
+               .Include(a => a.Article)
+               .Where(x => x.Article.IsDraft != true)
+               .Select(a => a.Article)
+               .ToListAsync();
+
             return articles.Count;
         }
 
@@ -128,6 +142,43 @@ namespace CMS.Services
             var article = await _context.Articles.SingleOrDefaultAsync(b => b.Id == id);
             article.Views++;
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<List<ArticleModel>> GetRecommendedArticle(string category, int currentArticleId)
+        {
+            var recommendedArticles = await _context.Taxonomies
+              .Where(x => x.Category.Name == category)
+              .Include(a => a.Article)
+              .ThenInclude(u => u.User)
+              .Include(a => a.Article)
+              .ThenInclude(c => c.Comments)
+              .Include(t => t.Tag)
+              .OrderByDescending(x => x.Article.AddDate)
+              .Where(x => x.Article.IsDraft != true && x.ArticleId != currentArticleId)
+              .Select(a => a.Article)
+              .Take(2)
+              .ToListAsync();
+
+            if(recommendedArticles.Count == 0 || category == null)
+            {
+                var newestArticles = Enumerable.Reverse(await _context.Articles.Where(x => x.IsDraft != true && x.Id != currentArticleId).Include(x => x.Image).Include(x => x.User).Include(x => x.Comments).ToListAsync()).Take(2).OrderByDescending(a => a.AddDate);
+                return newestArticles.ToList();
+            }
+
+            return recommendedArticles;
+        }
+
+        public string GetFirstCategoryOfArticle(ArticleModel article)
+        {
+            foreach(var taxonomy in article.Taxonomies)
+            {
+                if(taxonomy.Category != null)
+                {
+                    return taxonomy.Category.Name;
+                }
+            }
+
+            return null;
         }
     }
 }

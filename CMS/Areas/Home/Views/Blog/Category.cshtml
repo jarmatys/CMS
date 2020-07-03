@@ -22,7 +22,7 @@
                             <ul class="breadcrumb bg-white rounded shadow mb-0">
                                 <li class="breadcrumb-item"><a href="@Url.Action("Index","Home", new {area = "home"})">Strona główna</a></li>
                                 <li class="breadcrumb-item"><i class="fas fa-arrow-right"></i></li>
-                                <li class="breadcrumb-item"><a href="@Url.Action("List","Blog", new {area = "home"})">Wpisy</li>
+                                <li class="breadcrumb-item"><a href="@Url.Action("List","Blog", new {area = "home"})">Wpisy</a></li>
                                 <li class="breadcrumb-item"><i class="fas fa-arrow-right"></i></li>
                                 <li class="breadcrumb-item">@ViewBag.CategoryName</li>
                             </ul>
@@ -88,17 +88,17 @@
                             <ul class="pagination justify-content-center mb-0">
                                 @if (ViewBag.CurrentPage != 1)
                                 {
-                                    <li class="page-item"><a class="page-link" href="@Url.Action("List", "Blog", new { page = ViewBag.CurrentPage - 1 })" aria-label="Previous"><i class="fas fa-arrow-left"></i></a></li>
+                                    <li class="page-item"><a class="page-link" href="@Url.Action("Category", "Blog", new { page = ViewBag.CurrentPage - 1, category = ViewBag.CategoryName })" aria-label="Previous"><i class="fas fa-arrow-left"></i></a></li>
                                 }
 
                                 @for (int num = 1; num <= ViewBag.MaxPage; num++)
                                 {
-                                    <li class="page-item @(ViewBag.CurrentPage == num ? "active" : "")"><a class="page-link" href="@Url.Action("List", "Blog", new { page = num })">@num</a></li>
+                                    <li class="page-item @(ViewBag.CurrentPage == num ? "active" : "")"><a class="page-link" href="@Url.Action("Category", "Blog", new { page = num, category = ViewBag.CategoryName })">@num</a></li>
                                 }
 
                                 @if (ViewBag.MaxPage != ViewBag.CurrentPage)
                                 {
-                                    <li class="page-item"><a class="page-link" href="@Url.Action("List", "Blog", new { page = ViewBag.CurrentPage + 1 })" aria-label="Next"><i class="fas fa-arrow-right"></i></a></li>
+                                    <li class="page-item"><a class="page-link" href="@Url.Action("Category", "Blog", new { page = ViewBag.CurrentPage + 1, category = ViewBag.CategoryName })" aria-label="Next"><i class="fas fa-arrow-right"></i></a></li>
                                 }
                             </ul>
                         </div><!--end col-->

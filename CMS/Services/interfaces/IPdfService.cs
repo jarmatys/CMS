@@ -1,4 +1,5 @@
-﻿using CMS.Areas.Admin.Models.Email;
+﻿using CMS.Areas.Admin.Models.Pdf;
+using Microsoft.AspNetCore.Mvc;
 using Rotativa.AspNetCore;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,6 @@ namespace CMS.Services.interfaces
 {
     public interface IPdfService
     {
-        ViewAsPdf CreateAnalyticsRaport(string viewName, string fileName, AnalyticsView data);
+       Task<FileStreamResult> CreateAnalyticsRaport(string viewName, string fileName, AnalyticsView data);
     }
 }

@@ -11,7 +11,6 @@
     ViewData["canonical"] = article.FullUrl;
 }
 
-
 <!-- Hero Start -->
 <section class="bg-half bg-light d-table w-100">
     <div class="container">
@@ -40,7 +39,6 @@
     </div> <!--end container-->
 </section><!--end section-->
 <!-- Hero End -->
-
 <!-- Blog STart -->
 <section class="section">
     <div class="container">
@@ -58,6 +56,46 @@
                     </div>
                 </div>
 
+                <div class="card shadow rounded border-0 mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-0">Zobacz inne wpisy:</h5>
+                        <div class="row">
+                            @foreach (var recommended in ViewData["RecommendedArticle"] as List<ArticleModel>)
+                            {
+                                <div class="col-lg-6 mt-4 pt-2">
+                                    <div class="card blog rounded border-0 shadow">
+
+                                        <div class="position-relative">
+                                            @if (recommended.Image != null)
+                                            {
+                                                <img src="@recommended.Image.Url" class="card-img-top rounded-top" alt="@recommended.Image.Description">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/user/images/img-placeholder.jpg" class="card-img-top rounded-top" alt="Image placeholder">
+                                            }
+                                            <div onclick="location.href='@Url.Action("Details","Blog", new { slug = article.Slug})'" class="overlay rounded-top bg-dark"></div>
+                                        </div>
+
+                                        <div class="card-body content">
+                                            <h5><a href="@Url.Action("Details","Blog", new { slug = recommended.Slug})" class="card-title title text-dark">@recommended.Title</a></h5>
+                                            <div class="post-meta d-flex justify-content-between mt-3">
+                                                <ul class="list-unstyled mb-0">
+                                                    <li class="list-inline-item mr-2 mb-0"><i class="far fa-comments"></i> @recommended.Comments.Count()</li>
+                                                </ul>
+                                                <a href="@Url.Action("Details","Blog", new { slug = recommended.Slug})" class="text-muted readmore">Czytaj więcej <i class="fas fa-arrow-right"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="author">
+                                            <small class="text-light user d-block"><i class="far fa-user"></i> @recommended.User.Name @recommended.User.Surname</small>
+                                            <small class="text-light date"><i class="far fa-calendar-alt"></i> @recommended.AddDate.ToString("dd-MM-yyyy")</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
 
                 @if (homeData.BlogSettings.AllowComments && article.CommentStatus)
                 {
@@ -161,7 +199,7 @@
         const contentText = document.querySelector("#content");
         const emailText = document.querySelector("#email");
         const nameText = document.querySelector("#name");
-   
+
         const loader = document.querySelector("#button-loader");
         const text = document.querySelector("#button-text");
 
