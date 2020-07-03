@@ -39,7 +39,7 @@ namespace CMS.Areas.Home.Controllers
 
         // [ POST ] - <domain>
         [HttpPost]
-        public IActionResult SendMessage([FromBody] ContactView result)
+        public async Task<IActionResult> SendMessage([FromBody] ContactView result)
         {
             if (!ModelState.IsValid)
             {
@@ -48,7 +48,7 @@ namespace CMS.Areas.Home.Controllers
 
             var notification = new NotificationData($"Masz jedną wiadomość z formularza od: {result.Name}");
             _notificationService.Send(notification);
-            var isSend = _emailService.SendContactForm(result);
+            var isSend = await _emailService.SendContactForm(result);
 
             if (isSend)
             {
