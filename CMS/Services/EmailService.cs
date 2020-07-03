@@ -13,9 +13,11 @@ namespace CMS.Services
     public class EmailService : IEmailService
     {
         private readonly EmailModel _email;
-        public EmailService(CMSContext context)
+        private readonly IRenderService _renderService;
+        public EmailService(CMSContext context, IRenderService renderService)
         {
             _email = context.EmailSettings.FirstOrDefault();
+            _renderService = renderService;
         }
 
         public async Task<bool> SendEmail(string reciver, string subject, string emailBody)
@@ -51,17 +53,17 @@ namespace CMS.Services
         {
             var subject = $"[ Nowy komentarz ] Od {result.Name}";
             var text = $"Nowa komentarz \n\nOD: {result.Name} \nEMAIL: {result.Email} \n\nTREŚĆ: {result.Content}";
-            
+
             return await SendEmail(result.Email, subject, text);
 
         }
 
         public async Task<bool> SendContactForm(ContactView result)
-        {        
+        {
             var subject = $"[ Wiadomość z formularza ] {result.Subject}";
-            var text = $"Nowa wiadomość z formularza \n\nTEMAT: {result.Subject} \nEMAIL: {result.Email} \nIMIĘ: {result.Name} \nTELEFON: {result.Phone} \n\n WIADOMOŚĆ: \n{result.Message} ";
+            var html = await _renderService.ToHtmlStringAsync("ContactForm", result);
 
-            return await SendEmail(result.Email, subject, text);
+            return await SendEmail(result.Email, subject, html);
         }
     }
 }
