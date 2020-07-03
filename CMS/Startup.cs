@@ -21,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Rotativa.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Wkhtmltopdf.NetCore;
 
 namespace CMS
 {
@@ -65,9 +66,13 @@ namespace CMS
                 options.LoginPath = "/admin/account/login";
             });
 
+            // Dodajemy obsługę generatora PDF
+            services.AddWkhtmltopdf();
+
             // Dodajemy obsługę silnika razor oraz controllerów
             services.AddRazorPages();
             services.AddControllersWithViews();
+
             // Dodajemy obsługę dodawania opcji w konfiguracji
             services.AddOptions();
 
@@ -124,30 +129,9 @@ namespace CMS
             app.UseRouting();
             app.UseAuthorization();
 
-            RotativaConfiguration.Setup(env.WebRootPath);
-
             app.UseEndpoints(endpoints =>
             {
-                // ustawiamy routing na domyślny Model - View - Controller
-                //endpoints.MapDefaultControllerRoute();      
-
-                //endpoints.MapAreaControllerRoute(
-                //    name: "adminArea",
-                //    areaName: "admin",
-                //    pattern: "{area=admin}/{controller}/{action}/{id?}"
-                //);
-
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller=Home}/{action=Index}/{id?}"
-                //);
-
-                //// routing pod usera
-                //endpoints.MapControllerRoute(
-                //           name: "default",
-                //           pattern: "{controller=Home}/{action=Index}/{id?}");
-
-                // routing pod panel admina
+                // routing pod głownego layoutu
                 endpoints.MapAreaControllerRoute(
                            name: "default",
                            areaName: "home",
@@ -157,8 +141,7 @@ namespace CMS
                 endpoints.MapAreaControllerRoute(
                            name: "adminArea",
                            areaName: "admin",
-                           pattern: "{area=admin}/{controller=Home}/{action=index}/{id?}");
-     
+                           pattern: "{area=admin}/{controller=Home}/{action=index}/{id?}");   
             });
         }
     }
