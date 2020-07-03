@@ -1,6 +1,4 @@
 [
-  // ---------------------------- user boundle ----------------------------
-
   {
     "outputFileName": "wwwroot/boundle/css/user-css.min.css",
     "inputFiles": [
@@ -8,18 +6,9 @@
       "wwwroot/user/css/fontawesome.css",
       "wwwroot/user/css/materialdesignicons.min.css",
       "wwwroot/user/css/owl.carousel.min.css",
-      "wwwroot/user/css/owl.theme.default.min.css",
-      "wwwroot/user/css/style.css",
-      "wwwroot/user/css/colors/default.css"
+      "wwwroot/user/css/owl.theme.default.min.css"
     ]
   },
-  {
-    "outputFileName": "wwwroot/boundle/css/user-custom-css.min.css",
-    "inputFiles": [
-     
-    ]
-  },
-
   {
     "outputFileName": "wwwroot/boundle/js/user-js.min.js",
     "inputFiles": [
@@ -30,7 +19,6 @@
       "wwwroot/user/js/owl.carousel.min.js",
       "wwwroot/user/js/owl.init.js",
       "wwwroot/user/js/feather.min.js",
-      //"wwwroot/user/js/switcher.js",
       "wwwroot/user/js/app.js",
       "wwwroot/user/js/custom.js"
     ],
