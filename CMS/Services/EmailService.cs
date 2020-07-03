@@ -51,7 +51,7 @@ namespace CMS.Services
         {
             var subject = $"[ Nowy komentarz ] Od {result.Name}";
             var text = $"Nowa komentarz \n\nOD: {result.Name} \nEMAIL: {result.Email} \n\nTREŚĆ: {result.Content}";
-
+            
             return await SendEmail(result.Email, subject, text);
 
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CMS.Areas.Admin.Models.Email
+namespace CMS.Areas.Admin.Models.Pdf
 {
     public class AnalyticsView
     {
