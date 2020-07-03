@@ -20,5 +20,7 @@ namespace CMS.Services.interfaces
         Task<ArticleModel> GetArticleBySlug(string slug);
         Task<List<ArticleModel>> GetRangeOfArticle(int start, int count);
         Task<List<ArticleModel>> GetRangeOfArticleCategory(int start, int count, string category);
+        Task<List<ArticleModel>> GetRecommendedArticle(string category, int currentArticleId);
+        public string GetFirstCategoryOfArticle(ArticleModel article);
     }
 }

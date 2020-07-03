@@ -104,6 +104,9 @@ namespace CMS.Areas.Home.Controllers
 
             ViewData["Article"] = article;
 
+            var articleCategory = _articleService.GetFirstCategoryOfArticle(article);
+            ViewData["RecommendedArticle"] = await _articleService.GetRecommendedArticle(articleCategory, article.Id);
+
             // liczenie wyświetleń wpisu
             if (Request.Cookies[$"article_view_{article.Id}"] != "false")
             {
