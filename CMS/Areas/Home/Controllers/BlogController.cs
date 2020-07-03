@@ -33,21 +33,13 @@ namespace CMS.Areas.Home.Controllers
             _categoryService = categoryService;
         }
 
-        // [ GET ] - <domain>/blog/
-        [HttpGet("blog")]
-        [Route("blog")]
-        public IActionResult List()
-        {
-            return RedirectToAction("List", new { page = 1 });
-        }
-
         // [ GET ] - <domain>/blog/{page}
-        [HttpGet("blog/{page:int}")]
-        [Route("blog/{page:int}")]
-        public async Task<IActionResult> List(int page)
+        [HttpGet("blog/{page:int=1}")]
+        [Route("blog/{page:int=1}")]
+        public async Task<IActionResult> List(int page = 1)
         {
             var blogSettings = await _settingsService.GetBlogSettings();
-            var maxPax = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage) + 1;
+            var maxPax = Math.Ceiling(((double)(await _articleService.ArticleCount()) / (double)blogSettings.PostPerPage));
 
             // sprawdzamy aby użytkownik nie przekręcił "licznika" paginacji
             if (page < 1 || page > maxPax)
@@ -57,6 +49,40 @@ namespace CMS.Areas.Home.Controllers
 
             var skip = (page - 1) * blogSettings.PostPerPage;
             var articles = await _articleService.GetRangeOfArticle(skip, blogSettings.PostPerPage);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.MaxPage = maxPax;
+
+            return View(articles);
+        }
+
+        // [ GET ] - <domain>/blog/kategoria/{category}
+        [HttpGet("blog/kategoria/{category}/{page:int=1}")]
+        [Route("blog/kategoria/{category}/{page:int=1}")]
+        public async Task<IActionResult> Category(string category, int page = 1)
+        {
+            // pobieranie informacji o kategorii i sprawdzanie czy taka kategoria istnieje
+            var categoryModel = await _categoryService.GetCategoryByName(category);
+            if (categoryModel == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.CategoryName = categoryModel.Name;
+            ViewBag.CategoryDesc = categoryModel.Description;
+
+            var blogSettings = await _settingsService.GetBlogSettings();
+            var maxPax = Math.Ceiling(((double)(await _articleService.ArticleCountFromCategory(category)) / (double)blogSettings.PostPerPage));
+
+
+            // sprawdzamy aby użytkownik nie przekręcił "licznika" paginacji
+            if (page < 1 || page > maxPax)
+            {
+                page = 1;
+            }
+
+            var skip = (page - 1) * blogSettings.PostPerPage;
+            var articles = await _articleService.GetRangeOfArticleCategory(skip, blogSettings.PostPerPage, category);
 
             ViewBag.CurrentPage = page;
             ViewBag.MaxPage = maxPax;
@@ -86,47 +112,6 @@ namespace CMS.Areas.Home.Controllers
             }
 
             return View();
-        }
-
-        // [ GET ] - <domain>/blog/kategoria/{category}
-        [HttpGet("blog/kategoria/{category}")]
-        [Route("blog/kategoria/{category}")]
-        public IActionResult Category(string category)
-        {
-            return RedirectToAction("Category", new { category = category, page = 1 });
-        }
-
-        // [ GET ] - <domain>/blog/kategoria/{category}
-        [HttpGet("blog/kategoria/{category}/{page:int}")]
-        [Route("blog/kategoria/{category}/{page:int}")]
-        public async Task<IActionResult> Category(string category, int page)
-        {
-            // pobieranie informacji o kategorii i sprawdzanie czy taka kategoria istnieje
-            var categoryModel = await _categoryService.GetCategoryByName(category);
-            if (categoryModel == null)
-            {
-                return NotFound();
-            }
-
-            ViewBag.CategoryName = categoryModel.Name;
-            ViewBag.CategoryDesc = categoryModel.Description;
-
-            var blogSettings = await _settingsService.GetBlogSettings();
-            var maxPax = ((await _articleService.ArticleCount()) / blogSettings.PostPerPage) + 1;
-
-            // sprawdzamy aby użytkownik nie przekręcił "licznika" paginacji
-            if (page < 1 || page > maxPax)
-            {
-                page = 1;
-            }
-
-            var skip = (page - 1) * blogSettings.PostPerPage;
-            var articles = await _articleService.GetRangeOfArticleCategory(skip, blogSettings.PostPerPage, category);
-
-            ViewBag.CurrentPage = page;
-            ViewBag.MaxPage = maxPax;
-
-            return View(articles);
         }
 
         // [ POST ] - <domain>/Blog/AddComment

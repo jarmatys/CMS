@@ -95,6 +95,7 @@ namespace CMS.Services
 
             return articleList.Skip(start).Take(count).ToList();
         }
+
         public async Task<List<ArticleModel>> GetRangeOfArticleCategory(int start, int count, string category)
         {
 
@@ -112,9 +113,21 @@ namespace CMS.Services
 
             return articleList.Skip(start).Take(count).ToList();
         }
+
         public async Task<int> ArticleCount()
         {
-            var articles = await _context.Articles.ToListAsync();
+            var articles = await _context.Articles.Where(x => x.IsDraft != true).ToListAsync();
+            return articles.Count;
+        }
+        public async Task<int> ArticleCountFromCategory(string category)
+        {
+            var articles = await _context.Taxonomies
+               .Where(x => x.Category.Name == category)
+               .Include(a => a.Article)
+               .Where(x => x.Article.IsDraft != true)
+               .Select(a => a.Article)
+               .ToListAsync();
+
             return articles.Count;
         }
 
@@ -129,5 +142,7 @@ namespace CMS.Services
             article.Views++;
             return await _context.SaveChangesAsync() > 0;
         }
+
+     
     }
 }
