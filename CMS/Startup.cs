@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using CMS.Context;
 using CMS.Infrastructure;
 using CMS.Infrastructure.Settings;
 using CMS.Areas.Admin.Models.Db.Account;
 using CMS.Services;
 using CMS.Services.interfaces;
-using Google.Apis.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Rotativa.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Wkhtmltopdf.NetCore;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace CMS
 {
@@ -105,6 +98,12 @@ namespace CMS
         {
             var cultureInfo = new CultureInfo("pl-PL");
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+
+            // przekazywanie nagłówków aplikacji do reverse proxy
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             if (env.IsDevelopment())
             {
