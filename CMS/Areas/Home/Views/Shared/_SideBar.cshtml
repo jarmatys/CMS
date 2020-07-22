@@ -42,6 +42,11 @@
                         {
                             <div class="post-recent-thumb float-left"> <a href="@Url.Action("Details", "Blog", new { slug = article.Slug })"> <img alt="@article.Image.Description" src="@article.Image.Url" class="img-fluid rounded"></a></div>
                         }
+                        else
+                        {
+                            <div class="post-recent-thumb float-left"> <a href="@Url.Action("Details", "Blog", new { slug = article.Slug })"> <img alt="Image placeholder" src="~/user/images/img-placeholder.jpg" class="img-fluid rounded"></a></div>
+                        }
+
                         <div class="post-recent-content float-left"><a href="@Url.Action("Details","Blog", new { slug = article.Slug})">@article.Title</a><span class="text-muted mt-2">@article.AddDate.ToString("dd-MM-yyyy")</span></div>
                     </div>
                 }

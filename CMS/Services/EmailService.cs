@@ -24,7 +24,7 @@ namespace CMS.Services
         {
             MimeMessage message = new MimeMessage();
 
-            MailboxAddress from = new MailboxAddress(reciver);
+            MailboxAddress from = new MailboxAddress(_email.EmailFrom);
             message.From.Add(from);
 
             MailboxAddress to = new MailboxAddress(_email.EmailTo);
